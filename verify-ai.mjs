@@ -61,6 +61,28 @@ assert.ok(!('temperature' in calls[0].body.generationConfig));
 
 const unsupported = draft(); unsupported.questions[0].evidence = 'An invented excerpt not present in the supplied notes.';
 assert.throws(() => ai.validateDraft(unsupported, source, 5), /traced to your notes/);
+const libyaNotes = [
+  'The color green is worn in Paradise (*Jannah*) according to Surah Al-Kahf and Surah Al-Insan.',
+  'Over **1,200 prisoners** were executed within a few hours.',
+  'He was Gaddafi\u2019s top army commander in Chad who was disowned by Gaddafi after being captured.',
+  'On **October 20, 2011**, Gaddafi was captured hiding inside a concrete drainage pipe outside Sirte.',
+  'Sanctions ran from 1992 to 1999 &amp; isolated the country.',
+].join('\n');
+const libya = draft();
+[
+  'The color green is worn in Paradise (Jannah) according to Surah Al-Kahf and Surah Al-Insan.',
+  'Over 1,200 prisoners were killed within a few hours.',
+  "He was Gaddafi's top army commander in Chad who was disowned by Gaddafi after being captured.",
+  'On October 20, 2011, Gaddafi was captured hiding inside a concrete drainage pipe outside Sirte.',
+  'Sanctions ran from 1992 to 1999 & isolated the country.',
+].forEach((evidence, index) => { libya.questions[index].evidence = evidence; });
+const libyaDraft = ai.validateDraft(libya, libyaNotes, 5);
+assert.match(libyaDraft.questions[1].evidence, /1,200 prisoners/);
+assert.match(libyaDraft.questions[1].evidence, /executed/);
+assert.doesNotMatch(libyaDraft.questions[1].evidence, /killed/);
+const rewritten = draft();
+rewritten.questions[0].evidence = 'Thousands of inmates died after the negotiations collapsed at the prison in Tripoli.';
+assert.throws(() => ai.validateDraft(rewritten, libyaNotes, 5), /traced to your notes/);
 const duplicate = draft(); duplicate.questions[1].prompt = duplicate.questions[0].prompt;
 assert.throws(() => ai.validateDraft(duplicate, source, 5), /repeated a question/);
 const repeatedOption = draft(); repeatedOption.questions[0].options[1] = repeatedOption.questions[0].options[0];
