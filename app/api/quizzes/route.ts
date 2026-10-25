@@ -20,3 +20,15 @@ export async function PATCH(req:Request){
   return NextResponse.json({ok:true});
  }catch{return NextResponse.json({error:'Could not update this quiz. Please try again.'},{status:400})}
 }
+export async function DELETE(req:Request){
+ if(!sameOrigin(req)||!await isTeacher())return NextResponse.json({error:'Teacher access required'},{status:403});
+ try{
+  const q:any=await req.json();
+  if(typeof q.id!=='string'||!q.id)throw Error();
+  const current:any=await db().prepare('SELECT id FROM quizzes WHERE id=?').bind(q.id).first();
+  if(!current)return NextResponse.json({error:'This quiz no longer exists.'},{status:404});
+  await db().prepare('DELETE FROM submissions WHERE quiz_id=?').bind(q.id).run();
+  await db().prepare('DELETE FROM quizzes WHERE id=?').bind(q.id).run();
+  return NextResponse.json({ok:true});
+ }catch{return NextResponse.json({error:'Could not delete this quiz. Please try again.'},{status:400})}
+}

@@ -17,7 +17,7 @@ export function CommunityHome({data,recent,onNavigate,onStart,onCreate}:HomeProp
 }
 
 export function RankingList({rows}:{rows:Ranked[]}){
- return <div className="ranking-list" aria-label="Quiz rankings"><div className="ranking-header"><span>Rank</span><span>Student</span><span>Score</span><span>Percentage</span></div>{rows.map(s=><div className="ranking-row" key={s.id}><span className={'rank rank-'+s.rank}>{s.rank}</span><span className="ranking-student"><span className={'avatar color-'+s.rank}>{initials(s.name)}</span><b>{s.name}</b></span><strong className="ranking-score">{s.score}<small>/{s.max}</small>{s.bonus?<span>+{s.bonus} bonus included</span>:null}</strong><span className="ranking-percent">{percentage(s).toFixed(1)}%</span></div>)}</div>;
+ return <div className="ranking-list" aria-label="Quiz rankings"><div className="ranking-header"><span>Rank</span><span>Student</span><span>Score</span><span>Percentage</span></div>{rows.map(s=><div className={'ranking-row'+(s.rank===1?' is-champion':'')} key={s.id}><span className={'rank rank-'+s.rank}>{s.rank}</span><span className="ranking-student"><span className={'avatar color-'+s.rank}>{initials(s.name)}</span><b>{s.name}</b></span><strong className="ranking-score">{s.score}<small>/{s.max}</small>{s.bonus?<span>+{s.bonus} bonus included</span>:null}</strong><span className="ranking-percent">{percentage(s).toFixed(1)}%</span></div>)}</div>;
 }
 
 export function CommunityLeaderboard({community,onNavigate}:{community:Community;onNavigate:(view:string)=>void}){

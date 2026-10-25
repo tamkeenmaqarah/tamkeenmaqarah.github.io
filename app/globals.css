@@ -28,22 +28,23 @@ small{font-size:13px}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .skip-link{position:fixed;top:-90px;left:20px;z-index:20;background:var(--yellow);color:var(--navy);padding:10px 16px}
 .skip-link:focus-visible{top:10px}
-.app-header{background:white;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:8}
+.app-header{background:var(--navy);border-bottom:0;position:sticky;top:0;z-index:8;color:#fff}
 .header-inner{max-width:1120px;margin:auto;height:77px;display:flex;align-items:center;justify-content:space-between;gap:25px;padding:0 32px}
-.brand{display:flex;align-items:center;gap:11px;color:var(--ink);text-decoration:none;line-height:1.2}
-.brand-mark{background:var(--navy);color:var(--yellow);display:grid;place-items:center;width:42px;height:47px;border-radius:10px 10px 16px 16px}
+.brand{display:flex;align-items:center;gap:11px;color:#fff;text-decoration:none;line-height:1.2}
+.brand-mark{background:var(--yellow);color:var(--navy);display:grid;place-items:center;width:42px;height:47px;border-radius:10px 10px 16px 16px}
 .brand b{font-size:23px;font-weight:800;letter-spacing:-.03em}
-.brand small{display:block;font-size:11px;color:var(--muted);margin-top:4px}
+.brand small{display:block;font-size:11px;color:#d5e2f2;margin-top:4px}
 .brand small span{margin-left:10px}
-.teacher-account{display:flex;align-items:center;gap:20px;font-size:13px;color:var(--muted)}
-.teacher-account>.text-button{font-size:13px;color:var(--muted)}
-.teacher-signin{background:none;border:0;color:var(--muted);font-size:14px;min-height:44px;padding:8px 0}
-.teacher-signin:hover{color:var(--blue)}
+.teacher-account{display:flex;align-items:center;gap:20px;font-size:13px;color:#d5e2f2}
+.teacher-account>.text-button{font-size:13px;color:#e7eef8}
+.teacher-account>.text-button:hover{color:var(--yellow)}
+.teacher-signin{background:none;border:0;color:#e7eef8;font-size:14px;min-height:44px;padding:8px 0}
+.teacher-signin:hover{color:var(--yellow)}
 .main-nav{max-width:1120px;height:57px;margin:auto;display:flex;gap:30px;padding:0 32px}
-.main-nav>button{border:0;background:none;color:var(--muted);font-size:15px;font-weight:600;position:relative;padding:0 3px}
-.main-nav>button.selected{color:var(--blue-dark)}
-.main-nav>button.selected:after{content:'';position:absolute;height:3px;bottom:0;left:0;right:0;background:var(--blue);border-radius:3px 3px 0 0}
-.main-nav>button:hover{color:var(--blue)}
+.main-nav>button{border:0;background:none;color:#c9d7ea;font-size:15px;font-weight:600;position:relative;padding:0 3px}
+.main-nav>button.selected{color:#fff}
+.main-nav>button.selected:after{content:'';position:absolute;height:3px;bottom:0;left:0;right:0;background:var(--yellow);border-radius:3px 3px 0 0}
+.main-nav>button:hover{color:#fff}
 main{max-width:1120px;margin:auto;padding:34px 32px 65px;min-height:74vh}
 .page-heading{display:flex;align-items:center;justify-content:space-between;gap:25px;margin-bottom:28px}
 .page-heading p{color:var(--muted);margin:0;font-size:15px;max-width:65ch}
@@ -111,17 +112,18 @@ label>small{display:block;color:var(--muted);font-size:12px;margin-top:7px;font-
 .student-quiz p{font-size:15px;color:var(--muted);max-width:60ch;margin-bottom:15px}
 .student-quiz .help{font-size:13px}
 .student-quiz>.primary{min-width:140px}
-.home-intro{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(260px,1fr);gap:64px;align-items:center;margin:10px 0 32px}
-.home-intro h1{font-size:38px;line-height:1.2;margin-bottom:16px}
-.home-intro>div>p{max-width:53ch;font-size:17px;color:var(--muted);margin:0;line-height:1.8}
-.weekly-rhythm{padding:0 0 0 28px;border-left:1px solid var(--line)}
-.weekly-rhythm h2{display:flex;align-items:center;gap:9px;font-size:17px;margin-bottom:14px}
-.weekly-rhythm>div{display:flex;justify-content:space-between;gap:16px;padding:9px 0;font-size:14px}
-.weekly-rhythm>div+div{border-top:1px solid var(--line)}
-.weekly-rhythm span{color:var(--muted)}
-.home-quiz{display:flex;align-items:center;justify-content:space-between;gap:28px;background:var(--navy);color:var(--white);border-radius:var(--radius);padding:30px 32px}
+.home-intro{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(260px,.9fr);gap:48px;align-items:center;margin:6px 0 28px}
+.home-intro h1{font-size:42px;line-height:1.15;margin-bottom:16px}
+.home-intro>div>p{max-width:46ch;font-size:17px;color:var(--muted);margin:0;line-height:1.8}
+.weekly-rhythm{background:var(--navy);color:#fff;border-radius:var(--radius);padding:20px 22px 8px}
+.weekly-rhythm h2{display:flex;align-items:center;gap:9px;font-size:16px;margin-bottom:8px;color:#fff}
+.weekly-rhythm>div{display:flex;justify-content:space-between;gap:16px;padding:12px 0;font-size:15px}
+.weekly-rhythm>div+div{border-top:1px solid #ffffff24}
+.weekly-rhythm span{color:#d5e2f2}
+.weekly-rhythm b{font-weight:700}
+.home-quiz{display:flex;align-items:center;justify-content:space-between;gap:28px;background:var(--navy);color:var(--white);border-radius:var(--radius);padding:32px 34px;box-shadow:0 18px 40px #153a6524}
 .home-quiz>div:first-child{min-width:0}
-.home-quiz h2{font-size:24px;overflow-wrap:anywhere;margin-bottom:9px}
+.home-quiz h2{font-size:28px;overflow-wrap:anywhere;margin-bottom:9px}
 .home-quiz p{font-size:15px;color:#d9e4f3;max-width:64ch;margin:0;line-height:1.8}
 .home-quiz-actions{display:flex;flex-direction:column;align-items:center;gap:7px;flex-shrink:0}
 .home-quiz .primary{color:var(--navy);background:var(--yellow)}
@@ -193,13 +195,14 @@ label>small{display:block;color:var(--muted);font-size:12px;margin-top:7px;font-
 .podium-name{display:block;font-size:13px;line-height:1.4;overflow-wrap:anywhere}
 .podium-points{font:700 30px/1 'Barlow Condensed',sans-serif;margin:7px 0 12px}
 .podium-points small{font:400 12px Figtree,Arial,sans-serif;color:#d0ddec;margin-left:2px}
-.podium-block{height:43px;background:#aec9ee;border-radius:7px 7px 0 0;color:var(--navy);display:grid;place-items:center;font:700 26px 'Barlow Condensed',sans-serif}
-.tier-1 .podium-block{height:62px;background:var(--yellow)}
-.tier-3 .podium-block{height:31px;background:var(--lilac)}
+.podium-block{height:52px;background:#aec9ee;border-radius:7px 7px 0 0;color:var(--navy);display:grid;place-items:center;font:700 28px 'Barlow Condensed',sans-serif}
+.tier-1 .podium-block{height:84px;background:var(--yellow)}
+.tier-3 .podium-block{height:36px;background:var(--lilac)}
 .ranking-list{background:white;border:1px solid var(--line);border-radius:var(--radius)}
 .ranking-header,.ranking-row{display:grid;grid-template-columns:45px minmax(140px,1fr) 140px 110px;gap:20px;align-items:center;padding:15px 24px}
 .ranking-header{font-size:12px;color:var(--muted);background:#f9fbfe;border-radius:var(--radius) var(--radius) 0 0}
 .ranking-row{border-top:1px solid #e7edf6;min-height:77px;font-size:15px;font-variant-numeric:tabular-nums}
+.ranking-row.is-champion{background:#fff6d8}
 .rank{font-weight:700;color:var(--muted);display:grid;place-items:center;width:26px;height:28px}
 .rank-1{background:var(--yellow);color:#6c4d00;border-radius:5px}
 .ranking-student{display:flex;align-items:center;gap:11px;min-width:0}
@@ -367,6 +370,9 @@ label>small{display:block;color:var(--muted);font-size:12px;margin-top:7px;font-
 .manage-action-list>button>span{flex:1}
 .manage-action-list b{display:block;font-size:16px}
 .manage-action-list small{display:block;font-size:13px;color:var(--muted);margin-top:4px}
+.manage-action-list>button.danger{color:#8d332d}
+.manage-action-list>button.danger:hover{background:#fdf2f0}
+.quiz-actions .danger{color:#8d332d}
 .ai-highlight{border-top:1px solid var(--line);padding-top:25px;max-width:800px;margin:30px 0}
 .ai-highlight h2{font-size:21px}
 .ai-highlight>p{font-size:14px;color:var(--muted);max-width:65ch}
@@ -424,7 +430,7 @@ main{padding:28px 25px 50px}
 .home-intro{display:block;margin:0 0 25px}
 .home-intro h1{font-size:30px}
 .home-intro>div>p{font-size:15px;line-height:1.8}
-.weekly-rhythm{border-left:0;border-top:1px solid var(--line);padding:22px 0 0;margin-top:24px}
+.weekly-rhythm{padding:18px 18px 6px;margin-top:22px}
 .weekly-rhythm h2{font-size:16px;margin-bottom:9px}
 .weekly-rhythm>div{font-size:14px;padding:8px 0}
 .home-quiz{padding:25px}
@@ -520,9 +526,9 @@ h2{font-size:21px}
 .podium-name{font-size:11px}
 .podium-points{font-size:28px;margin-top:7px;margin-bottom:10px}
 .podium-points small{font-size:10px}
-.podium-block{font-size:24px;height:38px}
-.tier-1 .podium-block{height:55px}
-.tier-3 .podium-block{height:27px}
+.podium-block{font-size:24px;height:44px}
+.tier-1 .podium-block{height:68px}
+.tier-3 .podium-block{height:30px}
 .ranking-header{display:none}
 .ranking-row{grid-template-columns:23px minmax(100px,1fr) 75px;gap:11px;padding:16px 14px;min-height:81px}
 .ranking-student{grid-column:2;grid-row:1/3;gap:8px;font-size:14px}
