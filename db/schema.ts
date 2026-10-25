@@ -1,0 +1,6 @@
+import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
+export const quizzes=sqliteTable('quizzes',{id:text('id').primaryKey(),title:text('title').notNull(),description:text('description').notNull(),questions:text('questions').notNull(),published:integer('published').notNull().default(0),createdAt:text('created_at').notNull()});
+export const submissions=sqliteTable('submissions',{id:text('id').primaryKey(),quizId:text('quiz_id').notNull().references(()=>quizzes.id),name:text('name').notNull(),answers:text('answers').notNull(),score:integer('score').notNull(),max:integer('max').notNull(),createdAt:text('created_at').notNull()});
+export const records=sqliteTable('records',{id:text('id').primaryKey(),name:text('name').notNull(),regular:integer('regular').notNull(),bonus:integer('bonus').notNull(),max:integer('max').notNull()});
+export const moments=sqliteTable('moments',{id:text('id').primaryKey(),name:text('name').notNull(),question:text('question').notNull(),chosen:text('chosen').notNull(),correct:text('correct').notNull(),caption:text('caption').notNull(),createdAt:text('created_at').notNull()});
+export const aiUsage=sqliteTable('ai_usage',{day:text('day').primaryKey(),requests:integer('requests').notNull().default(0)});

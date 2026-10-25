@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1792951727223,
+      "tag": "0000_youthful_dark_phoenix",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1792953142108,
+      "tag": "0001_broken_human_robot",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1792954713188,
+      "tag": "0002_charming_rhodey",
+      "breakpoints": true
+    }
+  ]
+}
