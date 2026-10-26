@@ -72,6 +72,17 @@ typography:
     fontFamily: Lora, Georgia, serif
     fontSize: 32px
     lineHeight: 1.4
+  quran:
+    fontFamily: '"Amiri Quran", Amiri, serif'
+    fontSize: 32px
+    fontWeight: 400
+    lineHeight: 2.6
+    letterSpacing: '0'
+  quran-heading:
+    fontFamily: '"Amiri Quran", Amiri, serif'
+    fontSize: 35px
+    fontWeight: 400
+    lineHeight: 1.8
 rounded:
   material: 2px
   compact: 3px
@@ -129,6 +140,11 @@ components:
   cushion:
     width: 160px
     height: 100px
+  quran-reading:
+    backgroundColor: '{colors.form-clay}'
+    textColor: '{colors.field-ink}'
+    padding: 30px 40px
+    typography: '{typography.quran}'
 ---
 
 # Design System: أصحاب الخيمة / Ashab Al Khaimah
@@ -176,7 +192,7 @@ Deep red is the continuous public ground; warm ivory and amber give it legibilit
 
 ## Typography
 
-**Display font:** Amiri, serif. **English headings:** Lora, Georgia, serif. **Body and controls:** Figtree with IBM Plex Sans Arabic; Arabic reverses that priority. Font files are served locally.
+**Display font:** Amiri, serif. **English headings:** Lora, Georgia, serif. **Body and controls:** Figtree with IBM Plex Sans Arabic; Arabic reverses that priority. **Qur’an reading:** dedicated Amiri Quran, falling back to Amiri and serif. Font files are served locally; the Amiri Quran asset includes its OFL license.
 
 The Arabic identity is generous and calligraphic; English headings are literary without becoming ceremonial. Controls stay quiet and compact. English text that remains English retains its own family in the Arabic interface.
 
@@ -185,6 +201,7 @@ The Arabic identity is generous and calligraphic; English headings are literary 
 - **Body:** the base is (16px); supporting public copy commonly uses (13–15px), with more generous Arabic line height. Page descriptions cap at (59ch), and review explanations at (65ch).
 - **Labels:** action labels are (15px, 600); navigation is (13px), becoming (12px) on mobile. Table labels are (12px), becoming (10px) on mobile.
 - **Scores:** Lora tabular numbers use (22px), reduced to (20px) in the home table and (19px) on mobile. Result scores use (80px), reducing to (70px) on mobile.
+- **Qur’an text:** dedicated Amiri Quran uses (32px / 2.6), reducing to (28px / 2.6) at (750px). Surah headings use the same family at (35px / 1.8), reducing to (30px). Keep verse text at (400), with zero letter spacing. Separate ayah indices use IBM Plex Sans Arabic (16px / 2.6), reducing to (14px).
 
 **The Two Scripts Rule.** Use Amiri for Arabic display and headings, Lora for English headings, and the language-appropriate sans serif for body and controls. Remove English tracking from Arabic.
 
@@ -199,6 +216,8 @@ At (900px), gutters become (30px), main padding becomes (34px 30px 58px), and th
 The gathering name is centered between two lanterns inside a fine frame, ending in stepped plaster and a broad textile band. Desktop minimum height is (374px), mobile (354px); mobile moves smaller lamps above the name. The woven bottom band is (48px), reducing to (38px). The (380px) breakpoint further reduces the title and action widths.
 
 At (750px), the header brand row grows to (100px) so account and utility controls can wrap without crowding the identity. Hero bottom padding is (106px), increasing to (122px) at that breakpoint to clear the cushions. The shared footer leaves (100px) above its rule for a centered floor cushion. The tent door centers a sheet no wider than (520px) in a full-height red ground; its desktop sheet padding is (28px 46px 40px), reducing to (24px 24px 32px) at (750px).
+
+The shared Qur’an reader presents its controls in four columns (surah, from ayah, to ayah, action), with a (16px) gap. At (750px), controls use two columns with the surah selector and action spanning both. The clay reading panel uses (30px 40px) padding, reducing to (24px 18px). Its verse list caps at (880px); each RTL verse row reserves a separate index column (32px desktop, 22px mobile).
 
 Use logical inline properties. The document changes both language and direction. Isolate names and scores with `bdi`; let authored questions and captions determine their own direction. Standings remain semantic tables; the home preview omits the percentage column.
 
@@ -224,7 +243,7 @@ Cream fields with dark text, a thin warm border and control corners. Fields have
 
 ### Navigation
 
-Four text tabs in the public masthead. Warm muted text brightens on hover; selection gains (700) weight and a (2px) amber underline. The thread settles over (220ms); keyboard focus suppresses this animation. Language and motion controls remain keyboard accessible. The pause control exposes its pressed state and translated action label.
+Text tabs in the public masthead. Warm muted text brightens on hover; selection gains (700) weight and a (2px) amber underline. The thread settles over (220ms); keyboard focus suppresses this animation. Language and motion controls remain keyboard accessible. The pause control exposes its pressed state and translated action label.
 
 ### Cards / Containers
 
@@ -237,6 +256,14 @@ Use a semantic table with scoped headers, roomy row dividers, end-aligned scores
 ### Quiz feedback and results
 
 Answer options are large label targets with native radio inputs, letter markers and circular checks. Red surfaces carry light reading; selection changes the surface to warm burnt red, brightens the border and fills markers with amber. Desktop targets are at least (82px), mobile (80px). Fine-pointer hover shifts an option by (2px) toward reading flow; focus cancels movement. Progress uses subdued red, completed ochre and current amber. Questions enter over (250ms). Results use a red textile ground, warm score, amber medal and short settling motion; confetti is hidden. Private practice uses a quiet ruled section and shared review components.
+
+### Qur’an reader
+
+The reading tab and Homework disclosure reuse one shared reader. Keep the familiar cream number fields, native surah selector and amber reading action above a quiet clay reading panel. Label every control; fields use (48px) minimum heights. Surah and range labels follow the selected interface language while the Uthmani text remains Arabic with explicit `lang` and RTL direction.
+
+Use dedicated Amiri Quran for the surah heading and verses. Preserve the returned text, diacritics and order exactly; sacred text is reading content, never ornament. A centered heading and fine warm divider introduce the range. Verse rows have (22px) vertical padding, reducing to (18px) on mobile, and a separate ochre-brown index so numbering does not disturb the text. Keep the index legible on clay. The attributed source link stays below the reader in quiet supporting text.
+
+Loading uses a status message; failed or incomplete loading uses readable feedback and an explicit retry action. Range validation stays visible and prevents invalid reading. Successful content is cached, and stale or slow requests are canceled. In Homework, adding a selected range appends its explicit reference to the existing draft; the normal Save action remains necessary. Saved explicit references can open the reading range directly, including after refresh. Do not infer a range from legacy free-form assignments or present an unsaved draft as shared homework.
 
 ### Tent door
 

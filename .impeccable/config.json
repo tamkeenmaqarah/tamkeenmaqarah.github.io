@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "border-accent-on-rounded",
+        "value": "*",
+        "files": [
+          "styles.css"
+        ],
+        "createdAt": "2026-10-26T05:13:14.910Z",
+        "reason": "Agent review: pre-existing leaderboard podium uses a transparent border with the requested Sadu woven image trim, not a colored accent border. Preserve this intentional Najdi detail outside the Homework repair."
+      }
+    ]
+  }
+}

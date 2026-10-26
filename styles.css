@@ -6646,3 +6646,154 @@ button.study-ask {
     font-size: 13px;
   }
 }
+
+@font-face {
+  font-family: "Amiri Quran";
+  src: url("./assets/fonts/AmiriQuran-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+.quran-page > h1 {
+  margin: 0 0 28px;
+}
+.quran-controls {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) 110px 110px auto;
+  align-items: end;
+  gap: 16px;
+  margin-bottom: 26px;
+}
+.quran-controls label {
+  display: grid;
+  gap: 8px;
+  font-size: 14px;
+  color: #f0d7b1;
+}
+.quran-controls input,
+.quran-controls select {
+  width: 100%;
+  min-height: 48px;
+  font-size: 16px;
+}
+.quran-controls button {
+  min-height: 48px;
+}
+.quran-error {
+  margin-block: 22px;
+  color: #ffdda0;
+}
+.quran-error p {
+  margin-bottom: 12px;
+}
+.quran-reading {
+  background: #ead3ab;
+  color: #3a2920;
+  padding: 30px 40px;
+}
+.quran-reading-heading {
+  text-align: center;
+  padding-bottom: 22px;
+  border-bottom: 1px solid #ad8a61;
+}
+.quran-reading-heading h2 {
+  font:
+    400 35px/1.8 "Amiri Quran",
+    Amiri,
+    serif;
+  margin: 0 0 8px;
+}
+.quran-reading-heading p {
+  margin: 0;
+  color: #6a4b31;
+  font-size: 14px;
+}
+.quran-verses {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 880px;
+}
+.quran-verses li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 32px;
+  align-items: baseline;
+  gap: 22px;
+  padding-block: 22px;
+  border-bottom: 1px solid #c3a278;
+}
+.quran-verses li > p {
+  font:
+    400 32px/2.6 "Amiri Quran",
+    Amiri,
+    serif;
+  letter-spacing: 0;
+  margin: 0;
+}
+.quran-ayah-number {
+  font:
+    400 16px/2.6 "IBM Plex Sans Arabic",
+    sans-serif;
+  color: #75502e;
+  text-align: center;
+}
+.quran-add {
+  margin-top: 26px;
+}
+.quran-source {
+  color: #d0ad8c;
+  font-size: 12px;
+  margin-top: 18px;
+}
+.quran-source a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+.quran-homework-picker {
+  margin: 20px 0 26px;
+}
+.quran-homework-picker > button {
+  margin-bottom: 18px;
+}
+.quran-homework-picker .quran-reader {
+  border-block: 1px solid #7c4b3e;
+  padding-block: 24px;
+}
+.homework-read {
+  margin-top: 10px;
+  gap: 10px;
+}
+@media (max-width: 750px) {
+  .quran-controls {
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .quran-controls > label:first-child,
+  .quran-controls > button {
+    grid-column: 1 / -1;
+  }
+  .quran-reading {
+    padding: 24px 18px;
+  }
+  .quran-reading-heading h2 {
+    font-size: 30px;
+  }
+  .quran-verses li {
+    gap: 12px;
+    grid-template-columns: minmax(0, 1fr) 22px;
+    padding-block: 18px;
+  }
+  .quran-verses li > p {
+    font-size: 28px;
+    line-height: 2.6;
+  }
+  .quran-ayah-number {
+    font-size: 14px;
+  }
+}
+.quran-controls select {
+  background: #f5e5c7;
+  color: #3a2920;
+  border: 1px solid #bfa272;
+  border-radius: 5px;
+  padding: 10px 12px;
+}

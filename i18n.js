@@ -1,4 +1,27 @@
 const arabic = {
+  "Qur’an": "القرآن الكريم",
+  "Qur’an reader": "قراءة القرآن الكريم",
+  "Choose ayahs from the Qur’an": "اختيار آيات من القرآن",
+  Surah: "السورة",
+  "From ayah": "من الآية",
+  "To ayah": "إلى الآية",
+  "Read ayahs": "قراءة الآيات",
+  "Add to homework": "إضافة إلى الواجب",
+  "Loading Qur’an…": "جارٍ تحميل القرآن…",
+  "Ayahs {from}–{to}": "من الآية {from} إلى الآية {to}",
+  "Ayah {number}": "الآية {number}",
+  "Qur’an text: Al Quran Cloud · Uthmani edition":
+    "نص القرآن: Al Quran Cloud · الرسم العثماني",
+  "Qur’an is unavailable right now. Please try again.":
+    "تعذّر تحميل القرآن الآن. حاول مرة أخرى.",
+  "The surah list could not be loaded. Please try again.":
+    "تعذّر تحميل قائمة السور. حاول مرة أخرى.",
+  "The ayahs could not be loaded completely. Please try again.":
+    "تعذّر تحميل الآيات كاملةً. حاول مرة أخرى.",
+  "Choose a surah.": "اختر سورة.",
+  "Choose a valid ayah range.":
+    "اختر نطاق آيات صحيحًا: من آية البداية إلى آية النهاية.",
+
   "Choose a date": "اختر تاريخًا",
   "Dates are grouped by Sunday. A different day selects the following Sunday.":
     "الواجب مرتبط بيوم الأحد. إذا اخترت يومًا آخر، فسيُحدَّد الأحد الذي يليه.",

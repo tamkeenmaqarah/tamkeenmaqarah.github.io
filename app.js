@@ -33,7 +33,7 @@ import {
   getLanguage,
   setLanguage,
   subscribeLanguage,
-} from "./i18n.js?v=13";
+} from "./i18n.js?v=14";
 import {
   Ze as Xe,
   $e as Qe,
@@ -49,7 +49,7 @@ import {
   HangingLanterns,
   Cushion,
   GatheringFooter,
-} from "./components.js?v=13";
+} from "./components.js?v=14";
 import {
   nextHomeworkSunday,
   homeworkSunday,
@@ -59,6 +59,8 @@ import {
   storeHomeworkDraft,
   clearHomeworkDraft,
 } from "./homework.js?v=1";
+import {QuranReader} from "./quran-reader.js?v=1";
+import {quranReferences} from "./quran.js?v=1";
 const el = y.createElement;
 const Ye = "https://tamkeen-maqraah-teacher.ibrahiimmuhamud.workers.dev";
 var et = {
@@ -862,7 +864,9 @@ function Tt() {
     [homeworkLive, setHomeworkLive] = (0, y.useState)(!1),
     [homeworkBusy, setHomeworkBusy] = (0, y.useState)(!1),
     [homeworkReady, setHomeworkReady] = (0, y.useState)(!1),
-    [homeworkPending, setHomeworkPending] = (0, y.useState)(!1);
+    [homeworkPending, setHomeworkPending] = (0, y.useState)(!1),
+    [homeworkQuranOpen, setHomeworkQuranOpen] = y.useState(false),
+    [quranSelection, setQuranSelection] = y.useState(null);
   const homeworkContext = y.useRef();
   homeworkContext.current = `${n}/${homeworkWeek}/${v}`;
   (0, y.useEffect)(() => {
@@ -966,12 +970,16 @@ function Tt() {
           : l === `home` ||
               l === `quizzes` ||
               l === `moments` ||
-              l === `homework`
+              l === `homework` || l === `quran`
             ? r(l)
             : l === `grades` || l === `ai`
               ? r(c.teacher ? l : `login`)
               : (l === `teacher` || l === `login`) &&
                 r(c.teacher ? `quizzes` : `login`);
+        if (l === 'quran') {
+          const reference = quranReferences(`(${e.get('surah')}:${e.get('from') || 1}-${e.get('to') || 1})`)[0];
+          if (reference) setQuranSelection(reference);
+        }
         let u = e.get(`quizId`);
         u && Ie(u);
         let d = e.get(`quiz`);
@@ -1931,6 +1939,20 @@ function Tt() {
       setHomeworkBusy(false);
     }
   }
+  function openQuran(reference) {
+    if (!cn()) return;
+    setQuranSelection(reference);
+    ln('quran');
+    history.replaceState(null, '', `/?view=quran&surah=${reference.surah}&from=${reference.from}&to=${reference.to}`);
+  }
+  function addQuranHomework(reference) {
+    if (!homeworkReady || homeworkBusy) return;
+    const next = [homeworkDraft.trim(), reference].filter(Boolean).join('\n');
+    if (next.length > 500) { a('That homework is too long.'); return; }
+    setHomeworkDraft(next);
+    setHomeworkQuranOpen(false);
+    document.getElementById('homework-body')?.focus();
+  }
   let zn = m
       ? S?.score === S?.max
         ? translate(`Those answers are clear now`)
@@ -1953,6 +1975,7 @@ function Tt() {
       [`home`, translate(`Home`), ye],
       [`quizzes`, translate(`Quizzes`), ie],
       [`homework`, translate(`Homework`), HomeworkIcon],
+      [`quran`, translate("Qur’an"), ie],
       ...(e?.teacher ? [[`grades`, translate(`Grades`), E]] : []),
       [`leaderboard`, translate(`Leaderboard`), ze],
       [`moments`, translate(`Funny answers`), ge],
@@ -2601,6 +2624,8 @@ function Tt() {
                               }),
                       ],
                     })
+                  : e && n === 'quran' && !de
+                    ? el('section',{className:'quran-page'},el('h1',null,translate('Qur’an')),el(QuranReader,{initialSelection:quranSelection}))
                   : e && n === `homework` && !de
                     ? (0, N.jsxs)(`section`, {
                         className: `homework`,
@@ -2676,6 +2701,9 @@ function Tt() {
                               { role: "status", className: "help" },
                               translate("Loading homework…"),
                             ),
+                          el('div',{className:'quran-homework-picker'},
+                            el('button',{className:'secondary',type:'button',disabled:!homeworkReady || homeworkBusy,'aria-expanded':homeworkQuranOpen,'aria-controls':'homework-quran-picker',onClick:()=>setHomeworkQuranOpen(value=>!value)},translate('Choose ayahs from the Qur’an')),
+                            homeworkQuranOpen && el('div',{id:'homework-quran-picker'},el(QuranReader,{onAdd:addQuranHomework}))),
                           v.trim()
                             ? (0, N.jsxs)(`form`, {
                                 className: `homework-editor`,
@@ -2779,10 +2807,9 @@ function Tt() {
                                           translate("Saved on this phone."),
                                         ),
                                     ),
-                                    (0, N.jsx)(`p`, {
-                                      dir: `auto`,
-                                      children: item.body,
-                                    }),
+                                    el('div',{className:'homework-entry-body'},
+                                      el('p',{dir:'auto'},item.body),
+                                      ...quranReferences(item.body).map(ref=>el('button',{key:`${ref.surah}:${ref.from}-${ref.to}`,className:'text-button homework-read',type:'button',onClick:()=>openQuran(ref)},translate('Read ayahs'),el('bdi',{dir:'ltr'},`${ref.surah}:${ref.from}–${ref.to}`)))),
                                   ],
                                 },
                                 homeworkKey(item.name),
