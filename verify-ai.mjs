@@ -44,10 +44,9 @@ vm.runInNewContext(compile('app/ai.ts'), {
 const clone = value => JSON.parse(JSON.stringify(value));
 const draft = () => ({title: 'Lesson', description: '', questions: clone(questions)});
 const request = {title: 'Teacher title', source, count: 5, session: 'tuesday'};
-const checks = () => ({checks: questions.map((_, index) => ({index, valid: true, reason: 'Supported'}))});
-queue = [draft(), checks()];
+queue = [draft()];
 const result = await ai.draftQuiz(request);
-assert.equal(calls.length, 2);
+assert.equal(calls.length, 1);
 assert.equal(result.reviewRequired, true);
 assert.equal(result.draft.title, request.title);
 assert.match(result.draft.description, /Optional Tuesday/);
@@ -59,8 +58,10 @@ assert.equal(calls[0].body.generationConfig.responseFormat.text.mimeType, 'APPLI
 assert.ok(calls[0].url.endsWith('/gemini-3.5-flash-lite:generateContent'));
 assert.ok(!('temperature' in calls[0].body.generationConfig));
 
-const unsupported = draft(); unsupported.questions[0].evidence = 'An invented excerpt not present in the supplied notes.';
-assert.throws(() => ai.validateDraft(unsupported, source, 5), /traced to your notes/);
+const unsupported = draft(); unsupported.questions.forEach(q => { q.evidence = 'An invented excerpt not present in the supplied notes.'; });
+const rough = ai.validateDraft(unsupported, source, 5);
+assert.equal(rough.questions.length, 5);
+assert.equal(rough.questions[0].evidence, 'An invented excerpt not present in the supplied notes.');
 const libyaNotes = [
   'The color green is worn in Paradise (*Jannah*) according to Surah Al-Kahf and Surah Al-Insan.',
   'Over **1,200 prisoners** were executed within a few hours.',
@@ -82,16 +83,17 @@ assert.match(libyaDraft.questions[1].evidence, /executed/);
 assert.doesNotMatch(libyaDraft.questions[1].evidence, /killed/);
 const rewritten = draft();
 rewritten.questions[0].evidence = 'Thousands of inmates died after the negotiations collapsed at the prison in Tripoli.';
-assert.throws(() => ai.validateDraft(rewritten, libyaNotes, 5), /traced to your notes/);
+const keptRough = ai.validateDraft(rewritten, source, 5);
+assert.equal(keptRough.questions.length, 5);
+assert.match(keptRough.questions[0].evidence, /Tripoli/);
 const duplicate = draft(); duplicate.questions[1].prompt = duplicate.questions[0].prompt;
 assert.throws(() => ai.validateDraft(duplicate, source, 5), /repeated a question/);
 const repeatedOption = draft(); repeatedOption.questions[0].options[1] = repeatedOption.questions[0].options[0];
 assert.throws(() => ai.validateDraft(repeatedOption, source, 5), /duplicate answer choices/);
-queue = [draft(), {checks: [checks().checks[0], ...checks().checks.slice(0,4)]}];
-await assert.rejects(ai.draftQuiz(request), /quality check/);
-const rejected = checks(); rejected.checks[2].valid = false;
-queue = [draft(), rejected];
-await assert.rejects(ai.draftQuiz(request), /quality check/);
+calls = []; queue = [draft()];
+const imperfect = await ai.draftQuiz(request);
+assert.equal(calls.length, 1);
+assert.equal(imperfect.draft.questions.length, 5);
 
 calls = []; queue = [{candidateId: 'c0', caption: 'That alternative took the scenic route through the lesson.'}];
 const moment = await ai.highlight({quizId: 'quiz'});
@@ -124,4 +126,4 @@ assert.match(checked.note, /other three/);
 quota = false;
 await assert.rejects(ai.explainMiss({prompt: questions[0].prompt, options: questions[0].options, correct: 0, chosen: questions[0].options[1], explanation: questions[0].explanation}), /limit for today/);
 await assert.rejects(ai.draftQuiz(request), /daily AI limit/);
-console.log('PASS: structured requests, source evidence, independent quality rejection, answer shuffling, real-answer highlights, name minimization, grounded study lines, question checks, and daily quota. Provider calls were mocked; live Gemini quality is untested.');
+console.log('PASS: structured requests, source evidence, raw-transcript drafts, answer shuffling, real-answer highlights, name minimization, grounded study lines, question checks, and daily quota. Provider calls were mocked; live Gemini quality is untested.');
