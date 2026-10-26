@@ -3,7 +3,7 @@ export type Revisit={quizId:string;title:string;name:string;score:number;max:num
 export type SavedResult={quizId:string;attemptId:string;name:string;title:string;score:number;max:number;review:{prompt:string;correct:string;explanation:string;right:boolean}[]};
 export type Draft={quizId:string;attemptId:string;name:string;answers:number[];step:number};
 
-const KEYS={revisit:'tamkeen-revisit',draft:'tamkeen-draft',done:'tamkeen-done',name:'tamkeen-name'};
+const KEYS={revisit:'tamkeen-revisit',draft:'tamkeen-draft',done:'tamkeen-done',name:'tamkeen-name',token:'tamkeen-token'};
 
 export function spellName(typed:string,known:string[]){
  const clean=typed.trim().replace(/\s+/g,' ');

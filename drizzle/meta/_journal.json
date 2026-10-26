@@ -22,6 +22,13 @@
       "when": 1792954713188,
       "tag": "0002_charming_rhodey",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1792974834456,
+      "tag": "0003_student_accounts",
+      "breakpoints": true
     }
   ]
 }

@@ -1,0 +1,5 @@
+import {NextResponse} from 'next/server';
+import {accountsReady,openSession} from '../../../accounts';
+import {allowedPublicOrigin,publicCors,publicPreflight} from '../../../public-cors';
+export function OPTIONS(req:Request){return publicPreflight(req,'POST')}
+export async function POST(req:Request){const respond=(body:any,init?:ResponseInit)=>publicCors(req,NextResponse.json(body,init),'POST');if(!allowedPublicOrigin(req))return respond({error:'Invalid origin'},{status:403});try{if(!await accountsReady())return respond({error:'Student codes are not available on this server yet.'},{status:404});const {name,code}=await req.json() as any;if(typeof name!=='string'||typeof code!=='string'||!name.trim()||!code.trim())return respond({error:'Enter your name and the code from your teacher.'},{status:400});const session=await openSession(name,code);if(!session)return respond({error:'That name and code do not match.'},{status:401});return respond(session)}catch{return respond({error:'Could not sign in. Please try again.'},{status:500})}}

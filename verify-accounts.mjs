@@ -1,0 +1,35 @@
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import fs from 'node:fs';
+import ts from 'typescript';
+import vm from 'node:vm';
+import {DatabaseSync} from 'node:sqlite';
+const require=createRequire(import.meta.url);
+function load(file,mocks={}){
+ const exports={};
+ vm.runInNewContext(ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText,{exports,crypto,TextEncoder,Uint8Array,Request,Response,URL,require:name=>mocks[name]??require(name)});
+ return exports;
+}
+const accounts=load('app/accounts.ts',{'./server':{db(){throw Error('no database in this check')}},'./revisit':load('app/revisit.ts')});
+const code=accounts.makeCode();
+assert.equal(code.length,8);
+assert.match(code,/^[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]{8}$/);
+const hash=await accounts.digest('Yaseen');
+assert.equal(hash.length,64);
+assert.equal(hash,await accounts.digest('Yaseen'));
+assert.equal(accounts.sameHash(hash,hash),true);
+assert.equal(accounts.sameHash(hash,hash.slice(0,-1)+'0'),false);
+assert.equal(accounts.reviewFrom(''),null);
+assert.equal(accounts.validReview({quizId:'q',title:'Siwak',score:0,max:1,misses:[{prompt:'Which tree?',options:['a','b','c','d'],correct:1,explanation:'al-Arak'}]}).misses.length,1);
+assert.equal(accounts.validReview({quizId:'q',title:'Siwak',score:0,max:1,misses:[{prompt:'x',options:['a'],correct:1,explanation:''}]}),null);
+const db=new DatabaseSync(':memory:');
+for(const file of ['drizzle/0000_youthful_dark_phoenix.sql','drizzle/0001_broken_human_robot.sql','drizzle/0002_charming_rhodey.sql','drizzle/0003_student_accounts.sql'])db.exec(fs.readFileSync(file,'utf8').replaceAll('--> statement-breakpoint',';'));
+db.prepare('INSERT INTO quizzes (id,title,description,questions,published,created_at) VALUES (?,?,?,?,?,?)').run('q1','Etiquette','','[]',1,'2026-10-25T00:00:00.000Z');
+db.prepare('INSERT INTO students (id,name,code_hash,created_at) VALUES (?,?,?,?)').run('s1','Yaseen',hash,'2026-10-25T00:00:00.000Z');
+db.prepare('INSERT INTO submissions (id,quiz_id,name,answers,score,max,created_at,student_id) VALUES (?,?,?,?,?,?,?,?)').run('attempt-1','q1','Yaseen','[]',0,1,'2026-10-25T00:00:00.000Z',null);
+assert.equal(db.prepare('SELECT student_id FROM submissions WHERE id=?').get('attempt-1').student_id,null);
+const cors=load('app/public-cors.ts',{'./server':{sameOrigin:()=>false}});
+const preflight=cors.publicPreflight(new Request('https://backend.example/api/account/login',{headers:{Origin:'https://tamkeenmaqarah.github.io','Access-Control-Request-Method':'POST'}}),'POST');
+assert.equal(preflight.headers.get('Access-Control-Allow-Headers'),'Content-Type, Authorization');
+assert.equal(preflight.headers.get('Access-Control-Allow-Credentials'),null);
+console.log('PASS: student codes stay optional, hashed, and addable without rewriting old quizzes.');

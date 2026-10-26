@@ -31,6 +31,12 @@ small{font-size:13px}
 .skip-link:focus-visible{top:10px}
 .app-header{background-color:#1a1214;background-image:var(--frieze),var(--stripe);background-repeat:repeat-x,no-repeat;background-size:16px 16px,100% 100%;background-position:left bottom,center top;border-bottom:0;position:sticky;top:0;z-index:8;color:#fffdf8}
 .header-inner{max-width:1120px;margin:auto;height:77px;display:flex;align-items:center;justify-content:space-between;gap:25px;padding:0 32px}
+.header-actions{display:flex;align-items:center;gap:18px}
+.student-codes{margin-bottom:28px}
+.code-slip{font-family:ui-monospace,monospace;letter-spacing:.14em}
+.code-roster{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px}
+.code-roster li{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+@media(max-width:640px){.header-inner{height:auto;min-height:73px;padding-top:10px;padding-bottom:10px;flex-wrap:wrap}.header-actions{width:100%;justify-content:flex-end;gap:14px}.teacher-account,.teacher-signin{white-space:nowrap}}
 .brand{display:flex;align-items:center;gap:11px;color:#fff;text-decoration:none;line-height:1.2}
 .brand-mark{background:#f4ead8;color:#1a1214;display:grid;place-items:center;width:46px;height:46px;border-radius:2px}
 .brand b{font-family:'Reem Kufi',Figtree,sans-serif;font-size:28px;font-weight:700;letter-spacing:0;line-height:1}
