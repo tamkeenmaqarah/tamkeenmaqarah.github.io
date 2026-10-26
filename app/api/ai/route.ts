@@ -1,6 +1,6 @@
 import {NextResponse} from 'next/server';
 import {isTeacher,sameOrigin} from '../../server';
-import {AIError,configured,draftQuiz,highlight} from '../../ai';
+import {AIError,checkQuestion,configured,draftQuiz,highlight} from '../../ai';
 export async function POST(req:Request){
  if(!sameOrigin(req)||!await isTeacher())return NextResponse.json({error:'Teacher access required'},{status:403});
  try{
@@ -9,6 +9,7 @@ export async function POST(req:Request){
   const body:any=await req.json();
   if(body.kind==='quiz')return NextResponse.json(await draftQuiz(body));
   if(body.kind==='highlight')return NextResponse.json(await highlight(body));
-  throw new AIError('Choose quiz drafting or a funny-answer suggestion.');
+  if(body.kind==='check')return NextResponse.json(await checkQuestion(body.question));
+  throw new AIError('Choose quiz drafting, a question check, or a funny-answer suggestion.');
  }catch(e){if(e instanceof AIError)return NextResponse.json({error:e.message},{status:e.status});return NextResponse.json({error:'AI generation failed. Your input is still here; please try again.'},{status:500})}
 }
