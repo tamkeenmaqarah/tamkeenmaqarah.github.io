@@ -173,6 +173,75 @@ function _t(e) {
 function vt(e) {
   (e?.removeItem(P.remembered), ot(e, P.token));
 }
+const GOOGLE_CLIENT_ID = `883985581593-3sa5cjscjk0mhfdeiho8pi857qqqr2v3.apps.googleusercontent.com`;
+function GoogleSignIn({ onCredential: onCredential }) {
+  let host = (0, y.useRef)(null),
+    onRef = (0, y.useRef)(onCredential);
+  onRef.current = onCredential;
+  return (
+    (0, y.useEffect)(() => {
+      let node = host.current;
+      if (!node) return;
+      let cancelled = !1,
+        last = 0,
+        widthFor = () => {
+          let sheet = node.closest(`.door-sheet`),
+            styles = sheet ? getComputedStyle(sheet) : null,
+            pad = styles
+              ? parseFloat(styles.paddingLeft) + parseFloat(styles.paddingRight)
+              : 0,
+            available = (sheet?.clientWidth || node.clientWidth) - pad;
+          return Math.max(200, Math.min(384, Math.floor(available) || 280));
+        },
+        draw = () => {
+          let gis = window.google?.accounts?.id;
+          if (cancelled || !node || !gis) return;
+          let width = widthFor();
+          if (width === last && node.querySelector(`[role=button]`)) return;
+          ((last = width), node.replaceChildren());
+          gis.initialize({
+            client_id: GOOGLE_CLIENT_ID,
+            auto_select: !1,
+            callback: (resp) => {
+              resp?.credential && onRef.current(resp.credential);
+            },
+          });
+          gis.renderButton(node, {
+            type: `standard`,
+            theme: `outline`,
+            size: `large`,
+            text: `continue_with`,
+            shape: `rectangular`,
+            width,
+            logo_alignment: `left`,
+          });
+        },
+        sheet = node.closest(`.door-sheet`),
+        observer = new ResizeObserver(() => draw());
+      sheet && observer.observe(sheet);
+      if (window.google?.accounts?.id) draw();
+      else {
+        let script = document.querySelector(`script[data-tamkeen-gsi]`);
+        (script ||
+          ((script = document.createElement(`script`)),
+          (script.src = `https://accounts.google.com/gsi/client`),
+          (script.async = !0),
+          (script.dataset.tamkeenGsi = `1`),
+          document.head.appendChild(script)),
+          script.addEventListener(`load`, draw));
+        return () => {
+          ((cancelled = !0),
+            observer.disconnect(),
+            script.removeEventListener(`load`, draw));
+        };
+      }
+      return () => {
+        ((cancelled = !0), observer.disconnect());
+      };
+    }, []),
+    (0, N.jsx)(`div`, { className: `google-button`, ref: host })
+  );
+}
 function yt({
   savedName: e,
   busy: t,
@@ -182,6 +251,10 @@ function yt({
   onReset: a,
   onTeacher: o,
   onSomeoneElse: s,
+  onGoogle: onGoogle,
+  onGoogleName: onGoogleName,
+  onCancelGoogle: onCancelGoogle,
+  askTentName: askTentName,
 }) {
   let [c, l] = (0, y.useState)(e ? `back` : `create`),
     [u, d] = (0, y.useState)(e),
@@ -195,6 +268,15 @@ function yt({
   }
   async function S(t) {
     (t.preventDefault(), b(``));
+    if (askTentName) {
+      let e = ut(u);
+      if (e) {
+        b(e);
+        return;
+      }
+      await onGoogleName(lt(u));
+      return;
+    }
     let n = c === `back` || (c === `forgot` && e) ? e : u;
     if (c !== `forgot`) {
       let e = ut(n) || dt(f);
@@ -244,8 +326,11 @@ function yt({
         el(Cushion, { kind: "armrest", className: "door-cushion" }),
         (0, N.jsx)(`h1`, { lang: `ar`, dir: `rtl`, children: `أصحاب الخيمة` }),
         (0, N.jsx)(`p`, {
-          children:
-            c === `forgot`
+          children: askTentName
+            ? translate(
+                `Google confirmed you. What name does the tent use?`,
+              )
+            : c === `forgot`
               ? translate(
                   `Enter the recovery word from when you set your name, then choose a new password.`,
                 )
@@ -257,10 +342,19 @@ function yt({
                     `Set your name once. This phone remembers you, and next time you come straight in.`,
                   ),
         }),
+        !askTentName &&
+          c !== `forgot` &&
+          (0, N.jsx)(GoogleSignIn, { onCredential: onGoogle }),
+        !askTentName &&
+          c !== `forgot` &&
+          (0, N.jsx)(`p`, { className: `door-or`, children: translate(`or`) }),
         (0, N.jsxs)(`form`, {
           onSubmit: S,
           children: [
-            (c === `create` || c === `enter` || (c === `forgot` && !e)) &&
+            (askTentName ||
+              c === `create` ||
+              c === `enter` ||
+              (c === `forgot` && !e)) &&
               (0, N.jsxs)(`label`, {
                 htmlFor: `door-name`,
                 children: [
@@ -276,9 +370,16 @@ function yt({
                   }),
                 ],
               }),
-            (c === `back` || (c === `forgot` && e)) &&
+            !askTentName &&
+              (c === `back` || (c === `forgot` && e)) &&
               (0, N.jsx)(`p`, { className: `door-name`, children: e }),
-            c === `forgot`
+            askTentName
+              ? (0, N.jsx)(`small`, {
+                  children: translate(
+                    `This is the name on the leaderboard, not the Google email.`,
+                  ),
+                })
+              : c === `forgot`
               ? (0, N.jsxs)(`label`, {
                   htmlFor: `door-recovery`,
                   children: [
@@ -322,7 +423,7 @@ function yt({
                     }),
                   ],
                 }),
-            c === `create` &&
+            !askTentName && c === `create` &&
               (0, N.jsxs)(`label`, {
                 htmlFor: `door-confirm`,
                 children: [
@@ -338,7 +439,7 @@ function yt({
                   }),
                 ],
               }),
-            c === `create` &&
+            !askTentName && c === `create` &&
               (0, N.jsxs)(`label`, {
                 htmlFor: `door-recovery`,
                 children: [
@@ -419,7 +520,14 @@ function yt({
         (0, N.jsxs)(`div`, {
           className: `door-switch`,
           children: [
-            c === `forgot`
+            askTentName
+              ? (0, N.jsx)(`button`, {
+                  className: `text-button`,
+                  type: `button`,
+                  onClick: onCancelGoogle,
+                  children: translate(`Back`),
+                })
+              : c === `forgot`
               ? (0, N.jsx)(`button`, {
                   className: `text-button`,
                   type: `button`,
@@ -654,7 +762,8 @@ function Tt() {
     [Yt, Xt] = (0, y.useState)(10),
     [Zt, Qt] = (0, y.useState)(``),
     [$t, en] = (0, y.useState)(!1),
-    [tn, nn] = (0, y.useState)(!1);
+    [tn, nn] = (0, y.useState)(!1),
+    [googleTicket, setGoogleTicket] = (0, y.useState)(``);
   async function I(e, t = `GET`, n) {
     let r = T(),
       i = r?.getItem(P.token) || ``,
@@ -1056,8 +1165,13 @@ function Tt() {
           s(translate(`Quiz deleted.`)));
       });
   }
-  function xn(e, t, n, r, i) {
-    (ht(e, { name: t, passwordHash: n, ...(r ? { recoveryHash: r } : {}) }),
+  function xn(e, t, n, r, i, google) {
+    (ht(e, {
+      name: t,
+      passwordHash: n,
+      ...(r ? { recoveryHash: r } : {}),
+      ...(google ? { google: !0 } : {}),
+    }),
       i ? e?.setItem(P.token, i) : e?.removeItem(P.token),
       e?.setItem(P.name, t),
       _t(e),
@@ -1154,6 +1268,60 @@ function Tt() {
       }
     } catch (e) {
       kt(e.message || translate(`Could not save this name. Please try again.`));
+    } finally {
+      l(!1);
+    }
+  }
+  async function finishGoogle(credential, tentName) {
+    (l(!0), kt(``));
+    try {
+      At || T()?.removeItem(P.token);
+      let names = [
+          ...new Set(
+            (e?.community.boards || []).flatMap((board) =>
+              board.rows.map((row) => row.name),
+            ),
+          ),
+        ],
+        clean = tentName ? tt(lt(tentName), names) : ``;
+      if (tentName) {
+        let problem = ut(clean);
+        if (problem) throw Error(problem);
+      }
+      let server = await I(`/api/account/google`, `POST`, {
+        credential,
+        ...(clean ? { name: clean } : {}),
+      });
+      if (server.needsName) {
+        setGoogleTicket(credential);
+        return;
+      }
+      let known = server.student.name,
+        store = T(),
+        existing = mt(store),
+        same = !!(
+          existing &&
+          existing.name.toLocaleLowerCase(`en`) === known.toLocaleLowerCase(`en`)
+        );
+      (xn(
+        store,
+        known,
+        server.hasPassword && same ? existing?.passwordHash || `` : ``,
+        same ? existing?.recoveryHash : void 0,
+        server.token,
+        !0,
+      ),
+        setGoogleTicket(``));
+    } catch (err) {
+      let message = err?.message || ``;
+      kt(
+        /not available|not connected|not found|failed to fetch|load failed|network/i.test(
+          message,
+        )
+          ? translate(`Google sign-in is not available on this server yet.`)
+          : message ||
+              translate(`Could not sign in with Google. Please try again.`),
+      );
     } finally {
       l(!1);
     }
@@ -1471,8 +1639,14 @@ function Tt() {
             (Tt(`in`), L(`login`));
           },
           onSomeoneElse: () => {
-            (ot(T(), P.door), Dt(``), b(``), kt(``));
+            (ot(T(), P.door), Dt(``), b(``), kt(``), setGoogleTicket(``));
           },
+          onGoogle: (credential) => finishGoogle(credential),
+          onGoogleName: (name) => finishGoogle(googleTicket, name),
+          onCancelGoogle: () => {
+            (setGoogleTicket(``), kt(``));
+          },
+          askTentName: !!googleTicket,
         })
       : (0, N.jsxs)(`div`, {
           className: `site`,

@@ -31,6 +31,15 @@ const arabic = {
   "That password does not match.": "كلمة المرور غير مطابقة.",
   "Password saved. Use it the next time you sign in.":
     "حُفظت كلمة المرور. استخدمها عند تسجيل الدخول في المرة القادمة.",
+  or: "أو",
+  "Google confirmed you. What name does the tent use?":
+    "أكّد غوغل هويتك. ما الاسم الذي تستخدمه الخيمة؟",
+  "This is the name on the leaderboard, not the Google email.":
+    "هذا الاسم الذي يظهر في لوحة الترتيب، وليس بريد غوغل.",
+  "Google sign-in is not available on this server yet.":
+    "تسجيل الدخول عبر غوغل غير متاح على الخادم بعد.",
+  "Could not sign in with Google. Please try again.":
+    "تعذّر الدخول عبر غوغل. حاول مرة أخرى.",
 
   "Use the name the tent knows.": "اكتب الاسم الذي تعرفك به المجموعة.",
   "That name is too long.": "الاسم طويل جدًا.",
