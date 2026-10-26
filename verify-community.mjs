@@ -21,7 +21,8 @@ const moment={id:'m',name:'Hassuna',question:'Which tree?',chosen:'ar-Ruman',cor
 const community={boards:[{id:'paper-original',title:'Original etiquette quiz',kind:'paper',rows}],moments:[moment]};
 const data={teacher:false,aiConfigured:false,quizzes:[],records:[],submissions:[],moments:[],community};
 const home=renderToStaticMarkup(createElement(components.CommunityHome,{data,recent:null,onNavigate:()=>{},onStart:()=>{},onCreate:()=>{}}));
-for(const text of ['Welcome to Tamkeen','Saturday','Tuesday','Between quizzes','Yaseen','Hassuna','See leaderboard'])assert.ok(home.includes(text),text+' remains visible without quizzes');
+for(const text of ['خيمة ياسين','Sunday morning','Between quizzes','Yaseen','Hassuna','See leaderboard'])assert.ok(home.includes(text),text+' remains visible without quizzes');
+assert.ok(!home.includes('What you missed'));
 assert.ok(!home.includes('Create quiz'));
 const leaderboard=renderToStaticMarkup(createElement(components.CommunityLeaderboard,{community,onNavigate:()=>{}}));
 assert.ok(leaderboard.includes('Original etiquette quiz')&&leaderboard.includes('Hamza'));
