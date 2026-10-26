@@ -2,6 +2,9 @@
 name: أصحاب الخيمة / Ashab Al Khaimah
 description: A bilingual Qur’an review circle on deep oxblood textile, lit by interactive orange lanterns.
 colors:
+  rug: '#4c1b28'
+  rug-motif: '#5e2634'
+  upholstery: '#32151b'
   fabric: '#742c34'
   fabric-deep: '#2b1016'
   paper: '#3d151b'
@@ -94,6 +97,9 @@ spacing:
   tablet-gutter: 30px
   desktop-gutter: 40px
   community-gap: 56px
+  upholstery-desktop: 48px
+  upholstery-tablet: 18px
+  upholstery-mobile: 6px
 components:
   button-primary:
     backgroundColor: '{colors.action}'
@@ -133,6 +139,14 @@ components:
     rounded: '{rounded.control}'
     width: 80px
     height: 170px
+  header-lantern:
+    width: 44px
+    height: 88px
+  account-trigger:
+    textColor: '#f0cb98'
+    rounded: '{rounded.control}'
+    padding: 8px 12px
+    size: 44px
   tent-door:
     backgroundColor: '{colors.panel}'
     padding: 28px 46px 40px
@@ -153,16 +167,16 @@ components:
 
 **Creative North Star: "Deep oxblood and orange lamplight"**
 
-Deep oxblood textile, warm ivory ink and interactive orange lamplight place this bilingual learning circle inside its Najdi gathering. Intricacy comes from authored Sadu geometry, woven side rails, stepped plaster, fine brass-colored rules, separate pixel-art Sadu cushions and actual Arabic lettering. Generous space around sections, tables and actions makes the dark setting welcoming and readable.
+Deep oxblood textile, warm ivory ink and interactive orange lamplight place this bilingual learning circle inside its Najdi gathering. Intricacy comes from an authored geometric Najdi rug, upholstered majlis side rails, Sadu geometry, stepped plaster, fine brass-colored rules, separate pixel-art Sadu cushions and actual Arabic lettering. Generous space around sections, tables and actions makes the dark setting welcoming and readable.
 
-Amiri carries the Arabic identity; Lora gives English headings a quiet literary character. Figtree and IBM Plex Sans Arabic keep controls and reading clear. Red grounds carry the public shell and cards; clay is reserved for focused reading forms. Reference photographs never appear in the interface.
+Amiri carries the Arabic identity; Lora gives English headings a quiet literary character. Figtree and IBM Plex Sans Arabic keep controls and reading clear. The muted diamond rug carries the continuous public ground; calm red surfaces carry task content and cards, and clay is reserved for focused reading forms. Reference photographs never appear in the interface.
 
 Individual floor, backrest, square and cylindrical cushion silhouettes add a small crafted accent. Each is hand-drawn crisp-edge SVG; keep them separate and clear of reading and controls. The bilingual remembered-name/password tent door uses the same red, brass, cream fields and lantern vocabulary.
 
 **Key Characteristics:**
 
-- Deep oxblood grounds with warm ivory reading and amber actions.
-- Black, ivory and ochre Sadu, woven side rails, stepped plaster and brass detail.
+- Deep oxblood rug ground with quiet geometric motifs, warm ivory reading and amber actions.
+- Black, ivory and ochre Sadu, upholstered majlis side rails, stepped plaster and brass detail.
 - Equal English and Arabic functionality, with RTL and mixed-script isolation.
 - Stable interactive lantern buttons, orange glow and restrained motion.
 - Roomy sections, generous table rows and a wider desktop shell.
@@ -174,6 +188,7 @@ Deep red is the continuous public ground; warm ivory and amber give it legibilit
 
 ### Primary
 
+- **Rug / rug motif:** the continuous deep red floor and its quiet diamond geometry, authored in `assets/najdi-rug.svg`. Keep contrast low behind content. **Upholstery:** the dark backing for the stitched majlis rail asset, `assets/majlis-edge.svg`.
 - **Oxblood fabric, deep fabric and paper:** layered textile reds for the public shell and deeper recesses. **Header** is the darkest masthead ground; **hero** raises the gathering panel tonally without turning it beige.
 - **Amber action / action hover:** primary quiz and continuation controls, with dark **action ink**. In clay reading forms, primary controls invert to dark fabric with light text.
 - **Sadu red:** the authored textile asset, paired with **stitch black**, **stitch ivory** and **ochre**. Keep its intricate internal palette intact.
@@ -207,15 +222,15 @@ The Arabic identity is generous and calligraphic; English headings are literary 
 
 ## Layout
 
-The centered shell has a maximum width of (1280px) and desktop inline gutters of (40px). The sticky masthead has a (7px) textile edge, (93px) brand row and (54px) text navigation. Main content uses (45px) top and (72px) bottom padding. The footer caps at (1200px). Fixed authored Sadu side rails occupy (16px) at each viewport edge and cannot intercept input.
+The centered shell has a maximum width of (1280px) and desktop inline gutters of (40px). The sticky masthead has a (7px) textile edge, (93px) brand row and (54px) text navigation. Main content uses (45px) top and (72px) bottom padding. The footer caps at (1200px). Fixed authored upholstered majlis side rails occupy (48px) at each viewport edge, narrowing to (18px) at (1100px) and (6px) at (620px), and cannot intercept input. The rug repeats at (384 × 384px) on the body and tent-door ground; keep text and controls on calm surfaces.
 
 Home standings and the approved moment use a (1.28fr / 1fr) grid with a (56px) gap and (42px) space above. Weekly quiz actions have (34px / 35px) vertical space. Table rows and cards breathe: standard table cells use (20px 17px), home cells (17px 14px), and public quiz panels (34px) padding.
 
-At (900px), gutters become (30px), main padding becomes (34px 30px 58px), and the community gap becomes (34px). At (620px), the grid becomes one column with a (38px) gap; main padding is (28px 20px 49px), brand row (100px), and navigation (51px). Side rails narrow to (5px). The Latin masthead label hides while Arabic identity and language controls remain. The weekly action stays beside its copy and permits wrapped labels.
+At (900px), gutters become (30px), main padding becomes (34px 30px 58px), and the community gap becomes (34px). At (620px), the grid becomes one column with a (38px) gap; main padding is (28px 20px 49px), with the compact header and navigation behavior described below. The Latin masthead label hides while Arabic identity and language controls remain. The weekly action stays beside its copy and permits wrapped labels, stacking across the available width at (380px).
 
 The gathering name is centered between two lanterns inside a fine frame, ending in stepped plaster and a broad textile band. Desktop minimum height is (374px), mobile (354px); mobile moves smaller lamps above the name. The woven bottom band is (48px), reducing to (38px). The (380px) breakpoint further reduces the title and action widths.
 
-At (750px), the header brand row grows to (100px) so account and utility controls can wrap without crowding the identity. Hero bottom padding is (106px), increasing to (122px) at that breakpoint to clear the cushions. The shared footer leaves (100px) above its rule for a centered floor cushion. The tent door centers a sheet no wider than (520px) in a full-height red ground; its desktop sheet padding is (28px 46px 40px), reducing to (24px 24px 32px) at (750px).
+At (750px), the header brand row has a (76px) minimum height with (10px 20px 6px) padding and unwrapped utility controls; below (620px), inline padding becomes (16px). The six student destinations use a visible three-column, two-row grid with (44px) minimum targets and an (88px) minimum navigation height. The header lamp has reserved desktop flow space and hides at (750px); hero and door lamps remain. In landscape at heights up to (500px), the header scrolls with the page and scroll padding becomes (24px). Hero bottom padding is (106px), increasing to (122px) at (750px) to clear the cushions. The shared footer leaves (100px) above its rule for a centered floor cushion. The tent door centers a sheet no wider than (520px) in a full-height red ground; its desktop sheet padding is (28px 46px 40px), reducing to (24px 24px 32px) at (750px).
 
 The shared Qur’an reader presents its controls in four columns (surah, from ayah, to ayah, action), with a (16px) gap. At (750px), controls use two columns with the surah selector and action spanning both. The clay reading panel uses (30px 40px) padding, reducing to (24px 18px). Its verse list caps at (880px); each RTL verse row reserves a separate index column (32px desktop, 22px mobile).
 
@@ -223,7 +238,7 @@ Use logical inline properties. The document changes both language and direction.
 
 ## Elevation & Depth
 
-Depth comes from red tonal layers, fine brass-colored borders, dark moment surfaces and bounded orange lantern halos. Public panels use no box shadow. Stepped plaster, stitched edges and woven side rails provide material depth. Lantern hover and bright state add a local SVG drop shadow (0 3px 8px #fc8c3b50); the page itself remains grounded. The tent door alone uses a soft structural shadow (0 22px 60px #1b080c45) below its centered sheet.
+Depth comes from the quiet rug ground, upholstered edge shading, red tonal layers, fine brass-colored borders, dark moment surfaces and bounded orange lantern halos. Public panels use no box shadow. Stepped plaster, stitched upholstery and geometric rug detail provide material depth. Lantern hover and bright state add a local SVG drop shadow (0 3px 8px #fc8c3b50); the page itself remains grounded. The tent door alone uses a soft structural shadow (0 22px 60px #1b080c45) below its centered sheet.
 
 **The Bounded Light Rule.** Keep orange light local to the lanterns and their stable button targets. Pause loops offscreen and when the document is hidden; retain the header pause control and static reduced-motion path.
 
@@ -243,7 +258,15 @@ Cream fields with dark text, a thin warm border and control corners. Fields have
 
 ### Navigation
 
-Text tabs in the public masthead. Warm muted text brightens on hover; selection gains (700) weight and a (2px) amber underline. The thread settles over (220ms); keyboard focus suppresses this animation. Language and motion controls remain keyboard accessible. The pause control exposes its pressed state and translated action label.
+Text tabs in the public masthead. Warm muted text brightens on hover; selection gains (700) weight and a (2px) amber underline. The thread settles over (220ms); keyboard focus suppresses this animation. Language and motion controls remain keyboard accessible with (44px) minimum targets. All six student destinations remain visible in the mobile three-by-two grid, with wrapped labels and a red selected fill. The pause control exposes its pressed state and translated action label.
+
+### Account disclosure
+
+A native `details` / `summary` disclosure groups the remembered name, password change, sign-out and teacher entry. Its labeled summary is at least (44 × 44px), with a warm border, control corners and a red open/hover state. The anchored popover is (250px) wide, bounded by the viewport, with (44px) action rows. At (750px), the summary becomes icon-only while its accessible name retains the account identity. Escape closes it and returns focus to the summary; an outside pointer closes it, and activating an action closes it.
+
+### Halaqa media
+
+A labeled play preview loads the selected lesson only after activation; choosing a lesson also starts its player. Keep an external YouTube link available beside the player. Desktop uses player/list columns (1.65fr / 1fr, list minimum 260px) with a (24px) gap; at (750px), they stack with a (12px) gap. The preview uses the deep fabric surface, amber play geometry and a visible inset focus ring.
 
 ### Cards / Containers
 
@@ -261,13 +284,13 @@ Answer options are large label targets with native radio inputs, letter markers 
 
 The reading tab and Homework disclosure reuse one shared reader. Keep the familiar cream number fields, native surah selector and amber reading action above a quiet clay reading panel. Label every control; fields use (48px) minimum heights. Surah and range labels follow the selected interface language while the Uthmani text remains Arabic with explicit `lang` and RTL direction.
 
-Use dedicated Amiri Quran for the surah heading and verses. Preserve the returned text, diacritics and order exactly; sacred text is reading content, never ornament. A centered heading and fine warm divider introduce the range. Verse rows have (22px) vertical padding, reducing to (18px) on mobile, and a separate ochre-brown index so numbering does not disturb the text. Keep the index legible on clay. The attributed source link stays below the reader in quiet supporting text.
+Use dedicated Amiri Quran for the surah heading and verses. Preserve the returned Al Quran Cloud Uthmani text, diacritics and order exactly; sacred text is reading content, never ornament. Keep the page-level `notranslate` metadata and source-text `translate="no"` protection. A centered heading and fine warm divider introduce the range. Verse rows have (22px) vertical padding, reducing to (18px) on mobile, and a separate ochre-brown index so numbering does not disturb the text. Keep the index legible on clay. The attributed source link stays below the reader in quiet supporting text.
 
 Loading uses a status message; failed or incomplete loading uses readable feedback and an explicit retry action. Range validation stays visible and prevents invalid reading. Successful content is cached, and stale or slow requests are canceled. In Homework, adding a selected range appends its explicit reference to the existing draft; the normal Save action remains necessary. Saved explicit references can open the reading range directly, including after refresh. Do not infer a range from legacy free-form assignments or present an unsaved draft as shared homework.
 
 ### Tent door
 
-The remembered-name/password entry sheet inherits the red panel, woven top edge, cream fields and amber full-width action. Its Amiri name is (55px / 1.6), reducing to (45px) at (750px) and (38px) at (380px). Fields have visible labels, a (48px) minimum height and native name/password autocomplete. Creation, returning-name, alternate-name, recovery-word and password-change modes retain the upstream controller and translated copy. Recovery and password change reuse the same fields, lanterns, cushion and validation treatment. The English password-change heading uses Lora (32px / 1.4), with (34px 0 20px) block margins; Arabic follows the existing Amiri display family. Validation appears as a live alert. The signed-in header exposes password change with a translated label and title; below (750px), its text yields to the inline SVG icon while the remembered name can shrink. Language and pause controls stay above the form; small interactive lanterns frame the sheet, and a separate cylindrical cushion sits below its edge. Do not turn decorative cushion hover into an implied form action.
+The remembered-name/password entry sheet inherits the red panel, woven top edge, cream fields and amber full-width action. Its Amiri name is (55px / 1.6), reducing to (45px) at (750px) and (38px) at (380px). Fields have visible labels, a (48px) minimum height and native name/password autocomplete. Creation, returning-name, alternate-name, recovery-word and password-change modes retain the upstream controller and translated copy. Recovery and password change reuse the same fields, lanterns, cushion and validation treatment. The English password-change heading uses Lora (32px / 1.4), with (34px 0 20px) block margins; Arabic follows the existing Amiri display family. Validation appears as a live alert. The signed-in header exposes password change through the account disclosure with its translated label. Google sign-in shows readable loading or failure status rather than leaving an empty control. Language and pause controls stay above the form; small interactive lanterns frame the sheet, and a separate cylindrical cushion sits below its edge. Do not turn decorative cushion hover into an implied form action.
 
 ### Pixel-art cushions
 
@@ -279,9 +302,9 @@ Ambient breathing moves only the inner artwork by (2px) over a (7s) loop, with s
 
 Lanterns are semantic buttons containing authored inline SVG brass geometry and orange panes. Their button targets remain stationary; only the inner SVG bodies sway. Desktop targets are (80 × 170px), mobile (54 × 115px). Pointer activation, Enter or Space brightens/dims an individual lamp, updates `aria-pressed`, and changes its bilingual action label. Decorative SVG, halo and boost layers remain hidden from assistive technology. A visible (2px) focus ring identifies the stable target.
 
-The two bodies sway between (−1°) and (1°), with offset (8s / 9s) loops. Bounded orange halo and pane brightness run over (4.3s); bright state adds a separate orange boost with a (220ms) opacity transition. Hover adds a restrained local drop shadow. Only transform and opacity animate continuously. A compact lamp can appear in the masthead away from home and is hidden below (900px).
+The two bodies sway between (−1°) and (1°), with offset (8s / 9s) loops. Bounded orange halo and pane brightness run over (4.3s); bright state adds a separate orange boost with a (220ms) opacity transition. Hover adds a restrained local drop shadow. Only transform and opacity animate continuously. A compact lamp can appear in the masthead away from home in reserved flow space (44 × 88px, with 48px flex basis), and is hidden at (750px).
 
-The shared ambient-motion hook pauses lantern and cushion loops offscreen; document visibility also pauses them. The header pause control disables animations and transitions for the visit. Reduced motion keeps lamps static and preserves immediate brighten/dim interaction. Content is present and interactive before animation runs. Reuse the original Sadu and stepped-plaster assets with the authored vertical side-rail asset; reference photography stays out of the UI.
+The shared ambient-motion hook pauses lantern and cushion loops offscreen; document visibility also pauses them. The header pause control disables animations and transitions for the visit. Reduced motion keeps lamps static and preserves immediate brighten/dim interaction. Content is present and interactive before animation runs. Reuse the original Sadu and stepped-plaster assets with the authored geometric rug and upholstered side-rail SVGs; reference photography stays out of the UI.
 
 ## Do's and Don'ts
 
