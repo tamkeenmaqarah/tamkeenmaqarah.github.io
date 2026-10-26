@@ -6586,3 +6586,63 @@ button.study-ask {
     padding-inline: 2px;
   }
 }
+.homework-date {
+  text-align: center;
+}
+.homework-date label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+  color: #f0d7b1;
+  font-size: 13px;
+}
+.homework-date input {
+  width: 174px;
+  min-height: 42px;
+  padding: 7px 10px;
+  font-size: 16px;
+  color-scheme: light;
+}
+.homework-date-help {
+  margin-bottom: 24px;
+}
+.homework-week .secondary {
+  flex-shrink: 0;
+}
+.homework-own-label {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 400;
+  color: #f0d7b1;
+}
+.homework-list li.is-own-homework {
+  background: #54232b;
+  padding-inline: 18px;
+}
+@media (max-width: 750px) {
+  .main-nav.student-nav {
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+  .main-nav.student-nav > button {
+    flex-shrink: 0;
+  }
+}
+@media (max-width: 640px) {
+  .homework-date {
+    grid-area: 1 / 1 / 2 / -1;
+  }
+  .homework-week h2 {
+    font-size: 21px;
+    line-height: 1.5;
+  }
+  .homework-week .secondary {
+    min-width: 0;
+    padding-inline: 8px;
+    font-size: 13px;
+  }
+}

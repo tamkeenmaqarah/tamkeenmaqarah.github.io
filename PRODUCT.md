@@ -30,3 +30,5 @@ Existing public app and live server; four user-supplied tent, Sadu textile and m
 - Preserve the existing data and security model.
 
 Latest refinement: Use separate hand-drawn pixel-art Sadu cushions (floor mattress, long backrest, square pillow and cylindrical armrest) around public screens, not a complete seating scene. Generated illustrations were rejected and are not shipped. Gentle decorative movement follows the shared pause, offscreen/hidden and reduced-motion rules. Preserve upstream 499c84f remembered-name/password tent door and password recovery; localize and style it consistently. User explicitly requested publishing the completed site.
+
+Homework: show the current student’s saved entry alongside the group. Shared save failures retain a device copy for explicit retry; phone-only notes remain visible when shared storage returns. Default to the strictly next Sunday in device-local time, including on Sundays. A native date picker selects that date’s Sunday (or the following Sunday for another weekday), with previous/next week controls and a full localized date. Homework is stored separately by student and Sunday.

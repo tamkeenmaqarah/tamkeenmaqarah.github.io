@@ -6,14 +6,14 @@ from subprocess import run, CalledProcessError
 import argparse
 
 ROOT = Path(__file__).resolve().parent
-UPSTREAM = "https://tamkeen-maqraah-learning.modest-mink-0683.chatgpt.site"
+UPSTREAM = "https://tamkeen-maqraah-teacher.ibrahiimmuhamud.workers.dev"
 
 
 class Preview(SimpleHTTPRequestHandler):
     def do_GET(self):
-        if self.path == "/api/data":
+        if self.path == "/api/data" or self.path.startswith("/api/homework?"):
             try:
-                response = run(["curl", "--fail", "--silent", "--show-error", "--max-time", "15", UPSTREAM + "/api/data"], capture_output=True, check=True)
+                response = run(["curl", "--fail", "--silent", "--show-error", "--max-time", "15", "-H", "Origin: https://tamkeenmaqarah.github.io", UPSTREAM + self.path], capture_output=True, check=True)
                 self.send_body(response.stdout, "application/json")
             except CalledProcessError:
                 self.send_body(b'{"error":"Public data is unavailable. Please try again."}', "application/json", 502)

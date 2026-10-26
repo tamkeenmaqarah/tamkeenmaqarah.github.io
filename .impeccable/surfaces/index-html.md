@@ -23,3 +23,6 @@ Focal: Two brass lantern bodies sway one degree within stable button targets whi
 Separate hand-drawn pixel-art red Sadu floor cushion, long backrest, square pillow and cylindrical armrest accents replace generated illustrations. No composite majlis seating scene. Place the square and backrest at hero edges, an armrest at the door and quiz, and a floor mattress at the shared footer. Keep ornament clear of controls. Their two-pixel breathing motion shares the lantern visibility pause, global pause and reduced-motion behavior.
 
 Latest upstream integration: Preserve commit 499c84f password recovery and password change. Both reuse the tent-door form system and bilingual controls; the mobile header password action is a labeled SVG button.
+
+## Homework repair
+Preserve the public Najdi interface and existing homework API. Make own saved homework visible, distinguish shared saves from phone-only copies, retain failed or pending saves for retry, and prevent week changes during a save. Use a native date input and existing amber controls; show the full localized Sunday date. The initial week is strictly the next Sunday in device-local time. Selecting another weekday maps to its following Sunday. Verify desktop/mobile EN/AR plus save, reload, per-week isolation, deletion and offline recovery with synthetic writes.

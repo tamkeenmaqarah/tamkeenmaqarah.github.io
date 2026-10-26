@@ -1,4 +1,20 @@
 const arabic = {
+  "Choose a date": "اختر تاريخًا",
+  "Dates are grouped by Sunday. A different day selects the following Sunday.":
+    "الواجب مرتبط بيوم الأحد. إذا اخترت يومًا آخر، فسيُحدَّد الأحد الذي يليه.",
+  "Loading homework…": "جارٍ تحميل الواجب…",
+  "Your saved homework": "واجبك المحفوظ",
+  "Homework saved for everyone.": "حُفظ الواجب وأصبح ظاهرًا للجميع.",
+  "You have an edit saved on this phone. Save homework to share it with everyone.":
+    "لديك تعديل محفوظ على هذا الجهاز. اضغط «حفظ الواجب» ليظهر للجميع.",
+  "No homework has been saved for this Sunday yet.":
+    "لم يُحفظ أي واجب لهذا الأحد بعد.",
+  "This phone could not save homework. Try again when you are online.":
+    "تعذّر حفظ الواجب على هذا الجهاز. حاول مجددًا عند الاتصال بالإنترنت.",
+  "Could not load homework. Please try again.":
+    "تعذّر تحميل الواجب. حاول مرة أخرى.",
+  "Choose a Sunday.": "اختر يوم أحد.",
+
   "Use at least 4 characters for the recovery word.":
     "استخدم ٤ أحرف على الأقل لكلمة الاسترداد.",
   "That recovery word is too long.": "كلمة الاسترداد طويلة جدًا.",
@@ -198,8 +214,7 @@ const arabic = {
     "تعذّر حفظ الواجب. حاول مرة أخرى.",
   "The shared list updates when the teacher site can store it. Until then, a change stays on this phone.":
     "تظهر القائمة للجميع عندما يستطيع موقع المعلّم حفظها. إلى ذلك الحين يبقى التعديل على هذا الجهاز.",
-  "Come in with your name to add your homework.":
-    "ادخل باسمك لإضافة واجبك.",
+  "Come in with your name to add your homework.": "ادخل باسمك لإضافة واجبك.",
   "No one else has written homework for this Sunday yet.":
     "لم يكتب أحد آخر واجبه لهذا الأحد بعد.",
   "Correct answer: ": "الإجابة الصحيحة: ",

@@ -33,7 +33,7 @@ import {
   getLanguage,
   setLanguage,
   subscribeLanguage,
-} from "./i18n.js?v=11";
+} from "./i18n.js?v=13";
 import {
   Ze as Xe,
   $e as Qe,
@@ -49,7 +49,16 @@ import {
   HangingLanterns,
   Cushion,
   GatheringFooter,
-} from "./components.js?v=11";
+} from "./components.js?v=13";
+import {
+  nextHomeworkSunday,
+  homeworkSunday,
+  shiftHomeworkWeek,
+  homeworkKey,
+  readHomeworkLocal,
+  storeHomeworkDraft,
+  clearHomeworkDraft,
+} from "./homework.js?v=1";
 const el = y.createElement;
 const Ye = "https://tamkeen-maqraah-teacher.ibrahiimmuhamud.workers.dev";
 var et = {
@@ -781,41 +790,14 @@ function HomeworkIcon({ size = 17 }) {
     ],
   });
 }
-function nextHomeworkSunday(from = new Date()) {
-  let date = new Date(from.getFullYear(), from.getMonth(), from.getDate());
-  let add = date.getDay() === 0 ? 7 : 7 - date.getDay();
-  date.setDate(date.getDate() + add);
-  return homeworkIso(date);
-}
-function homeworkIso(date) {
-  return (
-    date.getFullYear() +
-    `-` +
-    String(date.getMonth() + 1).padStart(2, `0`) +
-    `-` +
-    String(date.getDate()).padStart(2, `0`)
-  );
-}
-function shiftHomeworkWeek(iso, days) {
-  let [year, month, day] = iso.split(`-`).map(Number);
-  return homeworkIso(new Date(year, month - 1, day + days));
-}
 function formatHomeworkWeek(iso) {
   let [year, month, day] = iso.split(`-`).map(Number);
   return new Intl.DateTimeFormat(getLanguage() === `ar` ? `ar` : `en`, {
+    weekday: `long`,
     month: `long`,
     day: `numeric`,
+    year: `numeric`,
   }).format(new Date(year, month - 1, day));
-}
-function homeworkKey(name) {
-  return lt(name).toLocaleLowerCase(`en`);
-}
-function readHomeworkLocal() {
-  try {
-    return JSON.parse(localStorage.getItem(`tamkeen-homework`) || `{}`);
-  } catch {
-    return {};
-  }
 }
 function Tt() {
   y.useSyncExternalStore(subscribeLanguage, getLanguage, getLanguage);
@@ -879,7 +861,10 @@ function Tt() {
     [homeworkDraft, setHomeworkDraft] = (0, y.useState)(``),
     [homeworkLive, setHomeworkLive] = (0, y.useState)(!1),
     [homeworkBusy, setHomeworkBusy] = (0, y.useState)(!1),
-    [homeworkReady, setHomeworkReady] = (0, y.useState)(!1);
+    [homeworkReady, setHomeworkReady] = (0, y.useState)(!1),
+    [homeworkPending, setHomeworkPending] = (0, y.useState)(!1);
+  const homeworkContext = y.useRef();
+  homeworkContext.current = `${n}/${homeworkWeek}/${v}`;
   (0, y.useEffect)(() => {
     let stop = !1;
     fetch(Ye + `/api/study`, { method: `OPTIONS` })
@@ -1039,6 +1024,9 @@ function Tt() {
       if (n !== `homework`) return;
       let stop = !1;
       setHomeworkReady(!1);
+      setHomeworkEntries([]);
+      setHomeworkDraft(``);
+      setHomeworkPending(!1);
       (async () => {
         let pack = await loadHomeworkWeek(homeworkWeek);
         if (stop) return;
@@ -1047,7 +1035,15 @@ function Tt() {
         let mine = pack.entries.find(
           (item) => homeworkKey(item.name) === homeworkKey(v),
         );
-        setHomeworkDraft(mine?.body || ``);
+        const local = readHomeworkLocal(T())[homeworkWeek];
+        const key = homeworkKey(v);
+        const pending =
+          local &&
+          Object.hasOwn(local, key) &&
+          (local[key] === null || typeof local[key]?.body === "string") &&
+          (local[key]?.body || "") !== (mine?.body || "");
+        setHomeworkPending(!!pending);
+        setHomeworkDraft(pending ? local[key]?.body || `` : mine?.body || ``);
         setHomeworkReady(!0);
       })();
       return () => {
@@ -1826,7 +1822,14 @@ function Tt() {
         let data = await res.json();
         return {
           live: !0,
-          entries: Array.isArray(data.entries) ? data.entries : [],
+          entries: Array.isArray(data.entries)
+            ? data.entries.filter(
+                (item) =>
+                  typeof item?.name === "string" &&
+                  typeof item.body === "string" &&
+                  item.body,
+              )
+            : [],
         };
       }
     } catch {}
@@ -1835,13 +1838,18 @@ function Tt() {
       let file = await fetch(`./homework.json`, { cache: `no-store` });
       if (file.ok) shared = await file.json();
     } catch {}
-    let local = readHomeworkLocal(),
+    let local = readHomeworkLocal(T()),
       byName = new Map();
     for (let item of shared[week] || [])
-      item?.name && item.body && byName.set(homeworkKey(item.name), item);
+      typeof item?.name === "string" &&
+        typeof item.body === "string" &&
+        item.body &&
+        byName.set(homeworkKey(item.name), item);
     for (let [key, item] of Object.entries(local[week] || {}))
-      item?.body
-        ? byName.set(key, { name: item.name, body: item.body })
+      typeof item?.name === "string" &&
+      typeof item.body === "string" &&
+      item.body
+        ? byName.set(key, { name: item.name, body: item.body, localOnly: true })
         : byName.delete(key);
     return {
       live: !1,
@@ -1850,59 +1858,77 @@ function Tt() {
       ),
     };
   }
+  function changeHomeworkWeek(week) {
+    if (homeworkBusy || week === homeworkWeek) return;
+    const saved = homeworkEntries.find(
+      (item) => homeworkKey(item.name) === homeworkKey(v),
+    );
+    const body = homeworkDraft.trim().replace(/\s+/g, " ");
+    if (homeworkReady && v.trim() && body !== (saved?.body || ""))
+      storeHomeworkDraft(T(), homeworkWeek, lt(v), body);
+    setHomeworkReady(false);
+    setHomeworkWeek(week);
+    a("");
+    s("");
+  }
   async function saveHomework() {
-    let name = lt(v),
+    if (homeworkBusy || !homeworkReady) return;
+    const name = lt(v),
       problem = ut(name),
-      body = homeworkDraft.trim().replace(/\s+/g, ` `);
+      body = homeworkDraft.trim().replace(/\s+/g, " "),
+      week = homeworkWeek,
+      context = homeworkContext.current;
     if (problem) {
       a(problem);
       return;
     }
     if (body.length > 500) {
-      a(translate(`That homework is too long.`));
+      a("That homework is too long.");
       return;
     }
-    setHomeworkBusy(!0);
-    a(``);
+    setHomeworkBusy(true);
+    a("");
+    s("");
+    // Keep the edit for retry before making a shared write.
+    const kept = storeHomeworkDraft(T(), week, name, body);
     try {
       if (homeworkLive) {
-        await I(`/api/homework`, `POST`, {
-          week: homeworkWeek,
-          name,
-          body,
-        });
-        let pack = await loadHomeworkWeek(homeworkWeek);
-        setHomeworkLive(pack.live);
-        setHomeworkEntries(pack.entries);
-      } else {
-        let store = readHomeworkLocal();
-        store[homeworkWeek] = store[homeworkWeek] || {};
-        store[homeworkWeek][homeworkKey(name)] = body
-          ? { name, body }
-          : null;
-        localStorage.setItem(`tamkeen-homework`, JSON.stringify(store));
-        let pack = await loadHomeworkWeek(homeworkWeek);
-        setHomeworkEntries(pack.entries);
+        await I("/api/homework", "POST", { week, name, body });
+        clearHomeworkDraft(T(), week, name);
+      } else if (!kept) {
+        throw Error(
+          "This phone could not save homework. Try again when you are online.",
+        );
       }
+      if (homeworkContext.current !== context) return;
+      setHomeworkEntries((entries) => {
+        const others = entries.filter(
+          (item) => homeworkKey(item.name) !== homeworkKey(name),
+        );
+        return body
+          ? [{ name, body, localOnly: !homeworkLive }, ...others]
+          : others;
+      });
+      setHomeworkDraft(body);
+      setHomeworkPending(!homeworkLive);
       s(
-        translate(
-          body
-            ? homeworkLive
-              ? `Homework saved.`
-              : `Saved on this phone.`
-            : `Homework cleared.`,
-        ),
+        homeworkLive
+          ? body
+            ? "Homework saved for everyone."
+            : "Homework cleared."
+          : "Saved on this phone.",
       );
     } catch (err) {
-      a(
-        translate(
+      if (homeworkContext.current === context) {
+        setHomeworkPending(kept);
+        a(
           err instanceof Error && err.message
             ? err.message
-            : `Could not save homework. Please try again.`,
-        ),
-      );
+            : "Could not save homework. Please try again.",
+        );
+      }
     } finally {
-      setHomeworkBusy(!1);
+      setHomeworkBusy(false);
     }
   }
   let zn = m
@@ -2106,7 +2132,7 @@ function Tt() {
                     role: `alert`,
                     children: [
                       (0, N.jsx)(_e, { size: 19 }),
-                      (0, N.jsx)(`span`, { children: i }),
+                      (0, N.jsx)(`span`, { children: translate(i) }),
                       !e &&
                         (0, N.jsx)(`button`, {
                           onClick: () =>
@@ -2123,7 +2149,7 @@ function Tt() {
                     role: `status`,
                     children: [
                       (0, N.jsx)(ue, { size: 19 }),
-                      (0, N.jsx)(`span`, { children: o }),
+                      (0, N.jsx)(`span`, { children: translate(o) }),
                       (0, N.jsx)(`button`, {
                         className: `icon-button`,
                         "aria-label": translate(`Dismiss message`),
@@ -2592,26 +2618,64 @@ function Tt() {
                               (0, N.jsx)(`button`, {
                                 type: `button`,
                                 className: `secondary`,
+                                disabled: homeworkBusy,
                                 onClick: () =>
-                                  setHomeworkWeek((week) =>
-                                    shiftHomeworkWeek(week, -7),
+                                  changeHomeworkWeek(
+                                    shiftHomeworkWeek(homeworkWeek, -7),
                                   ),
                                 children: translate(`Previous Sunday`),
                               }),
-                              (0, N.jsx)(`h2`, {
-                                children: formatHomeworkWeek(homeworkWeek),
-                              }),
+                              el(
+                                "div",
+                                { className: "homework-date" },
+                                el(
+                                  "h2",
+                                  null,
+                                  formatHomeworkWeek(homeworkWeek),
+                                ),
+                                el(
+                                  "label",
+                                  null,
+                                  translate("Choose a date"),
+                                  el("input", {
+                                    type: "date",
+                                    "aria-label": translate("Choose a date"),
+                                    value: homeworkWeek,
+                                    disabled: homeworkBusy,
+                                    onChange: (event) => {
+                                      const week = homeworkSunday(
+                                        event.target.value,
+                                      );
+                                      if (week) changeHomeworkWeek(week);
+                                    },
+                                  }),
+                                ),
+                              ),
                               (0, N.jsx)(`button`, {
                                 type: `button`,
                                 className: `secondary`,
+                                disabled: homeworkBusy,
                                 onClick: () =>
-                                  setHomeworkWeek((week) =>
-                                    shiftHomeworkWeek(week, 7),
+                                  changeHomeworkWeek(
+                                    shiftHomeworkWeek(homeworkWeek, 7),
                                   ),
                                 children: translate(`Next Sunday`),
                               }),
                             ],
                           }),
+                          el(
+                            "p",
+                            { className: "help homework-date-help" },
+                            translate(
+                              "Dates are grouped by Sunday. A different day selects the following Sunday.",
+                            ),
+                          ),
+                          !homeworkReady &&
+                            el(
+                              "p",
+                              { role: "status", className: "help" },
+                              translate("Loading homework…"),
+                            ),
                           v.trim()
                             ? (0, N.jsxs)(`form`, {
                                 className: `homework-editor`,
@@ -2626,8 +2690,11 @@ function Tt() {
                                       translate(`Your homework`),
                                       (0, N.jsx)(`textarea`, {
                                         id: `homework-body`,
+                                        "aria-label": translate("Your homework"),
                                         dir: `auto`,
                                         maxLength: 500,
+                                        disabled:
+                                          !homeworkReady || homeworkBusy,
                                         value: homeworkDraft,
                                         placeholder: translate(`Surah and ayahs`),
                                         onChange: (e) =>
@@ -2658,6 +2725,16 @@ function Tt() {
                                         : translate(`Remove my homework`),
                                   }),
                                   homeworkReady &&
+                                    homeworkPending &&
+                                    homeworkLive &&
+                                    el(
+                                      "p",
+                                      { className: "help", role: "status" },
+                                      translate(
+                                        "You have an edit saved on this phone. Save homework to share it with everyone.",
+                                      ),
+                                    ),
+                                  homeworkReady &&
                                     !homeworkLive &&
                                     (0, N.jsx)(`p`, {
                                       className: `help`,
@@ -2675,38 +2752,49 @@ function Tt() {
                               }),
                           (0, N.jsx)(`ul`, {
                             className: `homework-list`,
-                            children: homeworkEntries
-                              .filter(
-                                (item) =>
-                                  homeworkKey(item.name) !== homeworkKey(v),
-                              )
-                              .map((item) =>
-                                (0, N.jsxs)(
-                                  `li`,
-                                  {
-                                    children: [
-                                      (0, N.jsx)(`strong`, {
-                                        dir: `auto`,
-                                        children: item.name,
-                                      }),
-                                      (0, N.jsx)(`p`, {
-                                        dir: `auto`,
-                                        children: item.body,
-                                      }),
-                                    ],
-                                  },
-                                  homeworkKey(item.name),
-                                ),
+                            children: homeworkEntries.map((item) =>
+                              (0, N.jsxs)(
+                                `li`,
+                                {
+                                  className:
+                                    homeworkKey(item.name) === homeworkKey(v)
+                                      ? "is-own-homework"
+                                      : "",
+                                  children: [
+                                    el(
+                                      "strong",
+                                      null,
+                                      el("bdi", null, item.name),
+                                      homeworkKey(item.name) ===
+                                        homeworkKey(v) &&
+                                        el(
+                                          "small",
+                                          { className: "homework-own-label" },
+                                          translate("Your saved homework"),
+                                        ),
+                                      item.localOnly &&
+                                        el(
+                                          "small",
+                                          { className: "homework-own-label" },
+                                          translate("Saved on this phone."),
+                                        ),
+                                    ),
+                                    (0, N.jsx)(`p`, {
+                                      dir: `auto`,
+                                      children: item.body,
+                                    }),
+                                  ],
+                                },
+                                homeworkKey(item.name),
                               ),
+                            ),
                           }),
                           homeworkReady &&
-                            !homeworkEntries.filter(
-                            (item) => homeworkKey(item.name) !== homeworkKey(v),
-                          ).length &&
+                            !homeworkEntries.length &&
                             (0, N.jsx)(`p`, {
                               className: `help`,
                               children: translate(
-                                `No one else has written homework for this Sunday yet.`,
+                                `No homework has been saved for this Sunday yet.`,
                               ),
                             }),
                         ],
