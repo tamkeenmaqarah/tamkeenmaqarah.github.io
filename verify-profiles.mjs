@@ -46,4 +46,8 @@ const homework=load('app/api/homework/route.ts',{'next/server':{NextResponse:{js
 const sameOriginRead=new Request('https://backend.example/api/homework?week=2026-11-01');
 assert.equal((await homework.GET(sameOriginRead)).status,200);
 teacher=false;assert.equal((await homework.GET(sameOriginRead)).status,403);
-console.log('PASS teacher same-origin homework access and profile migration, photo validation, Google host allowlist, persistence, removal, authenticated ownership, CORS and bounded uploads.');
+const dataEnv={};
+const publicData=load('app/api/data/route.ts',{'cloudflare:workers':{env:dataEnv},'next/server':{NextResponse:{json:Response.json}},'../../server':{db,isTeacher:async()=>false,sameOrigin:()=>true},'../../ai':{configured:()=>false},'../../community-data':{getCommunity:async()=>({boards:[],moments:[]})},'../../accounts':{accountsReady:async()=>true,latestMisses:async()=>null,studentFrom:async()=>null},'../../google':{activeGoogleClientId:()=>''},'../../profiles':profiles,'../../public-cors':cors});
+assert.equal((await(await publicData.GET(new Request('https://backend.example/api/data'))).json()).publicSiteUrl,'https://tamkeenmaqarah.github.io/');
+dataEnv.PUBLIC_SITE_URL='https://configured.example/';assert.equal((await(await publicData.GET(new Request('https://backend.example/api/data'))).json()).publicSiteUrl,'https://configured.example/');
+console.log('PASS student-link destination, teacher same-origin homework access and profile migration, photo validation, Google host allowlist, persistence, removal, authenticated ownership, CORS and bounded uploads.');
