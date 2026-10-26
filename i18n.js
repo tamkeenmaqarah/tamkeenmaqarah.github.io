@@ -37,6 +37,10 @@ const arabic = {
   "Checking with Google…": "جارٍ التحقق من غوغل…",
   "Google could not sign you in yet. Come in with your name and password.":
     "تعذّر الدخول عبر غوغل الآن. ادخل باسمك وكلمة المرور.",
+  "Google could not confirm this sign-in. Come in with your name and password.":
+    "تعذّر تأكيد الدخول عبر غوغل. ادخل باسمك وكلمة المرور.",
+  "This phone kept your name. Come in with Google.":
+    "اسمك محفوظ على هذا الجهاز. ادخل عبر غوغل.",
   "Google confirmed you. What name does the tent use?":
     "أكّد غوغل هويتك. ما الاسم الذي تستخدمه الخيمة؟",
   "This is the name on the leaderboard, not the Google email.":

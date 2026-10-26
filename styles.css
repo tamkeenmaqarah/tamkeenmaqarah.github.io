@@ -5873,6 +5873,7 @@ textarea::placeholder {
   font-size: 14px;
   line-height: 1.6;
   margin: 0 0 18px;
+  text-align: center;
 }
 .door-sheet label {
   display: grid;
@@ -5904,6 +5905,8 @@ textarea::placeholder {
 .door-sheet .door-name {
   font-size: 23px;
   color: #ffdda0;
+  text-align: center;
+  margin: 0;
 }
 .door-switch {
   display: flex;
@@ -5915,22 +5918,39 @@ textarea::placeholder {
 .door-switch .text-button {
   font-size: 12px;
 }
+.door-google {
+  display: grid;
+  gap: 12px;
+  width: 100%;
+  margin: 2px 0 18px;
+}
 .door-error,
 .door-note {
   color: #ffe7c4;
-  margin: 0 0 14px;
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: #3d151b;
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.45;
+  text-align: center;
 }
+.door-sheet form .door-error {
+  margin-bottom: 14px;
+}
+.door-google .door-or,
 .door-sheet > p.door-or {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin: 14px 0 16px;
+  margin: 2px 0 0;
   color: #e8c9a7;
   font-size: 13px;
   line-height: 1;
+  text-align: center;
 }
+.door-google .door-or:before,
+.door-google .door-or:after,
 .door-sheet > p.door-or:before,
 .door-sheet > p.door-or:after {
   content: "";
@@ -5946,6 +5966,15 @@ textarea::placeholder {
   max-width: 100%;
   margin: 0;
   overflow: hidden;
+  border-radius: 8px;
+}
+.door-caption {
+  display: block;
+  margin: 0 0 16px;
+  color: #e8c9a7;
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: center;
 }
 .google-button iframe {
   max-width: 100%;

@@ -174,6 +174,27 @@ function vt(e) {
   (e?.removeItem(P.remembered), ot(e, P.token));
 }
 const GOOGLE_CLIENT_ID = `883985581593-3sa5cjscjk0mhfdeiho8pi857qqqr2v3.apps.googleusercontent.com`;
+function googleClaims(credential) {
+  try {
+    let part = String(credential || ``).split(`.`)[1];
+    if (!part) return null;
+    part += `=`.repeat((4 - (part.length % 4)) % 4);
+    let json = JSON.parse(atob(part.replace(/-/g, `+`).replace(/_/g, `/`)));
+    if (
+      json.iss !== `accounts.google.com` &&
+      json.iss !== `https://accounts.google.com`
+    )
+      return null;
+    if (json.aud !== GOOGLE_CLIENT_ID) return null;
+    if (typeof json.exp !== `number` || json.exp * 1000 < Date.now() - 60000)
+      return null;
+    if (typeof json.sub !== `string` || json.sub.length < 6 || json.sub.length > 255)
+      return null;
+    return { sub: json.sub };
+  } catch {
+    return null;
+  }
+}
 function GoogleSignIn({ onCredential: onCredential }) {
   let host = (0, y.useRef)(null),
     onRef = (0, y.useRef)(onCredential);
@@ -252,6 +273,8 @@ function yt({
   onClearError: onClearError,
   askTentName: askTentName,
   googleBusy: googleBusy,
+  savedGoogle: savedGoogle,
+  hasPassword: hasPassword,
 }) {
   let [c, l] = (0, y.useState)(e ? `back` : `create`),
     [u, d] = (0, y.useState)(e),
@@ -260,7 +283,8 @@ function yt({
     [g, _] = (0, y.useState)(``),
     [v, b] = (0, y.useState)(``),
     googleNote = /Google|غوغل/.test(n || ``) ? n : ``,
-    x = googleNote ? v : v || n;
+    x = googleNote ? v : v || n,
+    googleOnly = c === `back` && savedGoogle && !hasPassword;
   function ee(e) {
     (l(e), p(``), h(``), _(``), b(``), onClearError?.());
   }
@@ -332,10 +356,14 @@ function yt({
               ? translate(
                   `Enter the recovery word from when you set your name, then choose a new password.`,
                 )
-              : c === `back`
+              : googleOnly
                 ? translate(
-                    `This phone kept your name. Enter the password to come back in.`,
+                    `This phone kept your name. Come in with Google.`,
                   )
+                : c === `back`
+                  ? translate(
+                      `This phone kept your name. Enter the password to come back in.`,
+                    )
                 : c === `enter`
                   ? translate(
                       `Enter the name and password you already chose.`,
@@ -346,21 +374,28 @@ function yt({
         }),
         !askTentName &&
           c !== `forgot` &&
-          (0, N.jsx)(GoogleSignIn, { onCredential: onGoogle }),
-        !askTentName &&
-          c !== `forgot` &&
-          (googleBusy || googleNote) &&
-          (0, N.jsx)(`p`, {
-            className: `door-note`,
-            role: googleNote ? `alert` : `status`,
-            children: googleBusy
-              ? translate(`Checking with Google…`)
-              : translate(googleNote),
+          (0, N.jsxs)(`div`, {
+            className: `door-google`,
+            children: [
+              (0, N.jsx)(GoogleSignIn, { onCredential: onGoogle }),
+              (googleBusy || googleNote) &&
+                (0, N.jsx)(`p`, {
+                  className: `door-note`,
+                  role: googleNote ? `alert` : `status`,
+                  children: googleBusy
+                    ? translate(`Checking with Google…`)
+                    : translate(googleNote),
+                }),
+              !googleOnly &&
+                (0, N.jsx)(`p`, {
+                  className: `door-or`,
+                  children: translate(`or`),
+                }),
+            ],
           }),
-        !askTentName &&
-          c !== `forgot` &&
-          (0, N.jsx)(`p`, { className: `door-or`, children: translate(`or`) }),
-        (0, N.jsxs)(`form`, {
+        googleOnly
+          ? (0, N.jsx)(`p`, { className: `door-name`, children: e })
+          : (0, N.jsxs)(`form`, {
           onSubmit: S,
           children: [
             (askTentName ||
@@ -374,7 +409,7 @@ function yt({
                   (0, N.jsx)(`input`, {
                     id: `door-name`,
                     autoComplete: `name`,
-                    autoFocus: c === `enter`,
+                    autoFocus: askTentName || c === `enter`,
                     maxLength: 40,
                     value: u,
                     onChange: (e) => d(e.target.value),
@@ -387,6 +422,7 @@ function yt({
               (0, N.jsx)(`p`, { className: `door-name`, children: e }),
             askTentName
               ? (0, N.jsx)(`small`, {
+                  className: `door-caption`,
                   children: translate(
                     `This is the name on the leaderboard, not the Google email.`,
                   ),
@@ -568,7 +604,8 @@ function yt({
                       onClick: () => ee(`create`),
                       children: translate(`New name`),
                     }),
-            (c === `back` || c === `enter`) &&
+            !askTentName &&
+              (c === `enter` || (c === `back` && !googleOnly)) &&
               (0, N.jsx)(`button`, {
                 className: `text-button`,
                 type: `button`,
@@ -1178,12 +1215,13 @@ function Tt() {
           s(translate(`Quiz deleted.`)));
       });
   }
-  function xn(e, t, n, r, i, google) {
+  function xn(e, t, n, r, i, google, googleSub) {
     (ht(e, {
       name: t,
       passwordHash: n,
       ...(r ? { recoveryHash: r } : {}),
       ...(google ? { google: !0 } : {}),
+      ...(googleSub ? { googleSub: googleSub } : {}),
     }),
       i ? e?.setItem(P.token, i) : e?.removeItem(P.token),
       e?.setItem(P.name, t),
@@ -1301,17 +1339,65 @@ function Tt() {
         let problem = ut(clean);
         if (problem) throw Error(problem);
       }
-      let server = await I(`/api/account/google`, `POST`, {
-        credential,
-        ...(clean ? { name: clean } : {}),
-      });
+      let who = googleClaims(credential),
+        store = T(),
+        existing = mt(store),
+        server;
+      try {
+        server = await I(`/api/account/google`, `POST`, {
+          credential,
+          ...(clean ? { name: clean } : {}),
+        });
+      } catch (err) {
+        let message = err?.message || ``;
+        if (
+          !who ||
+          !/not available|not connected|not found|failed to fetch|load failed|network|unexpected token/i.test(
+            message,
+          )
+        )
+          throw err;
+        if (!clean) {
+          if (
+            existing?.google &&
+            (!existing.googleSub || existing.googleSub === who.sub)
+          ) {
+            (xn(
+              store,
+              existing.name,
+              existing.passwordHash || ``,
+              existing.recoveryHash,
+              ``,
+              !0,
+              who.sub,
+            ),
+              setGoogleTicket(``));
+            return;
+          }
+          setGoogleTicket(credential);
+          return;
+        }
+        let same = !!(
+          existing &&
+          existing.name.toLocaleLowerCase(`en`) === clean.toLocaleLowerCase(`en`)
+        );
+        (xn(
+          store,
+          clean,
+          same ? existing.passwordHash || `` : ``,
+          same ? existing.recoveryHash : void 0,
+          ``,
+          !0,
+          who.sub,
+        ),
+          setGoogleTicket(``));
+        return;
+      }
       if (server.needsName) {
         setGoogleTicket(credential);
         return;
       }
       let known = server.student.name,
-        store = T(),
-        existing = mt(store),
         same = !!(
           existing &&
           existing.name.toLocaleLowerCase(`en`) === known.toLocaleLowerCase(`en`)
@@ -1323,15 +1409,16 @@ function Tt() {
         same ? existing?.recoveryHash : void 0,
         server.token,
         !0,
+        who?.sub,
       ),
         setGoogleTicket(``));
     } catch (err) {
       let message = err?.message || ``;
       kt(
-        /not available|not connected|not found|failed to fetch|load failed|network/i.test(
+        /not available|not connected|not found|failed to fetch|load failed|network|unexpected token/i.test(
           message,
         )
-          ? `Google could not sign you in yet. Come in with your name and password.`
+          ? `Google could not confirm this sign-in. Come in with your name and password.`
           : message || `Could not sign in with Google. Please try again.`,
       );
     } finally {
@@ -1661,6 +1748,8 @@ function Tt() {
           onClearError: () => kt(``),
           askTentName: !!googleTicket,
           googleBusy: googleBusy,
+          savedGoogle: !!mt(T())?.google,
+          hasPassword: !!mt(T())?.passwordHash,
         })
       : (0, N.jsxs)(`div`, {
           className: `site`,
