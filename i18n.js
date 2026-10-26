@@ -1,0 +1,495 @@
+const arabic = {
+  "Use the name the tent knows.": "اكتب الاسم الذي تعرفك به المجموعة.",
+  "That name is too long.": "الاسم طويل جدًا.",
+  "Use letters in your name.": "اكتب اسمك بالحروف.",
+  "Use at least 6 characters.": "استخدم ٦ أحرف على الأقل.",
+  "That password is too long.": "كلمة المرور طويلة جدًا.",
+  "Those passwords do not match.": "كلمتا المرور غير متطابقتين.",
+  "This phone kept your name. Enter the password to come back in.":
+    "اسمك محفوظ على هذا الجهاز. أدخل كلمة المرور للدخول.",
+  "Set your name once. This phone remembers you, and next time you come straight in.":
+    "سجّل اسمك مرة واحدة، وسيحفظه هذا الجهاز للدخول مباشرةً في المرة القادمة.",
+  Password: "كلمة المرور",
+  "At least 6 characters. You only type it again if you sign out.":
+    "٦ أحرف على الأقل. لن تحتاج إليها مجددًا إلا بعد تسجيل الخروج.",
+  "The password you chose for this name.":
+    "كلمة المرور التي اخترتها لهذا الاسم.",
+  "Confirm password": "تأكيد كلمة المرور",
+  "Come in": "الدخول",
+  "I already have a name": "سبق لي التسجيل",
+  "This is someone else": "استخدام اسم آخر",
+  "New name": "تسجيل اسم جديد",
+  "That name and password do not match.": "الاسم وكلمة المرور غير متطابقين.",
+  "This phone has not saved that name yet.":
+    "هذا الاسم غير محفوظ على هذا الجهاز بعد.",
+  "Could not save this name. Please try again.":
+    "تعذّر حفظ الاسم. حاول مرة أخرى.",
+  "This phone remembers this name.": "هذا الاسم محفوظ على هذا الجهاز.",
+  "Choose a quiz below. This phone already has your name.":
+    "اختر اختبارًا من القائمة. اسمك محفوظ على هذا الجهاز.",
+  "Your name is saved": "اسمك محفوظ",
+  "This phone remembers you. The score uses that name.":
+    "اسمك محفوظ على هذا الجهاز، وستُسجَّل النتيجة بهذا الاسم.",
+
+  "Brighten lantern": "زيادة إضاءة الفانوس",
+  "Dim lantern": "تخفيف إضاءة الفانوس",
+  "What you missed": "أسئلة للمراجعة",
+  "Remove from this phone": "حذف من هذا الجهاز",
+  "Saved on this device. Practice does not change your score.":
+    "محفوظة على هذا الجهاز. المراجعة لا تغيّر درجتك.",
+  "Try these again": "راجع هذه الأسئلة",
+  "Those answers are clear now": "أحسنت في المراجعة",
+  "Still worth another look": "بقيت أسئلة للمراجعة",
+  "This practice stays on your phone. The leaderboard was not changed.":
+    "تبقى هذه المراجعة على جهازك. لم تتغيّر لوحة الترتيب.",
+  "These are the questions you missed. This practice is not graded.":
+    "هذه الأسئلة التي أخطأت فيها. المراجعة لا تُحتسب في الدرجات.",
+  "Take it again": "أعد الاختبار",
+  "This attempt was already saved.": "حُفظت هذه المحاولة مسبقًا.",
+  "You can change answers before submitting. ":
+    "يمكنك تعديل إجاباتك قبل إرسالها. ",
+  "Start over": "البدء من جديد",
+  "Pause animations": "إيقاف الحركة",
+  "Enable animations": "تفعيل الحركة",
+  "Loading the tent…": "جارٍ تحميل أصحاب الخيمة…",
+  "Failed to fetch": "تعذّر الاتصال. حاول مجددًا.",
+  "Public data is unavailable. Please try again.":
+    "تعذّر تحميل البيانات. حاول مجددًا.",
+  "+{count} bonus": "+{count} إضافية",
+  "Equal scores share a rank.": "الدرجات المتساوية تشترك في الترتيب.",
+  "Teacher-approved answers.": "إجابات اختارها المعلّم.",
+  "Your teacher will share the next quiz here.":
+    "سيشارك معلّمكم الاختبار القادم هنا.",
+  "After Fajr": "بعد الفجر",
+  "Weekly quiz": "الاختبار الأسبوعي",
+  "No quiz is open right now.": "لا يوجد اختبار متاح حاليًا.",
+  "All quizzes": "جميع الاختبارات",
+  "{count} questions · No time limit": "{count} أسئلة · دون وقت محدّد",
+  "Qur’an review · Saturday & Tuesday halaqas":
+    "مراجعة القرآن · حلقَتا السبت والثلاثاء",
+  "No results yet.": "لم تُسجّل نتائج بعد.",
+  "No funny answers yet.": "لم تُنشر طرائف بعد.",
+  Home: "الرئيسية",
+  Quizzes: "الاختبارات",
+  Leaderboard: "لوحة الترتيب",
+  "Funny answers": "طرائف الحلقة",
+  "Teacher sign in": "دخول المعلّم",
+  Teacher: "المعلّم",
+  "Sign out": "تسجيل الخروج",
+  "Sign in": "تسجيل الدخول",
+  Tamkeen: "تمكين",
+  "Tamkeen Maqra’ah": "مقرأة تمكين",
+  "Maqra’ah ": "مقرأة ",
+  "Welcome to Tamkeen": "أهلاً بكم في تمكين",
+  "Skip to content": "انتقل إلى المحتوى",
+  "Main navigation": "التنقل الرئيسي",
+  "Try again": "حاول مجددًا",
+  "Loading Tamkeen…": "جارٍ تحميل المقرأة…",
+  "Dismiss message": "إغلاق الرسالة",
+  "Start quiz": "ابدأ الاختبار",
+  "Take a quiz": "اختر اختبارًا",
+  "Choose a quiz": "اختر اختبارًا",
+  "Browse quizzes": "تصفّح الاختبارات",
+  "Find a quiz": "ابحث عن اختبار",
+  "See leaderboard": "عرض الترتيب",
+  "View leaderboard": "عرض لوحة الترتيب",
+  "View all": "عرض الكل",
+  "Back home": "العودة للرئيسية",
+  "Back to quizzes": "العودة للاختبارات",
+  Back: "رجوع",
+  Next: "التالي",
+  Previous: "السابق",
+  "No time limit": "دون وقت محدّد",
+  " questions": " أسئلة",
+  " questions · ": " أسئلة · ",
+  " questions · no time limit": " أسئلة · دون وقت محدّد",
+  " quizzes": " اختبارات",
+  "All ": "جميع الاختبارات: ",
+  All: "الكل",
+  "Your name": "اسمك",
+  "Enter your name": "اكتب اسمك",
+  "Your answers": "إجاباتك",
+  "Your latest result: ": "نتيجتك الأخيرة: ",
+  "Submit quiz": "إرسال الإجابات",
+  "Saving result…": "جارٍ حفظ النتيجة…",
+  "You can change answers before submitting.":
+    "يمكنك تعديل إجاباتك قبل إرسالها.",
+  "Question ": "السؤال ",
+  " of ": " من ",
+  " answered": " إجابات مكتملة",
+  " answered ": " أجاب: ",
+  "Correct answer: ": "الإجابة الصحيحة: ",
+  " Correct answer: ": " الإجابة الصحيحة: ",
+  "Correct answer": "الإجابة الصحيحة",
+  Correct: "صحيح",
+  Incorrect: "غير صحيح",
+  "All answers correct!": "كلّ إجاباتك صحيحة!",
+  "Quiz complete": "اكتمل الاختبار",
+  "Preview complete": "اكتملت المعاينة",
+  "This was a preview. No grade was saved.":
+    "هذه معاينة فقط. لم تُحفظ أي درجة.",
+  "Teacher preview. No student result will be saved.":
+    "معاينة المعلّم. لن تُحفظ نتيجة للطالب.",
+  "This attempt was already saved. Detailed review is unavailable after retrying.":
+    "حُفظت هذه المحاولة مسبقًا. لا تتوفر المراجعة المفصّلة عند إعادة الإرسال.",
+  "Use the name your teacher knows. Your name and score will appear on the group leaderboard.":
+    "اكتب الاسم الذي يعرفك به معلّمك. سيظهر اسمك ودرجتك في لوحة ترتيب المجموعة.",
+  "Your name and score appear on the group leaderboard.":
+    "يظهر اسمك ودرجتك في لوحة ترتيب المجموعة.",
+  "Choose a quiz below. No account needed.":
+    "اختر اختبارًا من القائمة. لا تحتاج إلى حساب.",
+  "No quizzes are available yet": "لا توجد اختبارات متاحة حاليًا",
+  "Your teacher will share a link when the next quiz is ready. In the meantime, catch up with the group.":
+    "سيشارك معلّمك رابط الاختبار القادم عندما يجهز. وحتى ذلك الحين، اطّلع على أخبار المجموعة.",
+  "Between quizzes. Still together.": "ننتظر الاختبار، وتستمرّ الصحبة.",
+  "The next quiz will appear here when your teacher publishes it. The leaderboard and funny answers are always here to explore.":
+    "سيظهر الاختبار القادم هنا عندما ينشره معلّمك. ويمكنك الآن الاطّلاع على الترتيب وطرائف الحلقة.",
+  "Our weekly halaqah": "لقاؤنا الأسبوعي",
+  Saturday: "السبت",
+  Tuesday: "الثلاثاء",
+  "Main halaqah": "الحلقة الرئيسية",
+  "Optional halaqah": "حلقة إضافية",
+  students: "طلاب",
+  attempts: "محاولات",
+  submission: "مشاركة",
+  submissions: "مشاركات",
+  " · Equal scores share a rank.": " · الدرجات المتساوية تشترك في الترتيب.",
+  " · Average ": " · المتوسّط ",
+  " bonus included": " نقاط إضافية محتسبة",
+  "Bonus points are included in the score. The maximum regular score stays 13.":
+    "تشمل الدرجة النقاط الإضافية. وتبقى الدرجة الأساسية من ١٣.",
+  "Every submitted attempt is listed. Names are entered by students.":
+    "تظهر كلّ محاولة مُرسلة. الأسماء كما أدخلها الطلاب.",
+  "Our group, one quiz at a time. Equal scores share a rank.":
+    "نتعلّم معًا، اختبارًا بعد اختبار. الدرجات المتساوية تشترك في الترتيب.",
+  "Rankings for the selected quiz. Equal scores share a rank.":
+    "ترتيب الاختبار المحدّد. الدرجات المتساوية تشترك في الترتيب.",
+  Rank: "الترتيب",
+  Student: "الطالب",
+  Score: "الدرجة",
+  Percentage: "النسبة",
+  Result: "النتيجة",
+  "Quiz rankings": "ترتيب المشاركين",
+  "Highest scoring students": "أعلى الدرجات",
+  "Paper quiz": "اختبار ورقي",
+  "Online quiz": "اختبار إلكتروني",
+  "Original etiquette quiz": "اختبار الآداب الأصلي",
+  "Original Etiquette Quiz": "اختبار الآداب الأصلي",
+  "The standings start here": "من هنا يبدأ الترتيب",
+  "Scores will appear once a quiz has been graded. You can still check for an open quiz.":
+    "ستظهر الدرجات بعد تصحيح الاختبار. ويمكنك الاطّلاع على الاختبارات المتاحة الآن.",
+  "A place for the whole group": "مكان يجمعنا جميعًا",
+  "Our first scores will appear here after a quiz is graded.":
+    "ستظهر درجاتنا الأولى هنا بعد تصحيح الاختبار.",
+  "Funniest mix-up": "من طرائف الإجابات",
+  "The latest teacher-approved mix-up": "آخر الطرائف التي اختارها المعلّم",
+  "The memorable mix-ups from our halaqah, picked by your teacher.":
+    "مواقف لا تُنسى من حلقتنا، يختارها معلّمكم.",
+  "The next mix-up is coming": "ننتظر الطرفة القادمة",
+  "When a funny answer earns a place here, your teacher will share it with everyone.":
+    "حين تستحقّ إجابة طريفة مكانًا هنا، سيشاركها معلّمكم مع الجميع.",
+  "Every group has its moments": "لكلّ صحبة مواقفها",
+  "No funny answers have been shared yet. Come back after the next quiz.":
+    "لم تُنشر أي طرائف بعد. عُد بعد الاختبار القادم.",
+  "Taking a quiz is simple": "من المراجعة إلى الاختبار",
+  "Open one here or use the link your teacher shares.":
+    "اختر اختبارًا هنا أو افتح الرابط الذي يشاركه معلّمك.",
+  "Use the name your group knows. No account needed.":
+    "اكتب الاسم الذي يعرفك به أصحابك. لا تحتاج إلى حساب.",
+  "Get your result": "اطّلع على نتيجتك",
+  "Submit to see your score and review the answers.":
+    "أرسل إجاباتك لتعرف درجتك وتراجع الإجابات الصحيحة.",
+  "Leave this quiz? Your answers have not been submitted.":
+    "هل تريد مغادرة الاختبار؟ لم تُرسل إجاباتك بعد.",
+  "Leave the quiz editor? Unsaved changes will be lost.":
+    "هل تريد مغادرة محرّر الاختبار؟ ستفقد التغييرات غير المحفوظة.",
+  "Leave without saving the grade changes?":
+    "هل تريد المغادرة دون حفظ الدرجات؟",
+  "This quiz is not available. It may have been closed. Choose another quiz below.":
+    "هذا الاختبار غير متاح، وربما أُغلق. اختر اختبارًا آخر من القائمة.",
+  "Something went wrong. Please try again.": "حدث خطأ. يرجى المحاولة مجددًا.",
+  "Teacher access key": "مفتاح دخول المعلّم",
+  "Sign in to create quizzes, manage grades and publish funny answers.":
+    "سجّل دخولك لإنشاء الاختبارات وإدارة الدرجات ونشر طرائف الحلقة.",
+  "Where is my access key?": "أين أجد مفتاح الدخول؟",
+  "Signing in…": "جارٍ تسجيل الدخول…",
+  "Signed in. You can now manage quizzes and grades.":
+    "تمّ تسجيل الدخول. يمكنك الآن إدارة الاختبارات والدرجات.",
+  "Signed out.": "تمّ تسجيل الخروج.",
+  "Ready for the next halaqah?": "مستعدّ للحلقة القادمة؟",
+  "Create a quiz yourself or draft one from your lesson notes.":
+    "أنشئ اختبارًا بنفسك أو أعدّ مسوّدة من ملاحظات الدرس.",
+  "Create a quiz, publish it, then share the student link.":
+    "أنشئ اختبارًا وانشره، ثمّ شارك رابطه مع الطلاب.",
+  "Create quiz": "إنشاء اختبار",
+  "Create a quiz": "إنشاء اختبار",
+  "Draft with AI": "مسوّدة بالذكاء الاصطناعي",
+  Grades: "الدرجات",
+  "Enter grades": "إدخال الدرجات",
+  "Select a quiz to enter paper grades or view online submissions.":
+    "اختر اختبارًا لإدخال الدرجات الورقية أو عرض المشاركات الإلكترونية.",
+  Published: "منشور",
+  "Not published": "غير منشور",
+  Closed: "مغلق",
+  Draft: "مسوّدة",
+  "Drafts & closed": "المسوّدات والمغلقة",
+  "Draft or closed": "مسوّدة أو مغلق",
+  "Filter quizzes": "تصفية الاختبارات",
+  "Search quizzes": "البحث في الاختبارات",
+  "Copy student link": "نسخ رابط الطلاب",
+  "View results": "عرض النتائج",
+  "Manage quiz": "إدارة الاختبار",
+  Delete: "حذف",
+  "Delete quiz": "حذف الاختبار",
+  "Edit quiz": "تعديل الاختبار",
+  Edit: "تعديل",
+  "Make a copy": "إنشاء نسخة",
+  Reopen: "إعادة الفتح",
+  "Review & publish": "مراجعة ونشر",
+  "No quizzes match this filter": "لا توجد اختبارات مطابقة",
+  "Choose another filter to see your quizzes.":
+    "اختر تصفية أخرى لعرض الاختبارات.",
+  "Create your first quiz": "أنشئ اختبارك الأوّل",
+  "Add questions, choose the correct answers, then publish.":
+    "أضف الأسئلة وحدّد الإجابات الصحيحة، ثمّ انشر الاختبار.",
+  "Load the group’s original quiz and grades":
+    "تحميل الاختبار الأصلي ودرجات المجموعة",
+  "Original quiz grades and practice draft loaded.":
+    "تمّ تحميل الدرجات الأصلية ومسوّدة التدريب.",
+  "You’re viewing teacher controls. Student links open the quiz directly. Home, leaderboards and published funny answers are public.":
+    "أنت تعرض أدوات المعلّم. تفتح روابط الطلاب الاختبار مباشرة. الرئيسية والترتيب والطرائف المنشورة متاحة للجميع.",
+  "Quiz details": "تفاصيل الاختبار",
+  "Quiz title": "عنوان الاختبار",
+  "Student instructions ": "تعليمات الطلاب ",
+  Optional: "اختياري",
+  "Anything students should know before starting":
+    "ما ينبغي للطلاب معرفته قبل البدء",
+  Details: "التفاصيل",
+  Questions: "الأسئلة",
+  "Review your quiz": "راجع اختبارك",
+  "Review quiz": "مراجعة الاختبار",
+  "Quiz creation steps": "خطوات إنشاء الاختبار",
+  "Next: add questions": "التالي: إضافة الأسئلة",
+  "Next: review quiz": "التالي: مراجعة الاختبار",
+  "Save draft": "حفظ المسوّدة",
+  "Saving…": "جارٍ الحفظ…",
+  "Changes are not saved yet": "لم تُحفظ التغييرات بعد",
+  "A draft needs a title and at least one complete question to save.":
+    "لحفظ المسوّدة، أضف عنوانًا وسؤالًا مكتملًا واحدًا على الأقل.",
+  "Complete every question and select its correct answer before continuing.":
+    "أكمل كلّ سؤال وحدّد إجابته الصحيحة قبل المتابعة.",
+  "Select a question": "اختر سؤالًا",
+  Question: "السؤال",
+  "Write your question": "اكتب سؤالك",
+  "Add another question": "إضافة سؤال",
+  "Remove question": "حذف السؤال",
+  "Answer choices": "خيارات الإجابة",
+  "Enter four options and select the correct answer.":
+    "أدخل أربعة خيارات وحدّد الإجابة الصحيحة.",
+  "Answer ": "الإجابة ",
+  "Option ": "الخيار ",
+  " is correct": " هي الصحيحة",
+  "Answer explanation ": "شرح الإجابة ",
+  "Shown after the quiz is submitted": "يظهر بعد إرسال الإجابات",
+  "Questions and correct answers": "الأسئلة والإجابات الصحيحة",
+  "Publish quiz": "نشر الاختبار",
+  Publish: "نشر",
+  "Publishing makes this quiz available to anyone with its student link.":
+    "عند نشر الاختبار، يتاح لكلّ من لديه رابط الطلاب.",
+  "Quiz published. Copy the student link to share it.":
+    "نُشر الاختبار. انسخ رابط الطلاب لمشاركته.",
+  "Draft saved. You can continue editing it from Quizzes.":
+    "حُفظت المسوّدة. يمكنك متابعة تعديلها من صفحة الاختبارات.",
+  "Quiz closed. Existing results are kept.":
+    "أُغلق الاختبار. النتائج السابقة محفوظة.",
+  "Quiz reopened. Copy its student link to share it.":
+    "أُعيد فتح الاختبار. انسخ رابطه لمشاركته.",
+  "Quiz deleted.": "حُذف الاختبار.",
+  "Preview quiz": "معاينة الاختبار",
+  "Try the quiz without saving a grade.": "جرّب الاختبار دون حفظ درجة.",
+  "See automatically graded submissions.": "اعرض المشاركات المصحّحة تلقائيًا.",
+  "Create a new version and keep existing results.":
+    "أنشئ نسخة جديدة مع الاحتفاظ بالنتائج السابقة.",
+  "Close quiz": "إغلاق الاختبار",
+  "Stop accepting new submissions.": "إيقاف استقبال إجابات جديدة.",
+  "Remove this quiz and its saved submissions.":
+    "حذف هذا الاختبار ومشاركاته المحفوظة.",
+  "No paper grades yet": "لا توجد درجات ورقية بعد",
+  "Load the original quiz from Quizzes to start.":
+    "حمّل الاختبار الأصلي من صفحة الاختبارات للبدء.",
+  "Regular /13": "الأساسية /١٣",
+  "Bonus /1": "الإضافية /١",
+  "Regular grade for ": "الدرجة الأساسية للطالب ",
+  "Bonus grade for ": "الدرجة الإضافية للطالب ",
+  Total: "المجموع",
+  "Save all grades": "حفظ جميع الدرجات",
+  "All grades saved. The leaderboard is updated.":
+    "حُفظت جميع الدرجات وحُدّث الترتيب.",
+  "You have unsaved changes.": "لديك تغييرات غير محفوظة.",
+  "Grades are up to date.": "الدرجات محدّثة.",
+  "Online submissions are graded automatically. No entry is needed.":
+    "تُصحّح الإجابات الإلكترونية تلقائيًا. لا يلزم إدخال الدرجات.",
+  "No submissions yet": "لا توجد مشاركات بعد",
+  "Share this quiz’s student link. Results appear here after students submit.":
+    "شارك رابط الاختبار. ستظهر النتائج هنا بعد إرسال الطلاب لإجاباتهم.",
+  "No results for this quiz yet": "لا توجد نتائج لهذا الاختبار بعد",
+  "Once grades are recorded, the rankings will appear here.":
+    "سيظهر الترتيب هنا بعد تسجيل الدرجات.",
+  "Copy results": "نسخ النتائج",
+  "Add funny answer": "إضافة طرفة",
+  "Add a funny answer": "إضافة إجابة طريفة",
+  "Edit funny answer": "تعديل الطرفة",
+  "Review a mix-up and publish it for everyone to enjoy.":
+    "راجع إجابة طريفة وانشرها للمجموعة.",
+  "Published funny answers are visible to everyone. Only teachers can add or remove them.":
+    "الطرائف المنشورة متاحة للجميع. المعلّمون وحدهم يستطيعون إضافتها أو حذفها.",
+  "No funny answers published yet": "لم تُنشر أي طرائف بعد",
+  "Add one yourself or choose a wrong answer from a submitted quiz.":
+    "أضف طرفة بنفسك أو اختر إجابة خاطئة من اختبار مُرسل.",
+  "Close funny answer editor": "إغلاق محرّر الطرائف",
+  "Use a submitted answer, or enter one below":
+    "اختر إجابة مُرسلة أو أدخل إجابة أدناه",
+  "Student name": "اسم الطالب",
+  "Their answer": "إجابته",
+  "Funny caption": "تعليق طريف",
+  "Keep the joke about the answer": "اجعل الطرفة عن الإجابة",
+  Cancel: "إلغاء",
+  "Publish funny answer": "نشر الطرفة",
+  "Funny answer published for the group.": "نُشرت الطرفة للمجموعة.",
+  "Funny answer removed.": "حُذفت الطرفة.",
+  Remove: "حذف",
+  "Remove this funny answer?": "هل تريد حذف هذه الطرفة؟",
+  "Copy for WhatsApp": "نسخ للواتساب",
+  "Ready to copy": "جاهز للنسخ",
+  "Student quiz link": "رابط الاختبار للطلاب",
+  "Close sharing box": "إغلاق نافذة المشاركة",
+  "Text to copy": "النص المراد نسخه",
+  "Anyone with this link can take the quiz. Teacher controls are not included.":
+    "يمكن لكلّ من لديه الرابط إجراء الاختبار. لا يتضمّن الرابط أدوات المعلّم.",
+  "Copy this text into WhatsApp or your group chat.":
+    "انسخ هذا النص إلى الواتساب أو محادثة المجموعة.",
+  "Copy again": "نسخ مجددًا",
+  "Copied. Paste it into WhatsApp or your group chat.":
+    "نُسخ النص. ألصقه في الواتساب أو محادثة المجموعة.",
+  "Copy the text in the box below.": "انسخ النص من المربّع أدناه.",
+  "Draft a quiz with AI": "إعداد مسوّدة بالذكاء الاصطناعي",
+  "From your lesson notes": "من ملاحظات الدرس",
+  "Lesson title": "عنوان الدرس",
+  "Transcript or detailed teaching notes": "نصّ الدرس أو ملاحظات مفصّلة",
+  Halaqah: "الحلقة",
+  "Core lesson": "الدرس الأساسي",
+  "Optional practice": "مراجعة إضافية",
+  "Number of questions": "عدد الأسئلة",
+  "Generate quiz draft": "إعداد مسوّدة الاختبار",
+  "Drafting and checking questions…": "جارٍ إعداد الأسئلة والتحقّق منها…",
+  "AI draft generated. Review the questions, correct answers and source excerpts before publishing.":
+    "أُعدّت المسوّدة. راجع الأسئلة والإجابات الصحيحة ومقتطفات المصدر قبل النشر.",
+  "AI drafts are checked for evidence and ambiguity. You review the answers before publishing.":
+    "تُفحص المسوّدات للتحقّق من الدليل ووضوح الأسئلة. راجع الإجابات قبل النشر.",
+  "I have reviewed the AI questions and correct answers.":
+    "راجعت الأسئلة والإجابات الصحيحة المُعدّة بالذكاء الاصطناعي.",
+  "Confirm you have reviewed the AI questions and correct answers before publishing.":
+    "أكّد مراجعتك للأسئلة والإجابات الصحيحة قبل النشر.",
+  "Connect Gemini to use AI": "اربط Gemini لاستخدام الذكاء الاصطناعي",
+  "Open Google AI Studio": "فتح Google AI Studio",
+  "Let AI find a funny answer": "اقتراح طرفة بالذكاء الاصطناعي",
+  "Teacher review required": "تتطلّب مراجعة المعلّم",
+  "Suggest funniest answer": "اقتراح إجابة طريفة",
+  "Finding a mix-up…": "جارٍ البحث عن طرفة…",
+  "AI suggestion ready. Review the answer and caption, then publish it for the group.":
+    "الاقتراح جاهز. راجع الإجابة والتعليق، ثمّ انشره للمجموعة.",
+  "AI chooses from real incorrect submissions and suggests a playful caption. Students’ names are added locally and are not sent to Gemini.":
+    "يختار الذكاء الاصطناعي من الإجابات الخاطئة الفعلية ويقترح تعليقًا طريفًا. تُضاف أسماء الطلاب محليًا ولا تُرسل إلى Gemini.",
+  "Connect Gemini from ": "اربط Gemini من صفحة ",
+  " before generating suggestions.": " قبل إعداد الاقتراحات.",
+  "For example: Etiquette of eating": "مثال: آداب الطعام",
+  "For example: Everyday Etiquette — Week 2":
+    "مثال: الآداب اليومية — الأسبوع الثاني",
+  "Paste a transcript or detailed teaching notes. AI will draft challenging questions with plausible answer choices for you to review.":
+    "ألصق نصّ الدرس أو ملاحظاته المفصّلة. سيعدّ الذكاء الاصطناعي أسئلة وخيارات للمراجعة.",
+  "Paste what was taught, including the key facts and explanations. For topic-only input, add your intended teaching points.":
+    "ألصق محتوى الدرس، بما فيه المعلومات والشروح الأساسية. إذا أدخلت عنوانًا فقط، فأضف النقاط التي تريد تدريسها.",
+  "100–30,000 characters. Each correct answer must be supported by an excerpt from these notes. Your notes are sent to Gemini when you generate.":
+    "من ١٠٠ إلى ٣٠٬٠٠٠ حرف. يجب أن تستند كلّ إجابة صحيحة إلى مقتطف من الملاحظات. تُرسل الملاحظات إلى Gemini عند إعداد المسوّدة.",
+  "The integration is ready, but no server API key is connected. Manual quizzes and automatic grading already work.":
+    "التكامل جاهز، لكن لم يُربط مفتاح API بالخادم. إنشاء الاختبارات يدويًا والتصحيح التلقائي يعملان بالفعل.",
+  "The private teacher link shared in this chat signs you in automatically. The key is the text after ":
+    "رابط المعلّم الخاص يسجّل دخولك تلقائيًا. المفتاح هو النصّ الذي يلي ",
+  " in that link. Keep it private.": " في الرابط. احتفظ به سرّيًا.",
+  "Set ": "أضف ",
+  " as a secret in this site’s server settings, then redeploy. Keep the key out of student links and public code.":
+    " كقيمة سرّية في إعدادات الخادم، ثمّ أعد النشر. لا تضع المفتاح في روابط الطلاب أو الشيفرة العامة.",
+  "Change a score below, then select ": "عدّل الدرجة أدناه، ثمّ اختر ",
+  " · 13 regular points + 1 optional bonus.":
+    " · ١٣ درجة أساسية ودرجة إضافية اختيارية.",
+  "Paper quiz · 13 points + bonus": "اختبار ورقي · ١٣ درجة ونقاط إضافية",
+  "Edit question ": "تعديل السؤال ",
+  " points": " درجات",
+  " — copy": " — نسخة",
+  "Together, after Fajr.": "نجتمع على القرآن.",
+  "A Sunday morning, well spent.": "صباح الأحد، في صحبة القرآن.",
+  "Every Sunday after Fajr, we gather in the tent to review our Qur’an, revisit the week’s halaqas, and keep one another going.":
+    "كلّ أحد بعد الفجر، نجتمع في الخيمة لمراجعة حفظ القرآن، ومذاكرة دروس الأسبوع، وتشجيع بعضنا بعضًا.",
+  "Our week, together": "أسبوعنا معًا",
+  Sunday: "الأحد",
+  "After Fajr · In the tent": "بعد الفجر · في الخيمة",
+  "Qur’an review & halaqa recap": "مراجعة الحفظ ومذاكرة الدروس",
+  "Tamkeen Youth halaqa": "حلقة شباب تمكين",
+  "This week’s quiz": "اختبار هذا الأسبوع",
+  "The next quiz is on its way.": "ننتظر الاختبار القادم.",
+  "Our Sunday gathering": "لقاؤنا يوم الأحد",
+  "Qur’an. Reflection. Good company.": "قرآنٌ، ومذاكرةٌ، وصحبةٌ طيّبة.",
+  "Change language to Arabic": "التبديل إلى العربية",
+  "Change language to English": "Switch to English",
+  "Community standings": "ترتيب المجموعة",
+  "From the majlis": "من المجلس",
+  "{count} questions · No time limit · Results when you finish":
+    "{count} أسئلة · دون وقت محدّد · النتيجة بعد الإرسال",
+  "{name}, your result has been saved.": "يا {name}، حُفظت نتيجتك.",
+  "Question {number}": "السؤال {number}",
+  "Delete “{title}”? This cannot be undone.{detail}":
+    "هل تريد حذف «{title}»؟ لا يمكن التراجع عن ذلك.{detail}",
+  " This also removes {count} saved {type}.":
+    " سيؤدي ذلك أيضًا إلى حذف {count} من المشاركات المحفوظة.",
+  "A place for our halaqah to keep learning together. Take a quiz, see the standings, and catch the latest mix-up.":
+    "مكان يجمعنا لنتعلّم معًا. اختبر معلوماتك، واطّلع على الترتيب وطرائف الحلقة.",
+};
+
+let language = "en";
+try {
+  language = localStorage.getItem("tamkeen-language") === "ar" ? "ar" : "en";
+} catch {
+  /* Language still works when browser storage is unavailable. */
+}
+const listeners = new Set();
+export const getLanguage = () => language;
+export function subscribeLanguage(listener) {
+  listeners.add(listener);
+  return () => listeners.delete(listener);
+}
+function applyLanguage() {
+  document.documentElement.lang = language;
+  document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
+  document.title =
+    language === "ar"
+      ? "أصحاب الخيمة | مقرأة تمكين"
+      : "Ashab Al Khaimah · أصحاب الخيمة";
+}
+export function setLanguage(next) {
+  if (!["en", "ar"].includes(next) || next === language) return;
+  language = next;
+  try {
+    localStorage.setItem("tamkeen-language", language);
+  } catch {
+    /* Preference lasts for this visit. */
+  }
+  applyLanguage();
+  listeners.forEach((listener) => listener());
+}
+export function t(message, values = {}) {
+  const text = language === "ar" ? (arabic[message] ?? message) : message;
+  return text.replace(/\{(\w+)\}/g, (match, key) =>
+    Object.hasOwn(values, key) ? String(values[key]) : match,
+  );
+}
+applyLanguage();

@@ -1,0 +1,619 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-26T01:08:58.036287+00:00",
+  "title": "Design System: أصحاب الخيمة / Ashab Al Khaimah",
+  "extensions": {
+    "colorMeta": {
+      "fabric": {
+        "role": "primary",
+        "displayName": "Fabric",
+        "canonical": "#742c34",
+        "tonalRamp": [
+          "oklch(15% 0.1015 16.25)",
+          "oklch(26% 0.1015 16.25)",
+          "oklch(38% 0.1015 16.25)",
+          "oklch(49% 0.1015 16.25)",
+          "oklch(61% 0.1015 16.25)",
+          "oklch(72% 0.1015 16.25)",
+          "oklch(84% 0.1015 16.25)",
+          "oklch(95% 0.1015 16.25)"
+        ]
+      },
+      "fabric-deep": {
+        "role": "primary",
+        "displayName": "Fabric Deep",
+        "canonical": "#2b1016",
+        "tonalRamp": [
+          "oklch(15% 0.0453 7.57)",
+          "oklch(26% 0.0453 7.57)",
+          "oklch(38% 0.0453 7.57)",
+          "oklch(49% 0.0453 7.57)",
+          "oklch(61% 0.0453 7.57)",
+          "oklch(72% 0.0453 7.57)",
+          "oklch(84% 0.0453 7.57)",
+          "oklch(95% 0.0453 7.57)"
+        ]
+      },
+      "paper": {
+        "role": "primary",
+        "displayName": "Paper",
+        "canonical": "#3d151b",
+        "tonalRamp": [
+          "oklch(15% 0.0630 13.37)",
+          "oklch(26% 0.0630 13.37)",
+          "oklch(38% 0.0630 13.37)",
+          "oklch(49% 0.0630 13.37)",
+          "oklch(61% 0.0630 13.37)",
+          "oklch(72% 0.0630 13.37)",
+          "oklch(84% 0.0630 13.37)",
+          "oklch(95% 0.0630 13.37)"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "White",
+        "canonical": "#fff2d9",
+        "tonalRamp": [
+          "oklch(15% 0.0356 83.78)",
+          "oklch(26% 0.0356 83.78)",
+          "oklch(38% 0.0356 83.78)",
+          "oklch(49% 0.0356 83.78)",
+          "oklch(61% 0.0356 83.78)",
+          "oklch(72% 0.0356 83.78)",
+          "oklch(84% 0.0356 83.78)",
+          "oklch(95% 0.0356 83.78)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#f0dfc2",
+        "tonalRamp": [
+          "oklch(15% 0.0427 81.12)",
+          "oklch(26% 0.0427 81.12)",
+          "oklch(38% 0.0427 81.12)",
+          "oklch(49% 0.0427 81.12)",
+          "oklch(61% 0.0427 81.12)",
+          "oklch(72% 0.0427 81.12)",
+          "oklch(84% 0.0427 81.12)",
+          "oklch(95% 0.0427 81.12)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "canonical": "#d0ad8c",
+        "tonalRamp": [
+          "oklch(15% 0.0607 65.05)",
+          "oklch(26% 0.0607 65.05)",
+          "oklch(38% 0.0607 65.05)",
+          "oklch(49% 0.0607 65.05)",
+          "oklch(61% 0.0607 65.05)",
+          "oklch(72% 0.0607 65.05)",
+          "oklch(84% 0.0607 65.05)",
+          "oklch(95% 0.0607 65.05)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Line",
+        "canonical": "#7c4b3e",
+        "tonalRamp": [
+          "oklch(15% 0.0704 35.63)",
+          "oklch(26% 0.0704 35.63)",
+          "oklch(38% 0.0704 35.63)",
+          "oklch(49% 0.0704 35.63)",
+          "oklch(61% 0.0704 35.63)",
+          "oklch(72% 0.0704 35.63)",
+          "oklch(84% 0.0704 35.63)",
+          "oklch(95% 0.0704 35.63)"
+        ]
+      },
+      "brass": {
+        "role": "secondary",
+        "displayName": "Brass",
+        "canonical": "#d4a063",
+        "tonalRamp": [
+          "oklch(15% 0.0997 69.70)",
+          "oklch(26% 0.0997 69.70)",
+          "oklch(38% 0.0997 69.70)",
+          "oklch(49% 0.0997 69.70)",
+          "oklch(61% 0.0997 69.70)",
+          "oklch(72% 0.0997 69.70)",
+          "oklch(84% 0.0997 69.70)",
+          "oklch(95% 0.0997 69.70)"
+        ]
+      },
+      "focus": {
+        "role": "secondary",
+        "displayName": "Focus",
+        "canonical": "#ffbd69",
+        "tonalRamp": [
+          "oklch(15% 0.1264 71.27)",
+          "oklch(26% 0.1264 71.27)",
+          "oklch(38% 0.1264 71.27)",
+          "oklch(49% 0.1264 71.27)",
+          "oklch(61% 0.1264 71.27)",
+          "oklch(72% 0.1264 71.27)",
+          "oklch(84% 0.1264 71.27)",
+          "oklch(95% 0.1264 71.27)"
+        ]
+      },
+      "header": {
+        "role": "primary",
+        "displayName": "Header",
+        "canonical": "#321319",
+        "tonalRamp": [
+          "oklch(15% 0.0506 9.60)",
+          "oklch(26% 0.0506 9.60)",
+          "oklch(38% 0.0506 9.60)",
+          "oklch(49% 0.0506 9.60)",
+          "oklch(61% 0.0506 9.60)",
+          "oklch(72% 0.0506 9.60)",
+          "oklch(84% 0.0506 9.60)",
+          "oklch(95% 0.0506 9.60)"
+        ]
+      },
+      "hero": {
+        "role": "primary",
+        "displayName": "Hero",
+        "canonical": "#5b222b",
+        "tonalRamp": [
+          "oklch(15% 0.0840 13.08)",
+          "oklch(26% 0.0840 13.08)",
+          "oklch(38% 0.0840 13.08)",
+          "oklch(49% 0.0840 13.08)",
+          "oklch(61% 0.0840 13.08)",
+          "oklch(72% 0.0840 13.08)",
+          "oklch(84% 0.0840 13.08)",
+          "oklch(95% 0.0840 13.08)"
+        ]
+      },
+      "action": {
+        "role": "primary",
+        "displayName": "Action",
+        "canonical": "#e7b479",
+        "tonalRamp": [
+          "oklch(15% 0.0962 69.82)",
+          "oklch(26% 0.0962 69.82)",
+          "oklch(38% 0.0962 69.82)",
+          "oklch(49% 0.0962 69.82)",
+          "oklch(61% 0.0962 69.82)",
+          "oklch(72% 0.0962 69.82)",
+          "oklch(84% 0.0962 69.82)",
+          "oklch(95% 0.0962 69.82)"
+        ]
+      },
+      "action-hover": {
+        "role": "primary",
+        "displayName": "Action Hover",
+        "canonical": "#f1c790",
+        "tonalRamp": [
+          "oklch(15% 0.0855 73.76)",
+          "oklch(26% 0.0855 73.76)",
+          "oklch(38% 0.0855 73.76)",
+          "oklch(49% 0.0855 73.76)",
+          "oklch(61% 0.0855 73.76)",
+          "oklch(72% 0.0855 73.76)",
+          "oklch(84% 0.0855 73.76)",
+          "oklch(95% 0.0855 73.76)"
+        ]
+      },
+      "action-ink": {
+        "role": "neutral",
+        "displayName": "Action Ink",
+        "canonical": "#3c1920",
+        "tonalRamp": [
+          "oklch(15% 0.0555 8.97)",
+          "oklch(26% 0.0555 8.97)",
+          "oklch(38% 0.0555 8.97)",
+          "oklch(49% 0.0555 8.97)",
+          "oklch(61% 0.0555 8.97)",
+          "oklch(72% 0.0555 8.97)",
+          "oklch(84% 0.0555 8.97)",
+          "oklch(95% 0.0555 8.97)"
+        ]
+      },
+      "form-clay": {
+        "role": "neutral",
+        "displayName": "Form Clay",
+        "canonical": "#ead3ab",
+        "tonalRamp": [
+          "oklch(15% 0.0586 81.41)",
+          "oklch(26% 0.0586 81.41)",
+          "oklch(38% 0.0586 81.41)",
+          "oklch(49% 0.0586 81.41)",
+          "oklch(61% 0.0586 81.41)",
+          "oklch(72% 0.0586 81.41)",
+          "oklch(84% 0.0586 81.41)",
+          "oklch(95% 0.0586 81.41)"
+        ]
+      },
+      "field": {
+        "role": "neutral",
+        "displayName": "Field",
+        "canonical": "#f5e5c7",
+        "tonalRamp": [
+          "oklch(15% 0.0432 83.21)",
+          "oklch(26% 0.0432 83.21)",
+          "oklch(38% 0.0432 83.21)",
+          "oklch(49% 0.0432 83.21)",
+          "oklch(61% 0.0432 83.21)",
+          "oklch(72% 0.0432 83.21)",
+          "oklch(84% 0.0432 83.21)",
+          "oklch(95% 0.0432 83.21)"
+        ]
+      },
+      "field-ink": {
+        "role": "neutral",
+        "displayName": "Field Ink",
+        "canonical": "#3a2920",
+        "tonalRamp": [
+          "oklch(15% 0.0300 49.06)",
+          "oklch(26% 0.0300 49.06)",
+          "oklch(38% 0.0300 49.06)",
+          "oklch(49% 0.0300 49.06)",
+          "oklch(61% 0.0300 49.06)",
+          "oklch(72% 0.0300 49.06)",
+          "oklch(84% 0.0300 49.06)",
+          "oklch(95% 0.0300 49.06)"
+        ]
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "Panel",
+        "canonical": "#54232b",
+        "tonalRamp": [
+          "oklch(15% 0.0733 11.84)",
+          "oklch(26% 0.0733 11.84)",
+          "oklch(38% 0.0733 11.84)",
+          "oklch(49% 0.0733 11.84)",
+          "oklch(61% 0.0733 11.84)",
+          "oklch(72% 0.0733 11.84)",
+          "oklch(84% 0.0733 11.84)",
+          "oklch(95% 0.0733 11.84)"
+        ]
+      },
+      "moment-dark": {
+        "role": "neutral",
+        "displayName": "Moment Dark",
+        "canonical": "#2b191c",
+        "tonalRamp": [
+          "oklch(15% 0.0292 8.60)",
+          "oklch(26% 0.0292 8.60)",
+          "oklch(38% 0.0292 8.60)",
+          "oklch(49% 0.0292 8.60)",
+          "oklch(61% 0.0292 8.60)",
+          "oklch(72% 0.0292 8.60)",
+          "oklch(84% 0.0292 8.60)",
+          "oklch(95% 0.0292 8.60)"
+        ]
+      },
+      "sadu-red": {
+        "role": "primary",
+        "displayName": "Sadu Red",
+        "canonical": "#8e2430",
+        "tonalRamp": [
+          "oklch(15% 0.1407 19.28)",
+          "oklch(26% 0.1407 19.28)",
+          "oklch(38% 0.1407 19.28)",
+          "oklch(49% 0.1407 19.28)",
+          "oklch(61% 0.1407 19.28)",
+          "oklch(72% 0.1407 19.28)",
+          "oklch(84% 0.1407 19.28)",
+          "oklch(95% 0.1407 19.28)"
+        ]
+      },
+      "stitch-black": {
+        "role": "neutral",
+        "displayName": "Stitch Black",
+        "canonical": "#241e1a",
+        "tonalRamp": [
+          "oklch(15% 0.0120 55.75)",
+          "oklch(26% 0.0120 55.75)",
+          "oklch(38% 0.0120 55.75)",
+          "oklch(49% 0.0120 55.75)",
+          "oklch(61% 0.0120 55.75)",
+          "oklch(72% 0.0120 55.75)",
+          "oklch(84% 0.0120 55.75)",
+          "oklch(95% 0.0120 55.75)"
+        ]
+      },
+      "stitch-ivory": {
+        "role": "neutral",
+        "displayName": "Stitch Ivory",
+        "canonical": "#e8ddc5",
+        "tonalRamp": [
+          "oklch(15% 0.0342 86.31)",
+          "oklch(26% 0.0342 86.31)",
+          "oklch(38% 0.0342 86.31)",
+          "oklch(49% 0.0342 86.31)",
+          "oklch(61% 0.0342 86.31)",
+          "oklch(72% 0.0342 86.31)",
+          "oklch(84% 0.0342 86.31)",
+          "oklch(95% 0.0342 86.31)"
+        ]
+      },
+      "ochre": {
+        "role": "secondary",
+        "displayName": "Ochre",
+        "canonical": "#be974d",
+        "tonalRamp": [
+          "oklch(15% 0.1035 81.67)",
+          "oklch(26% 0.1035 81.67)",
+          "oklch(38% 0.1035 81.67)",
+          "oklch(49% 0.1035 81.67)",
+          "oklch(61% 0.1035 81.67)",
+          "oklch(72% 0.1035 81.67)",
+          "oklch(84% 0.1035 81.67)",
+          "oklch(95% 0.1035 81.67)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display-arabic": {
+        "displayName": "Arabic gathering name",
+        "purpose": "Amiri gathering name; 91px desktop, 77px tablet, 61px mobile and 51px narrow."
+      },
+      "headline": {
+        "displayName": "English page heading",
+        "purpose": "English page title: 42px desktop and 34px mobile; Arabic preserves Amiri treatment."
+      },
+      "body": {
+        "displayName": "English body",
+        "purpose": "Figtree reading and controls."
+      },
+      "body-arabic": {
+        "displayName": "Arabic body",
+        "purpose": "IBM Plex Sans Arabic reading and controls."
+      },
+      "score": {
+        "displayName": "Standings score",
+        "purpose": "Lora tabular score fragments, isolated for mixed scripts."
+      },
+      "door-name": {
+        "displayName": "Tent door name",
+        "purpose": "Amiri identity at 55px; 45px at 750px and 38px at 380px."
+      }
+    },
+    "shadows": [
+      {
+        "name": "public-panel",
+        "value": "none",
+        "purpose": "Red tonal layers, material borders and woven detail provide structure."
+      },
+      {
+        "name": "lantern-hover-bright",
+        "value": "drop-shadow(0 3px 8px #fc8c3b50)",
+        "purpose": "Local orange halo on the inner SVG while hovered or brightened."
+      },
+      {
+        "name": "tent-door-sheet",
+        "value": "0 22px 60px #1b080c45",
+        "purpose": "Soft structural depth below the centered entry sheet."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Shared short control and entry feedback."
+      },
+      {
+        "name": "lantern-sway",
+        "value": "8s / 9s cubic-bezier(0.45, 0, 0.55, 1) infinite; rotate(-1deg) to rotate(1deg)",
+        "purpose": "Only the inner bodies sway inside stationary native button targets; pause offscreen, hidden or through the motion control."
+      },
+      {
+        "name": "lantern-light",
+        "value": "4.3s ease-in-out infinite; opacity 0.72–0.91; scale 0.98–1.025",
+        "purpose": "Bounded orange halo; static opacity 0.8 with reduced motion."
+      },
+      {
+        "name": "lantern-glass",
+        "value": "4.3s ease-in-out infinite; opacity 0.83–1",
+        "purpose": "Subtle pane brightness synchronized with its halo."
+      },
+      {
+        "name": "control-state",
+        "value": "160ms",
+        "purpose": "Button, border, option-check and standings-hover feedback."
+      },
+      {
+        "name": "directional-feedback",
+        "value": "180ms; translate 2px for options / 3px for action icons",
+        "purpose": "Fine pointer only; follows reading direction and stops on keyboard focus or reduced motion."
+      },
+      {
+        "name": "progress",
+        "value": "200ms background-color",
+        "purpose": "Current and completed quiz segments."
+      },
+      {
+        "name": "navigation-thread",
+        "value": "220ms; scaleX(0.4) to scaleX(1)",
+        "purpose": "Selected tab underline; disabled on focus."
+      },
+      {
+        "name": "question-entry",
+        "value": "250ms",
+        "purpose": "Existing quiz question continuity."
+      },
+      {
+        "name": "result-medal",
+        "value": "420ms; translateY(5px) scale(0.94) to identity",
+        "purpose": "Single result settle; no confetti."
+      },
+      {
+        "name": "result-score",
+        "value": "380ms; opacity 0.65 / translateY(6px) to identity",
+        "purpose": "Single score settle."
+      },
+      {
+        "name": "motion-access",
+        "value": "prefers-reduced-motion: reduce; html[data-motion=\"off\"]",
+        "purpose": "Disable animations and transitions, keep content visible, remove hover movement and smooth scrolling."
+      },
+      {
+        "name": "lantern-interaction",
+        "value": "220ms opacity; 180ms filter",
+        "purpose": "Pressed button toggles the separate orange boost; hover/pressed adds local SVG glow. Interaction persists without animation under reduced motion."
+      },
+      {
+        "name": "cushion-breathe",
+        "value": "7s ease-in-out infinite; translateY(0) to translateY(-2px)",
+        "purpose": "Inner pixel artwork only; staggered 0/-2/-4/-1s by variant. Shares offscreen/hidden/global pausing with lanterns; static under reduced motion."
+      },
+      {
+        "name": "cushion-hover",
+        "value": "220ms ease-out; translateY(-3px) rotate(-2deg)",
+        "purpose": "Decorative wrapper feedback for hover-capable pointers; transition removed under reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "tablet",
+        "value": "900px"
+      },
+      {
+        "name": "door-header-cushions",
+        "value": "750px"
+      },
+      {
+        "name": "mobile",
+        "value": "620px"
+      },
+      {
+        "name": "narrow",
+        "value": "380px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The main quiz or continuation action.",
+      "html": "<button class=\"ds-primary\" type=\"button\">Start quiz</button>",
+      "css": ".ds-primary{font-family:var(--body,Figtree,'IBM Plex Sans Arabic',sans-serif);display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:46px;padding:11px 20px;border:1px solid transparent;border-radius:5px;font-size:15px;font-weight:600;cursor:pointer;transition:background 160ms,border-color 160ms,transform 160ms cubic-bezier(.16,1,.3,1);background:#e7b479;color:#3c1920}.ds-primary:hover{background:#f1c790}.ds-primary:active{transform:scale(.98)}.ds-primary:focus-visible{outline:3px solid var(--focus,#ffbd69);outline-offset:4px}.ds-primary:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-primary{transition:none}}"
+    },
+    {
+      "name": "Secondary button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "A supporting action beside the primary.",
+      "html": "<button class=\"ds-secondary\" type=\"button\">Back</button>",
+      "css": ".ds-secondary{font-family:var(--body,Figtree,'IBM Plex Sans Arabic',sans-serif);display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:46px;padding:11px 20px;border:1px solid transparent;border-radius:5px;font-size:15px;font-weight:600;cursor:pointer;transition:background 160ms,border-color 160ms,transform 160ms cubic-bezier(.16,1,.3,1);background:transparent;color:#f0cfaa;border-color:#a67150}.ds-secondary:hover{background:#6a3232;border-color:#d2a16a}.ds-secondary:active{transform:scale(.98)}.ds-secondary:focus-visible{outline:3px solid var(--focus,#ffbd69);outline-offset:4px}.ds-secondary:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-secondary{transition:none}}"
+    },
+    {
+      "name": "Text action",
+      "kind": "button",
+      "refersTo": "button-text",
+      "description": "Quiet view-all or contextual action.",
+      "html": "<button class=\"ds-text\" type=\"button\">View all</button>",
+      "css": ".ds-text{font-family:var(--body,Figtree,'IBM Plex Sans Arabic',sans-serif);color:#edbd89;background:transparent;border:0;min-height:42px;padding:7px 0;font-size:14px;font-weight:600;cursor:pointer}.ds-text:hover{color:#ffdfb3;text-decoration:underline;text-underline-offset:4px}.ds-text:active{transform:scale(.98)}.ds-text:focus-visible{outline:3px solid var(--focus,#ffbd69);outline-offset:4px}"
+    },
+    {
+      "name": "Text field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "A visible label and warm field for quiz entry.",
+      "html": "<label class=\"ds-field\">Your name<input type=\"text\" placeholder=\"Your name\" autocomplete=\"name\"></label>",
+      "css": ".ds-field{font-family:var(--body,Figtree,'IBM Plex Sans Arabic',sans-serif);display:block;font-size:15px;font-weight:500;color:var(--ink,#f0dfc2)}.ds-field input{font-family:var(--body,Figtree,'IBM Plex Sans Arabic',sans-serif);display:block;width:100%;min-height:47px;margin-top:7px;padding:12px 14px;font-size:16px;line-height:1.5;color:#3a2920;background:#f5e5c7;border:1px solid #b99263;border-radius:5px;caret-color:#752d31}.ds-field input:hover{border-color:#a78d6e}.ds-field input::placeholder{color:#745438;opacity:1}.ds-field input:focus-visible{outline:3px solid var(--focus,#ffbd69);outline-offset:4px}"
+    },
+    {
+      "name": "Text navigation",
+      "kind": "nav",
+      "description": "Public masthead tabs with the fabric selection thread.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Main navigation\"><button type=\"button\" aria-current=\"page\">Home</button><button type=\"button\">Quizzes</button><button type=\"button\">Leaderboard</button><button type=\"button\">Funny answers</button></nav>",
+      "css": ".ds-nav{display:flex;gap:40px;height:54px;background:#321319;padding-inline:20px}.ds-nav button{font-family:var(--body,Figtree,'IBM Plex Sans Arabic',sans-serif);position:relative;padding:0 3px;background:transparent;border:0;font-size:13px;font-weight:500;color:#d2ad8a;cursor:pointer}.ds-nav button:hover,.ds-nav [aria-current]{color:#ffe0a5}.ds-nav [aria-current]{font-weight:700}.ds-nav [aria-current]:after{content:\"\";position:absolute;inset-inline:0;bottom:0;height:2px;background:#e5a75e;animation:ds-thread 220ms cubic-bezier(.16,1,.3,1)}.ds-nav button:focus-visible{outline:3px solid var(--focus,#ffbd69);outline-offset:4px}.ds-nav button:focus-visible:after{animation:none}@keyframes ds-thread{from{transform:scaleX(.4)}to{transform:scaleX(1)}}@media(max-width:620px){.ds-nav{height:51px;gap:15px;justify-content:space-between}.ds-nav button{font-size:12px;padding:0}}@media(prefers-reduced-motion:reduce){.ds-nav [aria-current]:after{animation:none}}"
+    },
+    {
+      "name": "Tent door with pixel cushion",
+      "kind": "card",
+      "refersTo": "tent-door",
+      "description": "Bilingual name/password entry surface and the actual hand-drawn armrest silhouette. Production retains controller validation, utility controls and shared ambient pausing.",
+      "html": "<section class=\"ds-door-sheet\" aria-labelledby=\"ds-door-title\"><svg class=\"ds-door-weave\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" width=\"240\" height=\"64\" viewBox=\"0 0 240 64\" shape-rendering=\"crispEdges\">\n<defs>\n<pattern id=\"ds-entry-stitch\" width=\"8\" height=\"4\" patternUnits=\"userSpaceOnUse\"><path fill=\"#e8ddc5\" d=\"M0 0h3v2H0zM4 2h3v2H4z\"/></pattern>\n<pattern id=\"ds-entry-edge\" width=\"24\" height=\"10\" patternUnits=\"userSpaceOnUse\"><path fill=\"#241e1a\" d=\"M0 0h24v10H0z\"/><path fill=\"#e8ddc5\" d=\"M0 0h4v2h4v2h4v2h4V4h4V2h4V0H0zm0 10V8h4V6h4V4h4v2h4v2h4v2z\"/></pattern>\n<g id=\"ds-entry-motif\"><path fill=\"#241e1a\" d=\"M0 31h4v-3h4v-3h4v-3h4v-3h4v26h-4v-3h-4v-3H8v-3H4v-3H0zm26-12h4v3h4v3h4v3h4v3h4v2h-4v3h-4v3h-4v3h-4v3h-4z\"/><path fill=\"#8e2430\" d=\"M17 23h2v18h-2zm12 0h2v18h-2z\"/><path fill=\"#e8ddc5\" d=\"m21 30 3-3 3 3-3 3z\"/></g>\n</defs>\n<path fill=\"#8e2430\" d=\"M0 0h240v64H0z\"/>\n<path fill=\"url(#ds-entry-edge)\" d=\"M0 0h240v10H0zM0 54h240v10H0z\"/>\n<path fill=\"#be974d\" d=\"M0 11h240v2H0zM0 51h240v2H0z\"/>\n<path fill=\"#241e1a\" d=\"M0 14h240v4H0zM0 46h240v4H0z\"/>\n<path fill=\"url(#ds-entry-stitch)\" d=\"M0 14h240v4H0zM0 46h240v4H0z\"/>\n<use href=\"#ds-entry-motif\" x=\"7\"/><use href=\"#ds-entry-motif\" x=\"87\"/><use href=\"#ds-entry-motif\" x=\"167\"/>\n<path fill=\"#e8ddc5\" d=\"M66 29h3v-2h3v2h3v4h-3v2h-3v-2h-3zm80 0h3v-2h3v2h3v4h-3v2h-3v-2h-3zm80 0h3v-2h3v2h3v4h-3v2h-3v-2h-3z\"/>\n</svg>\n<h1 id=\"ds-door-title\" lang=\"ar\" dir=\"rtl\">أصحاب الخيمة</h1><label class=\"ds-door-label\">Your name<input autocomplete=\"name\" required maxlength=\"40\"></label><label class=\"ds-door-label\">Password<input type=\"password\" autocomplete=\"current-password\" required maxlength=\"72\"></label><button type=\"button\" class=\"ds-door-action\">Come in <span aria-hidden=\"true\">→</span></button><div class=\"ds-door-cushion\" aria-hidden=\"true\"><svg class=\"ds-cushion-art\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 176 120\" shape-rendering=\"crispEdges\"><defs><pattern id=\"ds-door-weave\" width=\"32\" height=\"32\" patternUnits=\"userSpaceOnUse\"><path fill=\"#421921\" d=\"M0 0h32v32H0z\"/><path fill=\"#9d3440\" d=\"M0 2h32v4H0zm0 24h32v4H0z\"/><path fill=\"#edcd99\" d=\"M0 9h4v4H0zm28 0h4v4h-4zM12 8h8v4h4v8h-4v4h-8v-4H8v-8h4z\"/><path fill=\"#36191e\" d=\"M14 12h4v4h4v2h-4v4h-4v-4h-4v-2h4z\"/><path fill=\"#bb854c\" d=\"M0 0h32v2H0zm0 30h32v2H0z\"/></pattern><pattern id=\"ds-door-stitch\" width=\"8\" height=\"8\" patternUnits=\"userSpaceOnUse\"><path fill=\"#c4524b\" d=\"M0 0h2v2H0zm4 4h2v2H4z\"/></pattern></defs>\n<path fill=\"#250e17\" d=\"M18 88h134v14H18z\"/>\n<path fill=\"#451821\" d=\"M30 22h104v6h14v12h10v38h-8v14h-18v6H26v-8H16V78H10V44h8V30h12z\"/>\n<path fill=\"#a33942\" d=\"M32 28h98v6h14v12h8v30h-8v12h-16v4H28V84H20V74h-4V46h8V36h8z\"/>\n<path fill=\"#d56953\" d=\"M32 28h98v4H34v8H24v10h-4V46h4V36h8z\"/>\n<path fill=\"url(#ds-door-weave)\" d=\"M34 36h88v48H34z\"/>\n<path fill=\"#e7c18c\" d=\"M30 38h4v42h-4zm88-2h4v48h-4z\"/>\n<path fill=\"#722732\" d=\"M128 36h12v10h8v28h-8v12h-12v-8h-6V46h6z\"/>\n<path fill=\"#dfb580\" d=\"M132 40h4v8h6v22h-6v10h-4V68h-6V52h6z\"/>\n<path fill=\"#431a23\" d=\"M132 52h4v14h-4z\"/>\n<path fill=\"#b98851\" d=\"M144 60h16v4h-16zm16 0h4v16h-4zm-4 12h4v8h-4zm8 0h4v8h-4z\"/>\n<path fill=\"#742632\" d=\"M28 84h90v4H28z\"/>\n</svg>\n</div></section>",
+      "css": ".ds-door-sheet{position:relative;width:min(100%,520px);padding:28px 46px 40px;margin-bottom:57px;background:#54232b;color:#f0dfc2;box-shadow:0 22px 60px #1b080c45;font-family:var(--body,Figtree,'IBM Plex Sans Arabic',sans-serif)}.ds-door-weave{position:absolute;top:0;inset-inline:0;width:100%;height:8px}.ds-door-sheet h1{font:400 55px/1.6 Amiri,serif;color:#ffdda0;text-align:center;margin:0 0 12px}.ds-door-label{display:grid;gap:8px;font-size:14px;margin-bottom:20px}.ds-door-label input{display:block;width:100%;min-height:48px;padding:12px 14px;font:16px/1.5 var(--body,Figtree,'IBM Plex Sans Arabic',sans-serif);border:1px solid #bb966a;border-radius:5px;background:#f5e5c7;color:#3a2920}.ds-door-label input:focus-visible,.ds-door-action:focus-visible{outline:3px solid #ffbd69;outline-offset:4px}.ds-door-action{display:flex;justify-content:space-between;align-items:center;width:100%;min-height:46px;padding:11px 20px;border:0;border-radius:5px;font:600 15px var(--body,Figtree,'IBM Plex Sans Arabic',sans-serif);background:#e7b479;color:#3c1920;cursor:pointer;transition:background 160ms,transform 160ms cubic-bezier(.16,1,.3,1)}.ds-door-action:hover{background:#f1c790}.ds-door-action:active{transform:scale(.98)}.ds-door-cushion{position:absolute;bottom:-57px;inset-inline-end:20px;width:128px;height:88px;transition:transform 220ms ease-out;pointer-events:auto}.ds-cushion-art{display:block;width:100%;height:100%;image-rendering:pixelated;animation:ds-cushion-breathe 7s ease-in-out infinite;animation-delay:-1s;animation-play-state:var(--lantern-play-state,running)}@keyframes ds-cushion-breathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}@media(hover:hover){.ds-door-cushion:hover{transform:translateY(-3px) rotate(-2deg)}}@media(max-width:750px){.ds-door-sheet{padding:24px 24px 32px}.ds-door-sheet h1{font-size:45px}}@media(max-width:380px){.ds-door-sheet{padding-inline:18px}.ds-door-sheet h1{font-size:38px}}@media(prefers-reduced-motion:reduce){.ds-cushion-art{animation:none}.ds-door-cushion,.ds-door-action{transition:none}}"
+    },
+    {
+      "name": "Answer option",
+      "kind": "input",
+      "description": "A native radio target with visible selection and focus.",
+      "html": "<label class=\"ds-option\"><input type=\"radio\" name=\"ds-answer\"><span class=\"ds-letter\">A</span><span class=\"ds-option-text\">Answer choice</span><span class=\"ds-check\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\" width=\"14\" height=\"14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"m5 12 4 4L19 6\"/></svg></span></label>",
+      "css": ".ds-option{font-family:var(--body,Figtree,'IBM Plex Sans Arabic',sans-serif);position:relative;display:flex;align-items:center;gap:15px;min-height:82px;margin:12px 0;padding:20px;background:#54262d;color:#f3dbb8;border:1px solid #9d694c;border-radius:4px;font-size:18px;line-height:1.65;cursor:pointer;transition:background-color 160ms,border-color 160ms,transform 180ms cubic-bezier(.16,1,.3,1)}.ds-option>input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}.ds-option:hover{background:#683337;border-color:#d5a46c}.ds-option:has(input:checked){background:#81412f;border:2px solid #f6bd78;padding:19px}.ds-option:focus-within{outline:3px solid var(--focus,#ffbd69);outline-offset:4px}.ds-letter{display:grid;place-items:center;width:29px;height:31px;background:#341b21;color:#efc88f;border-radius:3px;font-size:13px;font-weight:700}.ds-option-text{flex:1;min-width:0;overflow-wrap:anywhere}.ds-check{display:grid;place-items:center;width:22px;height:22px;border:1px solid #c99a63;border-radius:50%}.ds-check svg{visibility:hidden}.ds-option:has(input:checked) .ds-letter,.ds-option:has(input:checked) .ds-check{background:#e4a25b;color:#39201f;border-color:#e4a25b}.ds-option:has(input:checked) svg{visibility:visible}@media(hover:hover) and (pointer:fine){.ds-option:hover{transform:translateX(2px)}.ds-option:dir(rtl):hover{transform:translateX(-2px)}}.ds-option:has(input:focus-visible){transition:none;transform:none}@media(max-width:620px){.ds-option{padding:19px 14px;min-height:80px}.ds-option:has(input:checked){padding:18px 13px}}@media(prefers-reduced-motion:reduce){.ds-option{transition:none;transform:none!important}}"
+    },
+    {
+      "name": "Standings table",
+      "kind": "custom",
+      "description": "The public table structure; sample row intentionally carries no score.",
+      "html": "<table class=\"ds-table\" aria-label=\"Quiz rankings\"><thead><tr><th scope=\"col\">Rank</th><th scope=\"col\">Student</th><th scope=\"col\">Score</th><th scope=\"col\">Percentage</th></tr></thead><tbody><tr><td class=\"ds-rank\">—</td><td><bdi>Student</bdi></td><td class=\"ds-score\"><bdi>—</bdi></td><td class=\"ds-percent\"><bdi>—</bdi></td></tr></tbody></table>",
+      "css": ".ds-table{font-family:var(--body,Figtree,'IBM Plex Sans Arabic',sans-serif);border-collapse:collapse;width:100%;text-align:start;font-size:14px;font-variant-numeric:tabular-nums;color:#ebd4b5;background:var(--paper,#3d151b)}.ds-table th{text-align:start;background:#622c33;color:#e2c29c;font-size:12px;font-weight:400;padding:14px 17px;border-top:2px solid #bb8552;border-bottom:1px solid #986043}.ds-table td{padding:20px 17px;line-height:1.7;border-bottom:1px solid #7a453d}.ds-table tbody tr{transition:background-color 160ms ease}.ds-table tbody tr:hover{background:#743b3d}.ds-table .ds-rank{width:54px;color:#dfb681;font-size:13px}.ds-table .ds-score{font-family:Lora,Georgia,serif;color:#ffda9e;font-size:22px;width:120px;text-align:end}.ds-table .ds-percent{width:120px;text-align:end;font-size:13px;color:#dcb992}.ds-table th:nth-last-child(-n+2){text-align:end}@media(max-width:620px){.ds-table{font-size:13px}.ds-table th{padding:12px 8px;font-size:10px}.ds-table td{padding:17px 8px}.ds-table .ds-rank{width:25px;font-size:12px}.ds-table .ds-score{width:68px;font-size:20px}.ds-table .ds-percent{width:58px;font-size:11px}}@media(prefers-reduced-motion:reduce){.ds-table tbody tr{transition:none}}"
+    },
+    {
+      "name": "Woven moment surface",
+      "kind": "card",
+      "refersTo": "moment-card",
+      "description": "The home moment surface, shown without invented group content.",
+      "html": "<article class=\"ds-moment\"><svg class=\"ds-weave\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" width=\"240\" height=\"64\" viewBox=\"0 0 240 64\" shape-rendering=\"crispEdges\">\n<defs>\n<pattern id=\"stitch\" width=\"8\" height=\"4\" patternUnits=\"userSpaceOnUse\"><path fill=\"#e8ddc5\" d=\"M0 0h3v2H0zM4 2h3v2H4z\"/></pattern>\n<pattern id=\"edge\" width=\"24\" height=\"10\" patternUnits=\"userSpaceOnUse\"><path fill=\"#241e1a\" d=\"M0 0h24v10H0z\"/><path fill=\"#e8ddc5\" d=\"M0 0h4v2h4v2h4v2h4V4h4V2h4V0H0zm0 10V8h4V6h4V4h4v2h4v2h4v2z\"/></pattern>\n<g id=\"motif\"><path fill=\"#241e1a\" d=\"M0 31h4v-3h4v-3h4v-3h4v-3h4v26h-4v-3h-4v-3H8v-3H4v-3H0zm26-12h4v3h4v3h4v3h4v3h4v2h-4v3h-4v3h-4v3h-4v3h-4z\"/><path fill=\"#8e2430\" d=\"M17 23h2v18h-2zm12 0h2v18h-2z\"/><path fill=\"#e8ddc5\" d=\"m21 30 3-3 3 3-3 3z\"/></g>\n</defs>\n<path fill=\"#8e2430\" d=\"M0 0h240v64H0z\"/>\n<path fill=\"url(#edge)\" d=\"M0 0h240v10H0zM0 54h240v10H0z\"/>\n<path fill=\"#be974d\" d=\"M0 11h240v2H0zM0 51h240v2H0z\"/>\n<path fill=\"#241e1a\" d=\"M0 14h240v4H0zM0 46h240v4H0z\"/>\n<path fill=\"url(#stitch)\" d=\"M0 14h240v4H0zM0 46h240v4H0z\"/>\n<use href=\"#motif\" x=\"7\"/><use href=\"#motif\" x=\"87\"/><use href=\"#motif\" x=\"167\"/>\n<path fill=\"#e8ddc5\" d=\"M66 29h3v-2h3v2h3v4h-3v2h-3v-2h-3zm80 0h3v-2h3v2h3v4h-3v2h-3v-2h-3zm80 0h3v-2h3v2h3v4h-3v2h-3v-2h-3z\"/>\n</svg>\n<p class=\"ds-question\">Question</p><p class=\"ds-answer\">Approved answer</p><p class=\"ds-correct\">Correct answer</p><p class=\"ds-caption\">Caption</p></article>",
+      "css": ".ds-moment{font-family:var(--body,Figtree,'IBM Plex Sans Arabic',sans-serif);position:relative;background:#2b191c;color:#f0d7b1;border:1px solid #966343;border-radius:2px;padding:30px 29px;overflow:hidden}.ds-weave{position:absolute;top:0;inset-inline:0;width:100%;height:7px}.ds-question{font-size:14px;line-height:1.8;color:#ddb894;margin:0 0 22px}.ds-answer{font-family:Lora,Georgia,serif;font-size:27px;line-height:1.65;color:#f3d7b0;margin:0 0 18px}.ds-correct{font-size:12px;line-height:1.8;color:#d5af87;margin:0 0 16px}.ds-caption{font-size:13px;line-height:1.8;color:#d4ae86;border-top:1px solid #795341;margin:22px 0 0;padding-top:17px}.ds-moment:lang(ar) .ds-answer{font-family:Amiri,serif;font-size:29px;line-height:1.9}@media(max-width:620px){.ds-moment{padding:29px 25px}.ds-answer{font-size:25px}}"
+    },
+    {
+      "name": "Interactive orange lantern",
+      "kind": "button",
+      "refersTo": "lantern",
+      "description": "Stable native button; click or keyboard activation toggles local orange light. Production supplies bilingual labels and offscreen/hidden loop pausing.",
+      "html": "<div class=\"ds-lamp-stage\"><button type=\"button\" class=\"ds-lantern\" aria-label=\"Brighten lantern\" aria-pressed=\"false\" onclick=\"const bright=this.getAttribute('aria-pressed')!=='true';this.setAttribute('aria-pressed',String(bright));this.setAttribute('aria-label',bright?'Dim lantern':'Brighten lantern')\"><span class=\"ds-lantern-halo\" aria-hidden=\"true\"></span><span class=\"ds-lantern-boost\" aria-hidden=\"true\"></span><svg class=\"ds-lantern-body\" viewBox=\"0 0 80 170\" fill=\"none\" aria-hidden=\"true\"><path d=\"M40 0v39\" stroke=\"#745031\" stroke-width=\"1.5\"/><path d=\"M33 45a7 7 0 1 1 14 0\" stroke=\"#745031\" stroke-width=\"2\"/><path d=\"m40 45-18 15h36L40 45Z\" fill=\"#936434\" stroke=\"#553a25\" stroke-width=\"1.5\"/><path d=\"m26 63-6 48 20 13 20-13-6-48H26Z\" fill=\"#5b3a25\" stroke=\"#4b3222\" stroke-width=\"2\"/><path class=\"ds-lantern-glass\" d=\"m29 67-5 42 13 9V67H29Zm14 0v51l13-9-5-42h-8Z\" fill=\"#ffb651\"/><path d=\"m29 68 8 4v37l-11-3 3-38Zm14 4 8-4 4 38-12 3V72Z\" fill=\"#ffda9a\" opacity=\".5\"/><path d=\"M40 65v57M24 109h32M26 64h28\" stroke=\"#704825\" stroke-width=\"2\"/><path d=\"M27 123h26l5 7H22l5-7Zm-5 8h36v4H22v-4Z\" fill=\"#80552e\" stroke=\"#513923\" stroke-width=\"1.5\"/><path d=\"M33 139h14m-7-3v8\" stroke=\"#91683b\" stroke-width=\"1.5\"/><path d=\"M31 57h18M26 126h28\" stroke=\"#d1aa68\" stroke-width=\"1.5\"/></svg></button></div>",
+      "css": ".ds-lamp-stage{display:grid;place-items:start center;position:relative;background:#5b222b;min-height:220px;overflow:hidden}.ds-lantern{position:relative;width:80px;height:170px;background:transparent;border:0;padding:0;border-radius:5px;display:block;cursor:pointer;animation:none}.ds-lantern:focus-visible{outline:2px solid #ffd396;outline-offset:5px}.ds-lantern-body{position:relative;z-index:1;display:block;width:100%;height:100%;transform-origin:50% 0;animation:ds-sway 8s cubic-bezier(.45,0,.55,1) infinite;animation-play-state:var(--lantern-play-state,running);transition:filter 180ms ease}.ds-lantern:hover .ds-lantern-body,.ds-lantern[aria-pressed=\"true\"] .ds-lantern-body{filter:drop-shadow(0 3px 8px #fc8c3b50)}.ds-lantern-halo{position:absolute;width:210px;height:210px;top:-8px;left:50%;margin-left:-105px;background:radial-gradient(ellipse,#ff9a3f94 0%,#fa7b343d 35%,#f16e2100 70%);pointer-events:none;animation:ds-light 4.3s ease-in-out infinite;animation-play-state:var(--lantern-play-state,running)}.ds-lantern-boost{position:absolute;width:245px;height:245px;top:-25px;left:50%;margin-left:-122.5px;pointer-events:none;background:radial-gradient(ellipse,#ffb85fbd 0%,#ff8b384d 38%,#ec5c1c00 72%);opacity:0;transition:opacity 220ms ease}.ds-lantern[aria-pressed=\"true\"] .ds-lantern-boost{opacity:1}.ds-lantern-glass{animation:ds-glass 4.3s ease-in-out infinite;animation-play-state:var(--lantern-play-state,running)}@keyframes ds-sway{0%,100%{transform:rotate(-1deg)}50%{transform:rotate(1deg)}}@keyframes ds-light{0%,100%{opacity:.72;transform:scale(.98)}37%{opacity:.91}64%{opacity:.78;transform:scale(1.025)}}@keyframes ds-glass{0%,100%{opacity:.83}37%{opacity:1}64%{opacity:.9}}@media(prefers-reduced-motion:reduce){.ds-lantern-body,.ds-lantern-halo,.ds-lantern-glass{animation:none!important}.ds-lantern-body,.ds-lantern-boost{transition:none}.ds-lantern-halo{opacity:.8;transform:none}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Deep oxblood and orange lamplight",
+    "overview": "Deep oxblood textile, warm ivory ink and interactive orange lamplight place this bilingual learning circle inside its Najdi gathering. Intricacy comes from authored Sadu geometry, woven side rails, stepped plaster, fine brass-colored rules, separate pixel-art Sadu cushions and actual Arabic lettering. Generous space around sections, tables and actions makes the dark setting welcoming and readable.\n\nAmiri carries the Arabic identity; Lora gives English headings a quiet literary character. Figtree and IBM Plex Sans Arabic keep controls and reading clear. Red grounds carry the public shell and cards; clay is reserved for focused reading forms. Reference photographs never appear in the interface.\n\nIndividual floor, backrest, square and cylindrical cushion silhouettes add a small crafted accent. Each is hand-drawn crisp-edge SVG; keep them separate and clear of reading and controls. The bilingual remembered-name/password tent door uses the same red, brass, cream fields and lantern vocabulary.",
+    "keyCharacteristics": [
+      "Deep oxblood grounds with warm ivory reading and amber actions.",
+      "Black, ivory and ochre Sadu, woven side rails, stepped plaster and brass detail.",
+      "Equal English and Arabic functionality, with RTL and mixed-script isolation.",
+      "Stable interactive lantern buttons, orange glow and restrained motion.",
+      "Roomy sections, generous table rows and a wider desktop shell.",
+      "Separate hand-drawn pixel-art Sadu cushions, never a complete seating scene."
+    ],
+    "rules": [
+      {
+        "name": "The Material Detail Rule",
+        "body": "Repeat the authored Najdi textile, plaster and brass vocabulary across edges and section details; keep ornament outside reading and control hit areas.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Scripts Rule",
+        "body": "Use Amiri for Arabic display and headings, Lora for English headings, and the language-appropriate sans serif for body and controls. Remove English tracking from Arabic.",
+        "section": "typography"
+      },
+      {
+        "name": "The Bounded Light Rule",
+        "body": "Keep orange light local to the lanterns and their stable button targets. Pause loops offscreen and when the document is hidden; retain the header pause control and static reduced-motion path.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use the four separate authored pixel-art cushion silhouettes at the existing accent placements.",
+      "Do use deep red for public grounds, warm ivory for reading and amber for primary actions.",
+      "Do reserve clay surfaces for focused reading forms.",
+      "Do repeat authored Sadu, stepped plaster and brass details across the public interface.",
+      "Do preserve semantic tables, visible keyboard focus, language switching and mixed-script isolation.",
+      "Do keep app copy factual and grounded in actual quizzes, standings and approved moments.",
+      "Do keep lantern targets stable, keyboard operable and labeled in the current language.",
+      "Do keep content visible and interactive before motion starts."
+    ],
+    "donts": [
+      "Don't replace the cushions with a composite seating scene, generated illustration or raster asset.",
+      "Don't return the public shell to a fully beige or soft light theme.",
+      "Don't put reference photographs or raster scene substitutes in the UI.",
+      "Don't use sacred text as ornament.",
+      "Don't replace the Najdi vocabulary with generic pan-Islamic decoration.",
+      "Don't add promotional filler, invented scores, members, dates or quiz content.",
+      "Don't propagate legacy blue or purple teacher-control accents into the public design system."
+    ]
+  }
+}

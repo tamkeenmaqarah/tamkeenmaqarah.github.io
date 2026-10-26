@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 120" shape-rendering="crispEdges"><defs><pattern id="weave" width="32" height="32" patternUnits="userSpaceOnUse"><path fill="#421921" d="M0 0h32v32H0z"/><path fill="#9d3440" d="M0 2h32v4H0zm0 24h32v4H0z"/><path fill="#edcd99" d="M0 9h4v4H0zm28 0h4v4h-4zM12 8h8v4h4v8h-4v4h-8v-4H8v-8h4z"/><path fill="#36191e" d="M14 12h4v4h4v2h-4v4h-4v-4h-4v-2h4z"/><path fill="#bb854c" d="M0 0h32v2H0zm0 30h32v2H0z"/></pattern><pattern id="stitch" width="8" height="8" patternUnits="userSpaceOnUse"><path fill="#c4524b" d="M0 0h2v2H0zm4 4h2v2H4z"/></pattern></defs>
+<path fill="#250e17" d="M18 88h134v14H18z"/>
+<path fill="#451821" d="M30 22h104v6h14v12h10v38h-8v14h-18v6H26v-8H16V78H10V44h8V30h12z"/>
+<path fill="#a33942" d="M32 28h98v6h14v12h8v30h-8v12h-16v4H28V84H20V74h-4V46h8V36h8z"/>
+<path fill="#d56953" d="M32 28h98v4H34v8H24v10h-4V46h4V36h8z"/>
+<path fill="url(#weave)" d="M34 36h88v48H34z"/>
+<path fill="#e7c18c" d="M30 38h4v42h-4zm88-2h4v48h-4z"/>
+<path fill="#722732" d="M128 36h12v10h8v28h-8v12h-12v-8h-6V46h6z"/>
+<path fill="#dfb580" d="M132 40h4v8h6v22h-6v10h-4V68h-6V52h6z"/>
+<path fill="#431a23" d="M132 52h4v14h-4z"/>
+<path fill="#b98851" d="M144 60h16v4h-16zm16 0h4v16h-4zm-4 12h4v8h-4zm8 0h4v8h-4z"/>
+<path fill="#742632" d="M28 84h90v4H28z"/>
+</svg>
