@@ -7,7 +7,7 @@ export default defineConfig({
  root,base,publicDir:fileURLToPath(new URL('./public',import.meta.url)),
  plugins:[react()],
  define:{
-  __TAMKEEN_API_ORIGIN__:JSON.stringify('https://tamkeen-maqraah-learning.modest-mink-0683.chatgpt.site'),
+  __TAMKEEN_API_ORIGIN__:JSON.stringify(process.env.TAMKEEN_API_ORIGIN||'https://tamkeen-maqraah-learning.modest-mink-0683.chatgpt.site'),
   __TAMKEEN_BASE_PATH__:JSON.stringify(base)
  },
  build:{outDir:fileURLToPath(new URL('./dist-pages',import.meta.url)),emptyOutDir:true}

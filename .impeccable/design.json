@@ -1,13 +1,13 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-25T19:15:41.075239+00:00",
-  "title": "Design System: Tamkeen Maqra’ah",
+  "generatedAt": "2026-10-26T00:02:45.366509+00:00",
+  "title": "Design System: \u062e\u064a\u0645\u0629 \u064a\u0627\u0633\u064a\u0646",
   "extensions": {
     "colorMeta": {
       "navy": {
         "role": "primary",
-        "displayName": "Club Navy",
-        "canonical": "#153a65",
+        "displayName": "Tent deep",
+        "canonical": "#7a1420",
         "tonalRamp": [
           "oklch(15.0% 0.0863 254.28)",
           "oklch(26.4% 0.0863 254.28)",
@@ -21,8 +21,8 @@
       },
       "ink": {
         "role": "neutral",
-        "displayName": "Reading Ink",
-        "canonical": "#1a2d49",
+        "displayName": "Ink",
+        "canonical": "#241416",
         "tonalRamp": [
           "oklch(15.0% 0.0571 257.96)",
           "oklch(26.4% 0.0571 257.96)",
@@ -36,8 +36,8 @@
       },
       "blue": {
         "role": "primary",
-        "displayName": "Royal Blue",
-        "canonical": "#315fe9",
+        "displayName": "Tent red",
+        "canonical": "#9d1c2b",
         "tonalRamp": [
           "oklch(15.0% 0.2147 265.45)",
           "oklch(26.4% 0.2147 265.45)",
@@ -51,8 +51,8 @@
       },
       "blue-dark": {
         "role": "primary",
-        "displayName": "Deep Royal",
-        "canonical": "#2348bd",
+        "displayName": "Tent deep",
+        "canonical": "#7a1420",
         "tonalRamp": [
           "oklch(15.0% 0.1885 265.58)",
           "oklch(26.4% 0.1885 265.58)",
@@ -66,8 +66,8 @@
       },
       "yellow": {
         "role": "secondary",
-        "displayName": "Champion Yellow",
-        "canonical": "#ffce58",
+        "displayName": "Brass",
+        "canonical": "#d7b56a",
         "tonalRamp": [
           "oklch(15.0% 0.1441 86.23)",
           "oklch(26.4% 0.1441 86.23)",
@@ -96,8 +96,8 @@
       },
       "lilac": {
         "role": "tertiary",
-        "displayName": "Lilac",
-        "canonical": "#c7b6f6",
+        "displayName": "Sand brass",
+        "canonical": "#ecd9b0",
         "tonalRamp": [
           "oklch(15.0% 0.0906 296.52)",
           "oklch(26.4% 0.0906 296.52)",
@@ -111,8 +111,8 @@
       },
       "paper": {
         "role": "neutral",
-        "displayName": "Cool Paper",
-        "canonical": "#f5f7fb",
+        "displayName": "Canvas",
+        "canonical": "#f7f1e6",
         "tonalRamp": [
           "oklch(15.0% 0.0057 264.53)",
           "oklch(26.4% 0.0057 264.53)",
@@ -126,8 +126,8 @@
       },
       "white": {
         "role": "neutral",
-        "displayName": "White",
-        "canonical": "#fff",
+        "displayName": "Ivory",
+        "canonical": "#fffdf8",
         "tonalRamp": [
           "oklch(15.0% 0.0000 0.00)",
           "oklch(26.4% 0.0000 0.00)",
@@ -141,8 +141,8 @@
       },
       "muted": {
         "role": "neutral",
-        "displayName": "Muted Slate",
-        "canonical": "#586c85",
+        "displayName": "Muted",
+        "canonical": "#6d534c",
         "tonalRamp": [
           "oklch(15.0% 0.0464 254.23)",
           "oklch(26.4% 0.0464 254.23)",
@@ -156,8 +156,8 @@
       },
       "line": {
         "role": "neutral",
-        "displayName": "Team Sheet Line",
-        "canonical": "#d8e1ee",
+        "displayName": "Line",
+        "canonical": "#e6d3c4",
         "tonalRamp": [
           "oklch(15.0% 0.0202 257.47)",
           "oklch(26.4% 0.0202 257.47)",
@@ -171,8 +171,8 @@
       },
       "soft-blue": {
         "role": "neutral",
-        "displayName": "Soft Blue",
-        "canonical": "#eaf0ff",
+        "displayName": "Sand",
+        "canonical": "#f6e7d4",
         "tonalRamp": [
           "oklch(15.0% 0.0212 268.43)",
           "oklch(26.4% 0.0212 268.43)",
@@ -186,8 +186,8 @@
       },
       "focus": {
         "role": "neutral",
-        "displayName": "Amber Focus",
-        "canonical": "#a86400",
+        "displayName": "Brass deep",
+        "canonical": "#8a5a12",
         "tonalRamp": [
           "oklch(15.0% 0.1268 65.30)",
           "oklch(26.4% 0.1268 65.30)",
@@ -353,7 +353,7 @@
       "name": "Student Quiz Card",
       "kind": "card",
       "description": "A student task with title, instructions and a visible next action.",
-      "html": "<article class=\"ds-quiz\"><div><h2>Everyday etiquette</h2><p>Choose one answer for each question.</p><span class=\"ds-quiz-help\">5 questions · no time limit</span></div><button class=\"ds-quiz-start\">Start quiz</button></article>",
+      "html": "<article class=\"ds-quiz\"><div><h2>Everyday etiquette</h2><p>Choose one answer for each question.</p><span class=\"ds-quiz-help\">5 questions \u00b7 no time limit</span></div><button class=\"ds-quiz-start\">Start quiz</button></article>",
       "css": ".ds-quiz{display:flex;align-items:center;justify-content:space-between;gap:30px;background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:28px;font-family:Figtree,Arial,sans-serif;color:var(--ink)}.ds-quiz h2{font-size:23px;font-weight:700;line-height:1.3;letter-spacing:-.025em;margin:0 0 10px}.ds-quiz p{font-size:15px;line-height:1.6;color:var(--muted);max-width:60ch;margin:0 0 15px}.ds-quiz-help{font-size:13px;line-height:1.7;color:var(--muted)}.ds-quiz-start{display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font:700 15px/1.6 Figtree,Arial,sans-serif;min-height:46px;border-radius:8px;padding:11px 18px;white-space:nowrap;transition:background .16s,border-color .16s,transform .16s var(--ease);min-width:140px;border:1px solid transparent;background:var(--blue);color:var(--white)}.ds-quiz-start:hover:not(:disabled){background:var(--blue-dark)}.ds-quiz-start:focus-visible{outline:3px solid var(--focus);outline-offset:4px;}.ds-quiz-start:not(:disabled):active{transform:scale(.98)}@media(max-width:580px){.ds-quiz{padding:25px;flex-direction:column;align-items:stretch;gap:22px}.ds-quiz p{font-size:14px}.ds-quiz-start{width:100%;font-size:14px;min-height:45px;padding:11px 16px;justify-content:space-between}}@media(prefers-reduced-motion:reduce){.ds-quiz-start{transition:none}}",
       "refersTo": "student-quiz"
     },
@@ -361,7 +361,7 @@
       "name": "Quiz Radio Choice",
       "kind": "custom",
       "description": "Visible quiz title and detail with a whole-card focus outline.",
-      "html": "<fieldset class=\"ds-quiz-choices\"><legend>Choose a quiz</legend><label class=\"ds-quiz-choice\"><input type=\"radio\" name=\"ds-quiz\" checked><span class=\"ds-quiz-choice-copy\"><b>Original etiquette quiz</b><small>Paper quiz · 13 points + bonus</small></span><span class=\"ds-choice-check\"><svg width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" aria-hidden=\"true\"><path d=\"m20 6-11 11-5-5\"/></svg></span></label></fieldset>",
+      "html": "<fieldset class=\"ds-quiz-choices\"><legend>Choose a quiz</legend><label class=\"ds-quiz-choice\"><input type=\"radio\" name=\"ds-quiz\" checked><span class=\"ds-quiz-choice-copy\"><b>Original etiquette quiz</b><small>Paper quiz \u00b7 13 points + bonus</small></span><span class=\"ds-choice-check\"><svg width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" aria-hidden=\"true\"><path d=\"m20 6-11 11-5-5\"/></svg></span></label></fieldset>",
       "css": ".ds-quiz-choices{border:0;padding:0;margin:0;font-family:Figtree,Arial,sans-serif;color:var(--ink)}.ds-quiz-choices legend{font-size:14px;font-weight:600;line-height:1.6;margin-bottom:12px}.ds-quiz-choice{display:flex;align-items:center;gap:12px;background:var(--white);border:1px solid #cbd7e8;border-radius:9px;padding:15px;cursor:pointer;min-width:0}.ds-quiz-choice>input{position:absolute;opacity:0;width:1px;height:1px}.ds-quiz-choice-copy{flex:1;min-width:0}.ds-quiz-choice b{display:block;font-size:14px;line-height:1.6;font-weight:700;overflow-wrap:anywhere}.ds-quiz-choice small{display:block;font-size:12px;line-height:1.6;font-weight:400;color:var(--muted);margin-top:3px}.ds-choice-check{display:grid;place-items:center;width:20px;height:20px;border:1px solid #bdcce2;border-radius:50%;flex-shrink:0}.ds-choice-check svg{visibility:hidden}.ds-quiz-choice:has(input:checked){background:var(--soft-blue);border-color:var(--blue)}.ds-quiz-choice:has(input:checked) .ds-choice-check{background:var(--blue);color:var(--white);border-color:var(--blue)}.ds-quiz-choice:has(input:checked) svg{visibility:visible}.ds-quiz-choice:focus-within{outline:3px solid var(--focus);outline-offset:3px}@media(max-width:580px){.ds-quiz-choice{padding:14px}}",
       "refersTo": "quiz-choice"
     },

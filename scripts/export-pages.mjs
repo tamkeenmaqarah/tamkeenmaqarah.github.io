@@ -16,4 +16,5 @@ html=html.replace(/<script type="module" crossorigin src="([^"]+)"><\/script>/g,
 fs.writeFileSync(path.join(dir,'index.html'),html);
 fs.copyFileSync('public/fonts/figtree-OFL.txt',path.join(dir,'Figtree-LICENSE.txt'));
 fs.copyFileSync('public/fonts/barlowcondensed-OFL.txt',path.join(dir,'Barlow-Condensed-LICENSE.txt'));
+fs.copyFileSync('public/fonts/reem-kufi-OFL.txt',path.join(dir,'Reem-Kufi-LICENSE.txt'));
 console.log('Exported standalone Pages index.html ('+Buffer.byteLength(html)+' bytes), including fonts and license files.');

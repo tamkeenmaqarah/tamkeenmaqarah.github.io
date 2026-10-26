@@ -10,15 +10,15 @@ related_targets: ["app/globals.css"]
 Mode: Operate. Targets: quiz library, student attempts, grades, leaderboard, funny answers, guided quiz builder and AI drafter. The user retains the selected League identity, asks for maximum intuitiveness and explicitly removes dropdowns. Code-first execution remains approved. The user explicitly authorizes public names, scores and teacher-approved funny answers; preserve private editing and full answer keys.
 
 ## Direction contract
-THESIS: Tamkeen League is a friendly youth quiz league with one task per screen and visible choices. Students find a quiz; teachers create, grade, compare and share.
+THESIS: This site is the Sunday tent inside Tamkeen, not a youth sports league. The quiz tasks stay in a normal top bar. The tent is the cloth, the Arabic name, and one stitched seam.
 
-OWN-WORLD: Navy club masthead, vivid royal blue actions, yellow champion podium, pale blue working surfaces, coral and lavender rank accents. Self-hosted Figtree for readable UI and Barlow Condensed for scoreboard numerals. Crisp 12px corners, flat task rows and strong baseline alignment.
+OWN-WORLD: Najdi majlis cloth. Crimson vertical stripes, a black geometric band, brass-gold actions, ivory working sheets. Reem Kufi for the Arabic name, Figtree for the tasks, Barlow Condensed for scores.
 
-STORY: Students choose an open quiz, answer one question at a time and receive a real saved score. Teachers use four named destinations, enter paper grades together and build quizzes through Details, Questions and Publish. AI drafts need source evidence and teacher review.
+STORY: A visitor understands this circle meets in Yasin Naseri's tent on Sunday mornings, stays with the Quran, and quizzes the Tamkeen halaqas. Students start a quiz. Teachers still create, grade, and review.
 
-FIRST VIEWPORT: Compact masthead; teachers see Quizzes, Grades, Leaderboard and Funny answers. Quizzes leads with Create quiz, secondary Draft with AI, then a single readable list. Students start on Home, with a weekly schedule, quiz availability, standings and approved funny answers. Home, Quizzes, Leaderboard and Funny answers remain visible even without a quiz. No sidebar. The home page introduces the community; each task has its own page. Visible radio cards replace quiz dropdowns; Manage quiz opens a page of named actions. Signature interaction: one short question arrival, answer-selection feedback and finite confetti after submission; reduced motion disables these.
+FIRST VIEWPORT: Tent masthead with الخيمة and “Yasin Naseri's tent”, then the same task nav. Home leads with the Sunday gathering and the open quiz, then the real standings. No sidebar. Signature move: a stitched lamp-gold seam under the masthead. Question arrival, answer selection, and finite confetti stay, and reduced motion disables them.
 
-FORM: Youth tournament scoreboard and team sheets; grounded candidate 1, assistant’s pick delegated by the user; seed 71a555e0. Other candidates were game console, trip passport, community poster, club magazine, museum exhibit and route map. This direction’s honest risk is familiar scoreboard language; precise typography and meaningful task density carry its distinction.
+FORM: Brief-pinned tent and Arabic lettering. The roll assigned another candidate; the brief outranks it. seed:aab9d84e1de57c1d. Honest risk: a tent costume could hide the quiz. The seam is the only ornament.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
 
