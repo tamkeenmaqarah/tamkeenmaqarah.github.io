@@ -16,6 +16,7 @@ jobs:
           node-version: 24
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - run: node --test tests/quran-content.test.mjs
       - run: pnpm build
       - name: Bind the D1 database
         env:
@@ -35,6 +36,16 @@ jobs:
         run: |
           printf '%s' "$TEACHER_KEY" | pnpm exec wrangler secret put TEACHER_KEY --config dist/server/wrangler.json
           printf '%s' "$GEMINI_API_KEY" | pnpm exec wrangler secret put GEMINI_API_KEY --config dist/server/wrangler.json
+      - name: Store Quran Foundation credentials
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          QURAN_CLIENT_ID: ${{ secrets.QURAN_CLIENT_ID }}
+          QURAN_CLIENT_SECRET: ${{ secrets.QURAN_CLIENT_SECRET }}
+        run: |
+          test -n "$QURAN_CLIENT_ID" && test -n "$QURAN_CLIENT_SECRET"
+          printf '%s' "$QURAN_CLIENT_ID" | pnpm exec wrangler secret put QURAN_CLIENT_ID --config dist/server/wrangler.json
+          printf '%s' "$QURAN_CLIENT_SECRET" | pnpm exec wrangler secret put QURAN_CLIENT_SECRET --config dist/server/wrangler.json
       - name: Apply database migrations
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
