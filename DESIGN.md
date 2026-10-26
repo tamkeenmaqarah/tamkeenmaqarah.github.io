@@ -1,6 +1,6 @@
 ---
 name: أصحاب الخيمة / Ashab Al Khaimah
-description: A bilingual Qur’an review circle on deep oxblood textile, lit by interactive orange lanterns.
+description: A bilingual Qur’an review circle on deep oxblood textile, lit by interactive orange lanterns and a pixel-art dish heater.
 colors:
   rug: '#4c1b28'
   rug-motif: '#5e2634'
@@ -139,6 +139,26 @@ components:
     rounded: '{rounded.control}'
     width: 80px
     height: 170px
+  heater:
+    backgroundColor: transparent
+    rounded: '{rounded.control}'
+    width: 112px
+    height: 144px
+  heater-hero-mobile:
+    width: 80px
+    height: 104px
+  heater-footer:
+    width: 96px
+    height: 124px
+  heater-footer-mobile:
+    width: 84px
+    height: 108px
+  heater-door:
+    width: 86px
+    height: 112px
+  heater-door-mobile:
+    width: 76px
+    height: 98px
   header-lantern:
     width: 44px
     height: 88px
@@ -154,6 +174,17 @@ components:
   cushion:
     width: 160px
     height: 100px
+  avatar:
+    backgroundColor: '{colors.rug-motif}'
+    width: 28px
+    height: 28px
+  avatar-large:
+    width: 136px
+    height: 136px
+  profile-settings:
+    backgroundColor: '#35151bed'
+    rounded: '{rounded.control}'
+    padding: 32px
   quran-reading:
     backgroundColor: '{colors.form-clay}'
     textColor: '{colors.field-ink}'
@@ -171,14 +202,14 @@ Deep oxblood textile, warm ivory ink and interactive orange lamplight place this
 
 Amiri carries the Arabic identity; Lora gives English headings a quiet literary character. Figtree and IBM Plex Sans Arabic keep controls and reading clear. The muted diamond rug carries the continuous public ground; calm red surfaces carry task content and cards, and clay is reserved for focused reading forms. Reference photographs never appear in the interface.
 
-Individual floor, backrest, square and cylindrical cushion silhouettes add a small crafted accent. Each is hand-drawn crisp-edge SVG; keep them separate and clear of reading and controls. The bilingual remembered-name/password tent door uses the same red, brass, cream fields and lantern vocabulary.
+Individual floor, backrest, square and cylindrical cushion silhouettes add a small crafted accent. A separate pixel-art dish heater shares their stepped geometry and gives the gathering a bounded, interactive source of radiant warmth. Each is hand-drawn crisp-edge SVG; keep them separate and clear of reading and controls. The bilingual remembered-name/password tent door uses the same red, brass, cream fields and lantern vocabulary.
 
 **Key Characteristics:**
 
 - Deep oxblood rug ground with quiet geometric motifs, warm ivory reading and amber actions.
 - Black, ivory and ochre Sadu, upholstered majlis side rails, stepped plaster and brass detail.
 - Equal English and Arabic functionality, with RTL and mixed-script isolation.
-- Stable interactive lantern buttons, orange glow and restrained motion.
+- Stable interactive lantern and dish-heater buttons, bounded orange warmth and fluid control feedback.
 - Roomy sections, generous table rows and a wider desktop shell.
 - Separate hand-drawn pixel-art Sadu cushions, never a complete seating scene.
 
@@ -195,7 +226,7 @@ Deep red is the continuous public ground; warm ivory and amber give it legibilit
 
 ### Secondary
 
-- **Brass:** supporting detail and quiet ornament. **Focus:** a brighter warm ring for keyboard navigation. Orange halos stay bounded around the lamps; they do not become a page-wide wash.
+- **Brass:** supporting detail and quiet ornament. **Focus:** a brighter warm ring for keyboard navigation. Concentrated orange halos stay bounded around lamps, heater coils and portraits. A faint heater spill can warm the rug behind the content; it cannot obscure reading or intercept input.
 
 ### Neutral
 
@@ -230,7 +261,7 @@ At (900px), gutters become (30px), main padding becomes (34px 30px 58px), and th
 
 The gathering name is centered between two lanterns inside a fine frame, ending in stepped plaster and a broad textile band. Desktop minimum height is (374px), mobile (354px); mobile moves smaller lamps above the name. The woven bottom band is (48px), reducing to (38px). The (380px) breakpoint further reduces the title and action widths.
 
-At (750px), the header brand row has a (76px) minimum height with (10px 20px 6px) padding and unwrapped utility controls; below (620px), inline padding becomes (16px). The six student destinations use a visible three-column, two-row grid with (44px) minimum targets and an (88px) minimum navigation height. The header lamp has reserved desktop flow space and hides at (750px); hero and door lamps remain. In landscape at heights up to (500px), the header scrolls with the page and scroll padding becomes (24px). Hero bottom padding is (106px), increasing to (122px) at (750px) to clear the cushions. The shared footer leaves (100px) above its rule for a centered floor cushion. The tent door centers a sheet no wider than (520px) in a full-height red ground; its desktop sheet padding is (28px 46px 40px), reducing to (24px 24px 32px) at (750px).
+At (750px), the header brand row has a (76px) minimum height with (10px 20px 6px) padding and unwrapped utility controls; below (620px), inline padding becomes (16px). The six student destinations use a visible three-column, two-row grid with (44px) minimum targets and an (88px) minimum navigation height. The header lamp has reserved desktop flow space and hides at (750px); hero and door lamps remain. In landscape at heights up to (500px), the header scrolls with the page and scroll padding becomes (24px). Hero bottom padding is (194px), changing to (178px) at (750px) to clear the centered dish heater and side cushions. The shared footer leaves (100px) above its rule for a centered floor-cushion and heater grouping; the hearth group anchors (126px) above its edge, changing to (114px) at (750px). The tent door centers a sheet no wider than (520px) in a full-height red ground; its desktop sheet padding is (28px 46px 40px), reducing to (24px 24px 32px) at (750px).
 
 The shared Qur’an reader presents its controls in four columns (surah, from ayah, to ayah, action), with a (16px) gap. At (750px), controls use two columns with the surah selector and action spanning both. The clay reading panel uses (30px 40px) padding, reducing to (24px 18px). Its verse list caps at (880px); each RTL verse row reserves a separate index column (32px desktop, 22px mobile).
 
@@ -238,9 +269,9 @@ Use logical inline properties. The document changes both language and direction.
 
 ## Elevation & Depth
 
-Depth comes from the quiet rug ground, upholstered edge shading, red tonal layers, fine brass-colored borders, dark moment surfaces and bounded orange lantern halos. Public panels use no box shadow. Stepped plaster, stitched upholstery and geometric rug detail provide material depth. Lantern hover and bright state add a local SVG drop shadow (0 3px 8px #fc8c3b50); the page itself remains grounded. The tent door alone uses a soft structural shadow (0 22px 60px #1b080c45) below its centered sheet.
+Depth comes from the quiet rug ground, upholstered edge shading, red tonal layers, fine brass-colored borders, dark moment surfaces, bounded orange lantern halos and radiant heater light. Heater spill and the faint room-warmth layer remain behind content and ignore pointer input. Public panels use no box shadow. Stepped plaster, stitched upholstery and geometric rug detail provide material depth. Lantern hover and bright state add a local SVG drop shadow (0 3px 8px #fc8c3b50); the page itself remains grounded. The tent door alone uses a soft structural shadow (0 22px 60px #1b080c45) below its centered sheet.
 
-**The Bounded Light Rule.** Keep orange light local to the lanterns and their stable button targets. Pause loops offscreen and when the document is hidden; retain the header pause control and static reduced-motion path.
+**The Bounded Light Rule.** Concentrate orange light around lanterns, heater coils and profile portraits; keep any room spill faint and behind readable content. Keep interactive object targets stable. Pause loops offscreen and when the document is hidden; retain the shared pause control and static reduced-motion path.
 
 ## Shapes
 
@@ -250,7 +281,7 @@ Small corners retain the material language: moment cards (2px), results and the 
 
 ### Buttons
 
-Compact, direct actions with more surrounding room. Public primary buttons use amber with dark red ink and a lighter amber hover. General controls have a (46px) minimum height and (11px 20px) padding; the home quiz action grows to (48px). In clay forms, primary controls use dark fabric and cream text. Secondary controls are transparent with warm light text and a brass-colored border, gaining a red fill on hover. Text actions use light amber and underline on hover. Disabled controls reduce opacity to (0.5); pressed controls scale to (0.98). Shared keyboard focus is a (3px) warm outline offset by (4px).
+Compact, direct actions with more surrounding room. Public primary buttons use amber with dark red ink and a lighter amber hover. General controls have a (46px) minimum height and (11px 20px) padding; the home quiz action grows to (48px). In clay forms, primary controls use dark fabric and cream text. Secondary controls are transparent with warm light text and a brass-colored border, gaining a red fill on hover. Text actions use light amber and underline on hover. Disabled controls reduce opacity to (0.5); pressed controls scale to (0.98). Shared button and utility feedback uses (160ms) transitions; keyboard activation keeps targets still, and reduced motion removes pressed transforms. Shared keyboard focus is a (3px) warm outline offset by (4px).
 
 ### Inputs / Fields
 
@@ -258,11 +289,19 @@ Cream fields with dark text, a thin warm border and control corners. Fields have
 
 ### Navigation
 
-Text tabs in the public masthead. Warm muted text brightens on hover; selection gains (700) weight and a (2px) amber underline. The thread settles over (220ms); keyboard focus suppresses this animation. Language and motion controls remain keyboard accessible with (44px) minimum targets. All six student destinations remain visible in the mobile three-by-two grid, with wrapped labels and a red selected fill. The pause control exposes its pressed state and translated action label.
+Text tabs in the public masthead. Warm muted text brightens on hover; selection gains (700) weight and a (2px) amber underline. One positioned underline translates and resizes to the selected tab over (230ms) with the shared ease-out curve after pointer activation. Its position follows layout, font-size changes, resizing and RTL; keyboard navigation and resize placement are immediate. Tab changes reset scroll after the new surface commits, so a shorter destination cannot inherit a stale scroll position. Language and motion controls remain keyboard accessible with (44px) minimum targets. All six student destinations remain visible in the mobile three-by-two grid, with wrapped labels and a red selected fill. The pause control exposes its pressed state and translated action label. Its initial state reads the document’s existing motion setting, so pausing at the tent door remains paused inside the app.
 
 ### Account disclosure
 
-A native `details` / `summary` disclosure groups the remembered name, password change, sign-out and teacher entry. Its labeled summary is at least (44 × 44px), with a warm border, control corners and a red open/hover state. The anchored popover is (250px) wide, bounded by the viewport, with (44px) action rows. At (750px), the summary becomes icon-only while its accessible name retains the account identity. Escape closes it and returns focus to the summary; an outside pointer closes it, and activating an action closes it.
+A native `details` / `summary` disclosure groups the remembered name, password change, sign-out and teacher entry. Its labeled summary is at least (44 × 44px), with a warm border, control corners and a red open/hover state. The anchored popover is (250px) wide, bounded by the viewport, with (44px) action rows. At (750px), the summary becomes icon-only while its accessible name retains the account identity. Escape closes it and returns focus to the summary; an outside pointer closes it, and activating an action closes it. Pointer opening unfolds the popover over (180ms) from its trigger-side corner, mirrored in RTL. Keyboard opening and reduced motion show it immediately.
+
+### Account and profile portrait
+
+The account page inherits the public rug, upholstered rails, masthead and script pairing. A centered identity column and a quiet dark settings sheet sit in a (220px / minmax(0, 1fr)) grid with a (64px) gap and (980px) maximum width. At (750px), they stack with a (24px) gap. Settings padding changes from (32px) to (24px 20px). The short Sadu seam stays below the identity, clear of the portrait and controls.
+
+Circular portraits are (28px) in shared identity contexts and (136px) on the account page. Use the selected real Google picture, cropped upload or name initials; failed images fall back to initials. A fine amber inner ring and translucent outer ring make the portrait share the lanterns’ bounded warmth. The small glow is (0 2px 12px #ec8e3c5c); the account portrait uses (0 4px 28px #ec8e3c59). Only outer-ring opacity breathes, over (5s); the existing ambient hook respects global pause, offscreen/hidden state and reduced motion.
+
+Photo choice is a draft until explicit **Save photo**; **Cancel** restores the saved selection. Google connection/refresh, upload and initials retain separate labeled actions, with readable preparation, save and failure states. Keep the file limit visible (JPG, PNG or WebP, up to 8 MB). Upload preparation center-crops to a (384 × 384px) JPEG; cloud persistence uses the signed-in profile endpoint. Account copy and status messages have English and Arabic equivalents. Keep the real provider control, password action and sign-out accessible; do not substitute a stock portrait or decorate the save/error state.
 
 ### Halaqa media
 
@@ -292,6 +331,14 @@ Loading uses a status message; failed or incomplete loading uses readable feedba
 
 The remembered-name/password entry sheet inherits the red panel, woven top edge, cream fields and amber full-width action. Its Amiri name is (55px / 1.6), reducing to (45px) at (750px) and (38px) at (380px). Fields have visible labels, a (48px) minimum height and native name/password autocomplete. Creation, returning-name, alternate-name, recovery-word and password-change modes retain the upstream controller and translated copy. Recovery and password change reuse the same fields, lanterns, cushion and validation treatment. The English password-change heading uses Lora (32px / 1.4), with (34px 0 20px) block margins; Arabic follows the existing Amiri display family. Validation appears as a live alert. The signed-in header exposes password change through the account disclosure with its translated label. Google sign-in shows readable loading or failure status rather than leaving an empty control. Language and pause controls stay above the form; small interactive lanterns frame the sheet, and a separate cylindrical cushion sits below its edge. Do not turn decorative cushion hover into an implied form action.
 
+### Radiant dish heater
+
+A separate hand-authored pixel-art dish heater joins the approved cushion vocabulary. The live shell is `assets/majlis-heater.svg` in an image, with `assets/heater-coils.svg` as its separate coil-layer background; both preserve crisp stepped geometry and pixelated rendering. Do not replace the object with a photograph or a composite seating scene. The reusable heater target is (112 × 144px); the hero uses (80 × 104px) at (750px). Footer heaters are (96 × 124px), reducing to (84 × 108px). The door uses (86 × 112px), reducing to (76 × 98px), and follows the form/actions in keyboard order while retaining its visual position beside the sheet.
+
+Each heater is a stationary native button with bilingual Increase heater warmth / Lower heater warmth labels and `aria-pressed`. Pointer, Enter or Space toggles its own normal/boosted warmth. Its shell and decorative layers cannot intercept input. Normal coils stay visible; boost raises coil opacity over (720ms), halo/spill opacity over (650ms), and halo/spill scale over (900ms), all with `cubic-bezier(.16,1,.3,1)`. The small power light settles over (300ms). Focus uses a (3px) warm ring offset by (5px).
+
+The core breathes over (5.5s), using only opacity and a restrained scale from (0.95) to (1.05). It shares the ambient-motion hook with lanterns, portraits and cushions: pause offscreen, when hidden and through the global pause; reduced motion removes the loop and transition. A boosted heater in the app can reveal faint room warmth over (650ms), behind all content with `pointer-events: none`. Keep coil light local and the textile legible. State changes remain immediate and operable when motion is disabled.
+
 ### Pixel-art cushions
 
 Use only the four authored SVGs: floor mattress, long backrest, square pillow and cylindrical armrest. These are separate decorations, not a composite seating scene or generated illustration. Keep their crisp pixel silhouettes at the existing small accent scale. The square and long backrest sit at hero edges; a floor mattress marks the shared footer; the cylindrical armrest appears beside quiz entry and the tent door. The decorative wrappers are hidden from assistive technology.
@@ -302,7 +349,7 @@ Ambient breathing moves only the inner artwork by (2px) over a (7s) loop, with s
 
 Lanterns are semantic buttons containing authored inline SVG brass geometry and orange panes. Their button targets remain stationary; only the inner SVG bodies sway. Desktop targets are (80 × 170px), mobile (54 × 115px). Pointer activation, Enter or Space brightens/dims an individual lamp, updates `aria-pressed`, and changes its bilingual action label. Decorative SVG, halo and boost layers remain hidden from assistive technology. A visible (2px) focus ring identifies the stable target.
 
-The two bodies sway between (−1°) and (1°), with offset (8s / 9s) loops. Bounded orange halo and pane brightness run over (4.3s); bright state adds a separate orange boost with a (220ms) opacity transition. Hover adds a restrained local drop shadow. Only transform and opacity animate continuously. A compact lamp can appear in the masthead away from home in reserved flow space (44 × 88px, with 48px flex basis), and is hidden at (750px).
+The two bodies sway between (−1°) and (1°), with offset (8s / 9s) loops. Bounded orange halo and pane brightness run over (4.3s); bright state adds a separate orange boost with a (550ms) opacity transition using the shared ease-out curve. Body-filter feedback settles over (380ms); bright state uses a bounded local drop shadow (0 3px 12px #fc8c3b85). Only transform and opacity animate continuously. A compact lamp can appear in the masthead away from home in reserved flow space (44 × 88px, with 48px flex basis), and is hidden at (750px).
 
 The shared ambient-motion hook pauses lantern and cushion loops offscreen; document visibility also pauses them. The header pause control disables animations and transitions for the visit. Reduced motion keeps lamps static and preserves immediate brighten/dim interaction. Content is present and interactive before animation runs. Reuse the original Sadu and stepped-plaster assets with the authored geometric rug and upholstered side-rail SVGs; reference photography stays out of the UI.
 

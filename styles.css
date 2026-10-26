@@ -7166,3 +7166,245 @@ main > *,
     align-self: stretch;
   }
 }
+
+/* Profile portraits share the lanterns' bounded amber light. */
+.avatar {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  flex: 0 0 28px;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #5e2634;
+  color: #f5d8a0;
+}
+.avatar:before,
+.avatar:after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.avatar:before {
+  inset: -3px;
+  border: 1px solid #e9b576;
+  box-shadow: 0 2px 12px #ec8e3c5c;
+}
+.avatar:after {
+  inset: -6px;
+  border: 1px solid #e9b57645;
+  opacity: .65;
+  animation: avatar-warmth 5s ease-in-out infinite;
+  animation-play-state: var(--lantern-play-state, running);
+}
+.avatar > img,
+.avatar-initials {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.avatar-initials {
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+}
+.account-menu > summary > .avatar {
+  display: inline-flex;
+  overflow: visible;
+  max-width: none;
+}
+.avatar-large {
+  flex-basis: 136px;
+  width: 136px;
+  height: 136px;
+}
+.avatar-large:before {
+  inset: -6px;
+  border-width: 2px;
+  box-shadow: 0 4px 28px #ec8e3c59;
+}
+.avatar-large:after {
+  inset: -13px;
+  border-color: #e9b57666;
+}
+.avatar-large .avatar-initials {
+  font-size: 44px;
+  font-weight: 400;
+}
+@keyframes avatar-warmth {
+  0%, 100% { opacity: .45; }
+  50% { opacity: 1; }
+}
+.account-layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 64px;
+  max-width: 980px;
+  margin: 40px auto 0;
+  align-items: start;
+}
+.profile-identity {
+  padding: 32px 12px;
+  text-align: center;
+}
+.profile-identity h2 {
+  margin: 32px 0 8px;
+  overflow-wrap: anywhere;
+}
+.profile-identity p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+.profile-identity:after {
+  content: "";
+  display: block;
+  width: 120px;
+  height: 16px;
+  margin: 24px auto 0;
+  background: url("./assets/sadu.svg") center / 120px 32px;
+}
+.profile-settings {
+  min-width: 0;
+  padding: 32px;
+  background: #35151bed;
+  border-radius: 5px;
+}
+.profile-settings h2 {
+  margin: 0 0 12px;
+  font-size: 25px;
+}
+.profile-settings .help {
+  line-height: 1.65;
+  margin: 0 0 20px;
+}
+.profile-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+}
+.profile-actions button {
+  white-space: normal;
+  text-align: center;
+}
+.profile-file {
+  display: none;
+}
+.profile-settings .profile-file-help {
+  font-size: 13px;
+  margin-block: 16px 24px;
+}
+.profile-save {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.profile-message,
+.profile-error {
+  margin: 0 0 18px;
+  color: #f5d8a0;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.profile-error {
+  color: #ffd5bd;
+}
+.profile-google,
+.profile-security {
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+.profile-google .google-sign-in {
+  max-width: 340px;
+}
+@media (max-width: 750px) {
+  .account-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    margin-top: 16px;
+  }
+  .profile-identity {
+    padding-block: 20px;
+  }
+  .profile-settings {
+    padding: 24px 20px;
+  }
+  .profile-settings h2 {
+    font-size: 24px;
+  }
+  .profile-save > .primary {
+    flex: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .avatar:after {
+    animation: none;
+  }
+}
+
+/* Radiant heat: one warm object, with its light confined to the surrounding rug. */
+.site{isolation:isolate;overflow-x:clip}
+.room-heat{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 4% 82%,#e96b242b,transparent 54%),radial-gradient(ellipse at 96% 34%,#ff8c1826,transparent 48%);opacity:0;transition:opacity 650ms cubic-bezier(.16,1,.3,1)}
+.site:has(.majlis-heater.is-warm)>.room-heat{opacity:1}
+.majlis-heater{position:relative;display:block;flex-shrink:0;width:112px;height:144px;padding:0;border:0;border-radius:5px;background:transparent;cursor:pointer;isolation:isolate;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.majlis-heater:focus-visible{outline:3px solid #ffc56e;outline-offset:5px}
+.heater-shell,.heater-coils{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;image-rendering:pixelated}
+.heater-coils{background:url('./assets/heater-coils.svg') center/100% 100%;opacity:.48;transition:opacity 720ms cubic-bezier(.16,1,.3,1)}
+.heater-halo,.heater-spill,.heater-light{position:absolute;pointer-events:none}
+.heater-halo{z-index:-1;inset:-24% -80% 5%;background:radial-gradient(ellipse at 50% 44%,#ff8c326b,transparent 65%);opacity:.48;transform:scale(.94);transition:opacity 650ms cubic-bezier(.16,1,.3,1),transform 900ms cubic-bezier(.16,1,.3,1)}
+.heater-spill{z-index:-1;width:260%;height:65%;left:-80%;bottom:-15%;background:radial-gradient(ellipse,#ff842b45,transparent 68%);opacity:.35;transform:scaleX(.8);transition:opacity 650ms cubic-bezier(.16,1,.3,1),transform 900ms cubic-bezier(.16,1,.3,1)}
+.heater-light{left:59%;top:77%;width:3.5%;height:3%;background:#e47942;opacity:.6;transition:background-color 300ms,opacity 300ms}
+.is-warm>.heater-coils{opacity:1}
+.is-warm>.heater-halo{opacity:1;transform:scale(1.08)}
+.is-warm>.heater-spill{opacity:1;transform:scaleX(1.12)}
+.is-warm>.heater-light{background:#ffcd76;opacity:1}
+.heater-coils:after{content:'';position:absolute;inset:17% 24% 44%;background:radial-gradient(ellipse,#ffba7836,transparent 70%);animation:heater-radiance 5.5s cubic-bezier(.45,0,.55,1) infinite;animation-play-state:var(--lantern-play-state,running)}
+@keyframes heater-radiance{0%,100%{opacity:.45;transform:scale(.95)}50%{opacity:1;transform:scale(1.05)}}
+.hero-heater{position:absolute;bottom:68px;left:calc(50% - 56px);z-index:2}
+.majlis-title{padding-bottom:194px}
+.footer-hearth{position:absolute;top:-126px;left:50%;transform:translateX(-50%);display:flex!important;align-items:flex-end;gap:24px;width:max-content;max-width:100%;padding:0!important}
+.footer-hearth .footer-cushion{position:relative;inset:auto;width:156px;height:92px;flex-shrink:0}
+.footer-heater{width:96px;height:124px}
+.door-heater{position:absolute;bottom:-76px;inset-inline-start:22px;width:86px;height:112px;z-index:2}
+.lantern-boost{transition:opacity 550ms cubic-bezier(.16,1,.3,1)}
+.lantern-body{transition:filter 380ms cubic-bezier(.16,1,.3,1)}
+.lantern.is-bright .lantern-body{filter:drop-shadow(0 3px 12px #fc8c3b85)}
+.motion-nav{position:relative}
+.motion-nav>button.selected:after{opacity:0}
+.nav-motion-indicator{position:absolute;top:0;left:0;width:1px;height:2px;background:#e5a75e;transform-origin:left center;pointer-events:none;opacity:0}
+.motion-nav[data-pointer=true]>.nav-motion-indicator{transition:transform 230ms cubic-bezier(.16,1,.3,1),opacity 120ms}
+:where(.primary,.secondary,.text-button,.icon-button,.main-nav>button,.account-menu>summary){transition:background-color 160ms,color 160ms,border-color 160ms,transform 160ms cubic-bezier(.16,1,.3,1)}
+:where(.primary,.secondary,.text-button,.icon-button,.main-nav>button,.account-menu>summary):active{transform:scale(.98)}
+.account-menu[open]>.account-popover{transform-origin:top right;animation:account-unfold 180ms cubic-bezier(.16,1,.3,1)}
+[dir=rtl] .account-menu[open]>.account-popover{transform-origin:top left}
+@keyframes account-unfold{from{opacity:.6;transform:translateY(-4px) scale(.98)}to{opacity:1;transform:none}}
+@media(hover:hover) and (pointer:fine){.majlis-heater:hover>.heater-halo{opacity:.8}.majlis-heater.is-warm:hover>.heater-halo{opacity:1}}
+@media(max-width:750px){
+ .majlis-title{padding-bottom:178px}
+ .hero-heater{width:80px;height:104px;left:calc(50% - 40px);bottom:64px}
+ .hero-cushion-start{width:56px;height:68px;inset-inline-start:12px}
+ .hero-cushion-end{width:88px;height:58px;inset-inline-end:12px}
+ .footer-hearth{gap:16px;top:-114px}
+ .footer-hearth .footer-cushion{width:124px;height:78px}
+ .footer-heater{width:84px;height:108px}
+ .door-heater{width:76px;height:98px;bottom:-68px;inset-inline-start:16px}
+}
+@media(prefers-reduced-motion:reduce){
+ .heater-coils:after{animation:none}
+ .heater-halo,.heater-spill,.heater-coils,.room-heat,.nav-motion-indicator,.lantern-body,.lantern-boost{transition:none!important}
+ .account-menu[open]>.account-popover{animation:none}
+ :where(.primary,.secondary,.text-button,.icon-button,.main-nav>button,.account-menu>summary):active{transform:none}
+}
+
+.account-menu:has(>summary:focus-visible)[open]>.account-popover{animation:none}
+:where(.primary,.secondary,.text-button,.icon-button,.main-nav>button,.account-menu>summary):focus-visible:active{transform:none;transition:none}

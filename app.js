@@ -33,7 +33,7 @@ import {
   getLanguage,
   setLanguage,
   subscribeLanguage,
-} from "./i18n.js?v=16";
+} from "./i18n.js?v=18";
 import {
   Ze as Xe,
   $e as Qe,
@@ -49,8 +49,10 @@ import {
   MotionToggle,
   HangingLanterns,
   Cushion,
+  Heater,
+  MotionNav,
   GatheringFooter,
-} from "./components.js?v=16";
+} from "./components.js?v=18";
 import {
   nextHomeworkSunday,
   homeworkSunday,
@@ -60,8 +62,10 @@ import {
   storeHomeworkDraft,
   clearHomeworkDraft,
 } from "./homework.js?v=1";
-import {QuranReader} from "./quran-reader.js?v=3";
+import {QuranReader} from "./quran-reader.js?v=5";
 import {quranReferences} from "./quran.js?v=1";
+import {AccountPage} from "./account.js?v=1";
+import {profileRequest} from "./profile.js?v=1";
 const el = y.createElement;
 const Ye = "https://tamkeen-maqraah-teacher.ibrahiimmuhamud.workers.dev";
 var et = {
@@ -642,6 +646,7 @@ function yt({
             }),
           ],
         }),
+        el(Heater,{className:"door-heater"}),
       ],
     }),
   });
@@ -765,6 +770,7 @@ function bt({ busy: e, error: t, onSave: n, onBack: r }) {
             children: translate(`Back to the tent`),
           }),
         }),
+        el(Heater,{className:"door-heater"}),
       ],
     }),
   });
@@ -877,7 +883,19 @@ function Tt() {
     [homeworkReady, setHomeworkReady] = (0, y.useState)(!1),
     [homeworkPending, setHomeworkPending] = (0, y.useState)(!1),
     [homeworkQuranOpen, setHomeworkQuranOpen] = y.useState(false),
-    [quranSelection, setQuranSelection] = y.useState(null);
+    [quranSelection, setQuranSelection] = y.useState(null),
+    [profile,setProfile] = y.useState(null),
+    [profileError,setProfileError] = y.useState(''),
+    [profileVersion,setProfileVersion] = y.useState(0),
+    [profileDirty,setProfileDirty] = y.useState(false);
+  y.useEffect(()=>{
+    setProfile(null);setProfileError('');
+    if(et!=='in'||!v)return;
+    const controller=new AbortController();
+    profileRequest('GET',undefined,controller.signal).then(value=>{if(!controller.signal.aborted)setProfile(value);}).catch(error=>{if(!controller.signal.aborted)setProfileError(error.message||'Could not load or save your profile. Please try again.');});
+    return ()=>controller.abort();
+  },[et,v,profileVersion]);
+  y.useLayoutEffect(()=>{window.scrollTo({top:0,left:0,behavior:"instant"});},[n]);
   const homeworkContext = y.useRef();
   homeworkContext.current = `${n}/${homeworkWeek}/${v}`;
   (0, y.useEffect)(() => {
@@ -981,7 +999,7 @@ function Tt() {
           : l === `home` ||
               l === `quizzes` ||
               l === `moments` ||
-              l === `homework` || l === `quran`
+              l === `homework` || l === `quran` || l === `account`
             ? r(l)
             : l === `grades` || l === `ai`
               ? r(c.teacher ? l : `login`)
@@ -1079,13 +1097,13 @@ function Tt() {
     on = !!(u && !S && x.some((e) => e !== -1));
   (0, y.useEffect)(() => {
     let e = (e) => {
-      (an || on || M) && (e.preventDefault(), (e.returnValue = ``));
+      (an || on || M || profileDirty) && (e.preventDefault(), (e.returnValue = ``));
     };
     return (
       window.addEventListener(`beforeunload`, e),
       () => window.removeEventListener(`beforeunload`, e)
     );
-  }, [an, on, M]);
+  }, [an, on, M, profileDirty]);
   async function sn(e) {
     (l(!0), a(``), s(``));
     try {
@@ -1097,7 +1115,9 @@ function Tt() {
     }
   }
   function cn() {
-    return M
+    return profileDirty
+      ? confirm(translate("Leave without saving your profile photo?"))
+      : M
       ? confirm(translate(`Leave without saving the grade changes?`))
       : on
         ? confirm(
@@ -1442,10 +1462,10 @@ function Tt() {
       l(!1);
     }
   }
-  async function finishGoogle(credential, tentName) {
+  async function finishGoogle(credential, tentName, linkExisting = false) {
     (setGoogleBusy(!0), kt(``));
     try {
-      At || T()?.removeItem(P.token);
+      At || linkExisting || T()?.removeItem(P.token);
       let names = [
           ...new Set(
             (e?.community.boards || []).flatMap((board) =>
@@ -1498,6 +1518,7 @@ function Tt() {
           ...(clean ? { name: clean } : {}),
         });
       } catch (err) {
+        if (linkExisting) throw err;
         let message = err?.message || ``;
         if (/already in the tent|already used by another name/i.test(message))
           throw Error(
@@ -1526,6 +1547,7 @@ function Tt() {
         return;
       }
       admit(server.student.name, server.token);
+      setProfileVersion(value=>value+1);
     } catch (err) {
       let message = err?.message || ``;
       kt(
@@ -2028,6 +2050,7 @@ function Tt() {
       : (0, N.jsxs)(`div`, {
           className: `site`,
           children: [
+            el("span",{className:"room-heat","aria-hidden":true}),
             (0, N.jsx)(`a`, {
               href: `#main`,
               className: `skip-link`,
@@ -2051,7 +2074,8 @@ function Tt() {
                       children: [
                         el(LanguageSwitcher),
                         el(MotionToggle),
-                        el(AccountMenu, {name: v || (e?.teacher ? translate("Teacher") : "")},
+                        el(AccountMenu, {name: v || (e?.teacher ? translate("Teacher") : ""),photo:profile?.name===v?profile.photo:e?.account?.name===v?e.account.photo:null},
+                        v && !e?.teacher && el("button",{className:"text-button",onClick:()=>L("account")},translate("Your account")),
                         et === `in` && v && !e?.teacher
                           ? (0, N.jsxs)(`div`, {
                               className: `teacher-account`,
@@ -2126,7 +2150,7 @@ function Tt() {
                   ],
                 }),
                 e &&
-                  (0, N.jsx)(`nav`, {
+                  (0, N.jsx)(MotionNav, {
                     className:
                       `main-nav ` + (e.teacher ? `teacher-nav` : `student-nav`),
                     "aria-label": translate(`Main navigation`),
@@ -2638,6 +2662,8 @@ function Tt() {
                               }),
                       ],
                     })
+                  : e && n === 'account' && !de
+                    ? el(AccountPage,{key:v,name:v,profile:profile?.name===v?profile:null,error:profileError,onRetry:()=>setProfileVersion(value=>value+1),onSaved:setProfile,onDirtyChange:setProfileDirty,onPassword:()=>{if(cn()){kt('');jt(true);}},onSignOut:()=>{if(cn())wn();},googleSignIn:el(GoogleSignIn,{onCredential:credential=>finishGoogle(credential,v,true)}),googleError:Ot,googleBusy})
                   : e && n === 'quran' && !de
                     ? el('section',{className:'quran-page'},el('h1',null,translate('Qur’an')),el(QuranReader,{initialSelection:quranSelection}))
                   : e && n === `homework` && !de

@@ -2,7 +2,7 @@
 version: 1
 slug: "index-html"
 primary_target: "index.html"
-related_targets: ["app.js","components.js","styles.css"]
+related_targets: ["app.js","components.js","styles.css","assets/majlis-heater.svg","assets/heater-coils.svg"]
 ---
 
 # Public application redesign
@@ -17,7 +17,7 @@ FORM: User-pinned Najdi cushions, floor seating and warm lighting override seed:
 FINISH: Independently reviewed with disposition ship and no material fixes. All 16 `final-*.png` captures in `.impeccable/review/polish/` were visually validated; `checks.json` records passing runtime checks. The refinement adds only authored geometric SVG assets, with no new raster assets or production data writes. DESIGN.md and its schemaVersion 2 sidecar canonize the approved material and responsive behavior.
 
 ## Motion thesis
-Focal: Two brass lantern bodies sway one degree within stable button targets while bounded orange light gently changes opacity. Pointer or keyboard activation brightens/dims each lantern; its pressed state and action label are bilingual. Continuity: selected navigation underline and existing quiz-question transitions. Feedback: pressed controls, selected answers, progress colors and result medal/score. Budget: CSS transform/opacity only for loops, no dependency, offscreen/hidden pause via IntersectionObserver, a user pause control, and static reduced-motion fallback. Content starts visible and interactive.
+Focal: Existing lanterns and a separate pixel-art dish heater cast bounded orange warmth across the Najdi rug. Native buttons keep their geometry still while local light responds; each heater has bilingual normal/boost actions and aria-pressed. Continuity: one measured tab rail moves over 230ms after pointer activation and aligns immediately for keyboard, font/layout resize and RTL. New tab content commits before instant scroll reset. Feedback: 160ms controls, a 180ms pointer-only account unfold, 550ms lantern boost, and heater coil/halo changes over 720ms / 650ms with scale settling over 900ms. Budget: only transform/opacity loops; 5.5s heater-core radiance shares offscreen/hidden pause, the visit-wide pause and static reduced-motion behavior. Pause state survives the door-to-app transition. Ambient room warmth stays behind readable content and cannot capture input. Content starts visible and interactive.
 
 ## Latest user refinement
 Separate hand-drawn pixel-art red Sadu floor cushion, long backrest, square pillow and cylindrical armrest accents replace generated illustrations. No composite majlis seating scene. Place the square and backrest at hero edges, an armrest at the door and quiz, and a floor mattress at the shared footer. Keep ornament clear of controls. Their two-pixel breathing motion shares the lantern visibility pause, global pause and reduced-motion behavior.
@@ -29,3 +29,14 @@ Preserve the public Najdi interface and existing homework API. Make own saved ho
 
 ## Qur’an extension
 User chose both a Qur’an reading tab and a Homework surah/ayah picker. Preserve the existing Najdi shell and data flows. Reuse cream fields and warm amber actions; sacred text is content on a quiet clay reading panel, never ornament. Use self-hosted Amiri Quran at32px/2.6 (28px mobile), unmodified Arabic Uthmani text with separate ayah numbers and source attribution. Add references to existing homework drafts only on explicit activation; normal Save homework remains required. Saved explicit ranges navigate to the reader and survive refresh through URL parameters. Load and validate the real API, cache successful responses, abort stale/slow requests and provide retry. Interface controls remain fully bilingual. Preserve the current Al Quran Cloud provider, source-text `translate="no"` protection and page-level `notranslate` metadata. Halaqa media loads after a play or lesson activation, with player/list columns on desktop, a mobile stack and an external YouTube fallback. Google sign-in exposes loading and failure states.
+
+
+## Radiant motion refinement
+
+The user explicitly requested fluid, high-quality motion across the existing site and dish heaters warming the display, within the approved visual world. Preserve the original rug, upholstered rails, script pairing, Sadu cushions and account tokens. Use the authored `assets/majlis-heater.svg` image and `assets/heater-coils.svg` background; the design sidecar’s portable preview inlines those same geometric paths.
+
+Keep the hero heater at 112×144px desktop and 80×104px at 750px, clear of the title and side cushions. The footer groups a floor cushion with a 96×124px heater (84×108px mobile), including on account and homework screens. Door heaters remain visually beside the sheet but follow the form/actions in native keyboard order. No focus trap or decorative overlay may block the sign-in task.
+
+Final motion review returned ship with the single bounded door focus-order item resolved and no remaining fixes. Both door surfaces now place the heater after all form/actions; native Tab regressions pass and all motion captures were refreshed at the same paths. Implementation verification reports the four-case motion browser suite, thirteen unit checks, profile browser checks and 320/390/768/1440 mobile regressions passing. This documentation pass does not rerun those checks or assert hardware Safari frame rates.
+
+Current visual references: `.impeccable/review/motion/desktop.png`, `mobile.png`, `mobile-ar.png`, `homework-mobile.png`, `hearth-mobile.png`, `hearth-mobile-ar.png`, `door-mobile.png` and `.impeccable/review/account-320-ar.png`. See `.impeccable/surfaces/components-js-heater.md` for the shared object and motion contract.

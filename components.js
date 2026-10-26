@@ -33,7 +33,8 @@ import {
   getLanguage,
   setLanguage,
   subscribeLanguage,
-} from "./i18n.js?v=16";
+} from "./i18n.js?v=18";
+import {photoUrl} from "./profile.js?v=1";
 const Ge = (e) => (e.score / e.max) * 100,
   Ke = (e) =>
     e
@@ -315,6 +316,7 @@ function Ze({
         ),
       ),
       el(HangingLanterns),
+      el(Heater,{className:"hero-heater"}),
       el(Cushion, { kind: "square", className: "hero-cushion-start" }),
       el(Cushion, { kind: "backrest", className: "hero-cushion-end" }),
       el("div", { className: "sadu-border", "aria-hidden": true }),
@@ -786,6 +788,23 @@ function useAmbientMotion() {
   }, []);
   return ref;
 }
+function Heater({ className = "" }) {
+  const ref=useAmbientMotion();
+  const [warm,setWarm]=y.useState(false);
+  return el("button",{ref,type:"button",className:"majlis-heater "+className+(warm?" is-warm":""),"aria-pressed":warm,"aria-label":translate(warm?"Lower heater warmth":"Increase heater warmth"),title:translate(warm?"Lower heater warmth":"Increase heater warmth"),onClick:()=>setWarm(!warm)},
+    el("span",{className:"heater-spill","aria-hidden":true}),
+    el("span",{className:"heater-halo","aria-hidden":true}),
+    el("img",{src:"./assets/majlis-heater.svg",className:"heater-shell",alt:"",width:112,height:144,draggable:false}),
+    el("span",{className:"heater-coils","aria-hidden":true}),
+    el("span",{className:"heater-light","aria-hidden":true}));
+}
+function MotionNav({children,className,...props}) {
+  const ref=y.useRef(null),indicator=y.useRef(null);
+  const place=()=>{const node=ref.current,selected=node?.querySelector("button.selected"),line=indicator.current;if(!selected||!line){if(line)line.style.opacity="0";return;}line.style.opacity="1";line.style.transform=`translate(${selected.offsetLeft}px,${selected.offsetTop+selected.offsetHeight-2}px) scaleX(${selected.offsetWidth})`;};
+  y.useLayoutEffect(place);
+  y.useEffect(()=>{const node=ref.current;const observer=new ResizeObserver(()=>{node.dataset.pointer="false";place();});observer.observe(node);node.querySelectorAll("button").forEach(button=>observer.observe(button));return ()=>observer.disconnect();},[]);
+  return el("nav",{...props,ref,className:className+" motion-nav",onPointerDown:()=>{ref.current.dataset.pointer="true";},onKeyDown:()=>{ref.current.dataset.pointer="false";}},children,el("span",{ref:indicator,className:"nav-motion-indicator","aria-hidden":true}));
+}
 function Cushion({ kind, className = "" }) {
   const ref = useAmbientMotion();
   return el(
@@ -813,7 +832,7 @@ function HangingLanterns({ compact = false }) {
   );
 }
 function MotionToggle() {
-  const [paused, setPaused] = y.useState(false);
+  const [paused, setPaused] = y.useState(()=>document.documentElement.dataset.motion === "off");
   return el(
     "button",
     {
@@ -888,7 +907,17 @@ function LanguageSwitcher() {
     isArabic ? "English" : "العربية",
   );
 }
-function AccountMenu({ name, children }) {
+function Avatar({name = "", photo, large = false}) {
+ const ref=useAmbientMotion();
+ const [failed,setFailed]=y.useState(false);
+ y.useEffect(()=>setFailed(false),[photo]);
+ const src=photoUrl(photo);
+ const letters=name.trim().split(/\s+/).slice(0,2).map(word=>Array.from(word)[0]||"").join("");
+ return el("span",{ref,className:"avatar"+(large?" avatar-large":""),"aria-hidden":true},
+   src&&!failed?el("img",{src,alt:"",referrerPolicy:"no-referrer",onError:()=>setFailed(true)}):el("span",{className:"avatar-initials"},letters||"—"));
+}
+
+function AccountMenu({ name, photo, children }) {
   const ref = y.useRef(null);
   y.useEffect(() => {
     const dismiss = (event) => {
@@ -909,9 +938,7 @@ function AccountMenu({ name, children }) {
   }, []);
   return el("details", {className: "account-menu", ref},
     el("summary", {"aria-label": translate("Account") + (name ? ": " + name : "")},
-      el("svg", {width: 20, height: 20, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.5, "aria-hidden": true},
-        el("circle", {cx: 12, cy: 8, r: 3.5}),
-        el("path", {d: "M5 21v-2a7 7 0 0 1 14 0v2"})),
+      el(Avatar, {name,photo}),
       el("span", null, name || translate("Account")),
       el("svg", {className: "account-chevron", width: 14, height: 14, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.5, "aria-hidden": true}, el("path", {d: "m6 9 6 6 6-6"}))),
     el("div", {className: "account-popover", onClick: (event) => { if (event.target.closest("button")) ref.current.open = false; }}, children));
@@ -938,7 +965,7 @@ function GatheringFooter() {
   return el(
     "footer",
     { className: "app-footer" },
-    el(Cushion, { kind: "floor", className: "footer-cushion" }),
+    el("div",{className:"footer-hearth"},el(Cushion,{kind:"floor",className:"footer-cushion"}),el(Heater,{className:"footer-heater"})),
     el(
       "span",
       { lang: "ar", dir: "rtl", className: "footer-arabic" },
@@ -1006,9 +1033,12 @@ export {
   qe,
   Brand,
   AccountMenu,
+  Avatar,
   LanguageSwitcher,
   MotionToggle,
   HangingLanterns,
   Cushion,
+  Heater,
+  MotionNav,
   GatheringFooter,
 };

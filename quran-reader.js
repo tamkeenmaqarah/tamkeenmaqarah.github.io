@@ -1,5 +1,5 @@
 import { y } from "./runtime.js";
-import { t, getLanguage } from "./i18n.js?v=16";
+import { t, getLanguage } from "./i18n.js?v=18";
 import {
   loadSurahs,
   loadSurah,

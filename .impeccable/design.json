@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-26T06:15:13.704576+00:00",
+  "generatedAt": "2026-10-26T07:41:29.705393+00:00",
   "title": "Design System: أصحاب الخيمة / Ashab Al Khaimah",
   "extensions": {
     "colorMeta": {
@@ -441,13 +441,23 @@
       },
       {
         "name": "lantern-hover-bright",
-        "value": "drop-shadow(0 3px 8px #fc8c3b50)",
-        "purpose": "Local orange halo on the inner SVG while hovered or brightened."
+        "value": "drop-shadow(0 3px 12px #fc8c3b85)",
+        "purpose": "Bounded bright-state glow on the inner lantern body; filter settles over 380ms."
       },
       {
         "name": "tent-door-sheet",
         "value": "0 22px 60px #1b080c45",
         "purpose": "Soft structural depth below the centered entry sheet."
+      },
+      {
+        "name": "avatar-small",
+        "value": "0 2px 12px #ec8e3c5c",
+        "purpose": "Bounded warm light around the 28px shared portrait."
+      },
+      {
+        "name": "avatar-account",
+        "value": "0 4px 28px #ec8e3c59",
+        "purpose": "Bounded warm light around the 136px account portrait."
       }
     ],
     "motion": [
@@ -473,8 +483,8 @@
       },
       {
         "name": "control-state",
-        "value": "160ms",
-        "purpose": "Button, border, option-check and standings-hover feedback."
+        "value": "160ms background-color, color, border-color; 160ms transform cubic-bezier(.16,1,.3,1)",
+        "purpose": "Shared button and utility feedback; pressed scale .98, removed for keyboard/reduced motion."
       },
       {
         "name": "directional-feedback",
@@ -488,8 +498,8 @@
       },
       {
         "name": "navigation-thread",
-        "value": "220ms; scaleX(0.4) to scaleX(1)",
-        "purpose": "Selected tab underline; disabled on focus."
+        "value": "230ms transform cubic-bezier(.16,1,.3,1); 120ms opacity",
+        "purpose": "One measured rail follows selected tab position/width after pointer activation; font/layout resize, RTL and keyboard placement are immediate."
       },
       {
         "name": "question-entry",
@@ -509,12 +519,12 @@
       {
         "name": "motion-access",
         "value": "prefers-reduced-motion: reduce; html[data-motion=\"off\"]",
-        "purpose": "Disable animations and transitions, keep content visible, remove hover movement and smooth scrolling."
+        "purpose": "Disable animations/transitions and pressed movement; keep content visible. Pause initializes from the existing document setting and survives tent-door entry."
       },
       {
         "name": "lantern-interaction",
-        "value": "220ms opacity; 180ms filter",
-        "purpose": "Pressed button toggles the separate orange boost; hover/pressed adds local SVG glow. Interaction persists without animation under reduced motion."
+        "value": "550ms opacity; 380ms filter; cubic-bezier(.16,1,.3,1)",
+        "purpose": "Pressed lamp toggles a local orange boost; stationary semantic button remains operable without motion."
       },
       {
         "name": "cushion-breathe",
@@ -525,6 +535,46 @@
         "name": "cushion-hover",
         "value": "220ms ease-out; translateY(-3px) rotate(-2deg)",
         "purpose": "Decorative wrapper feedback for hover-capable pointers; transition removed under reduced motion."
+      },
+      {
+        "name": "avatar-warmth",
+        "value": "5s ease-in-out infinite; opacity .45 → 1 → .45",
+        "purpose": "Outer portrait ring only; shared ambient pause and static reduced-motion path."
+      },
+      {
+        "name": "heater-coil",
+        "value": "720ms opacity cubic-bezier(.16,1,.3,1); .48 → 1",
+        "purpose": "Normal-to-boost coil warmth inside a stationary heater target."
+      },
+      {
+        "name": "heater-halo-spill",
+        "value": "650ms opacity; 900ms transform; cubic-bezier(.16,1,.3,1)",
+        "purpose": "Bounded halo .94 → 1.08 scale; rug spill .8 → 1.12 scaleX. Decoration stays behind content and ignores input."
+      },
+      {
+        "name": "heater-radiance",
+        "value": "5.5s cubic-bezier(.45,0,.55,1) infinite; opacity .45 → 1 → .45; scale .95 → 1.05 → .95",
+        "purpose": "Core loop uses only transform/opacity; shared offscreen, hidden, pause and reduced-motion guards."
+      },
+      {
+        "name": "heater-power-light",
+        "value": "300ms background-color, opacity",
+        "purpose": "Small normal/boost indicator with an immediate static path when motion is disabled."
+      },
+      {
+        "name": "room-warmth",
+        "value": "650ms opacity cubic-bezier(.16,1,.3,1)",
+        "purpose": "Faint app rug warmth appears while a heater is boosted; fixed behind content with pointer-events:none."
+      },
+      {
+        "name": "account-unfold",
+        "value": "180ms cubic-bezier(.16,1,.3,1); opacity .6 → 1; translateY(-4px) scale(.98) → identity",
+        "purpose": "Pointer disclosure from the trigger-side top corner, mirrored in RTL; keyboard and reduced motion are immediate."
+      },
+      {
+        "name": "tab-scroll-reset",
+        "value": "post-commit instant scrollTo(0,0)",
+        "purpose": "New tab content commits before scroll reset, preventing stale positions on shorter destinations."
       }
     ],
     "breakpoints": [
@@ -586,9 +636,9 @@
     {
       "name": "Text navigation",
       "kind": "nav",
-      "description": "Six public student destinations, with all tabs visible in a mobile three-by-two grid.",
-      "html": "<nav class=\"ds-nav\" aria-label=\"Main navigation\"><button type=\"button\" aria-current=\"page\">Home</button><button type=\"button\">Quizzes</button><button type=\"button\">Leaderboard</button><button type=\"button\">Funny answers</button><button type=\"button\">Homework</button><button type=\"button\">Qur’an</button></nav>",
-      "css": ".ds-nav{display:flex;gap:40px;height:54px;background:#321319;padding-inline:20px}.ds-nav button{font-family:var(--body,Figtree,'IBM Plex Sans Arabic',sans-serif);position:relative;min-height:44px;padding:0 3px;background:transparent;border:0;font-size:13px;font-weight:500;color:#d2ad8a;cursor:pointer}.ds-nav button:hover,.ds-nav [aria-current]{color:#ffe0a5}.ds-nav [aria-current]{font-weight:700}.ds-nav [aria-current]:after{content:\"\";position:absolute;inset-inline:0;bottom:0;height:2px;background:#e5a75e;animation:ds-thread 220ms cubic-bezier(.16,1,.3,1)}.ds-nav button:focus-visible{outline:3px solid var(--focus,#ffbd69);outline-offset:4px}.ds-nav button:focus-visible:after{animation:none}@keyframes ds-thread{from{transform:scaleX(.4)}to{transform:scaleX(1)}}.ds-nav button:active{background:#54232b}@media(max-width:750px){.ds-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));height:auto;min-height:88px;padding:0 16px 4px;gap:0 4px}.ds-nav button{display:flex;align-items:center;justify-content:center;font-size:12px;line-height:1.4;padding:8px 2px;white-space:normal;text-align:center;letter-spacing:0}.ds-nav [aria-current]{background:#54232b}}@media(prefers-reduced-motion:reduce){.ds-nav [aria-current]:after{animation:none}}"
+      "description": "Measured selected-tab rail with pointer continuity and immediate keyboard/resize placement; this portable preview shows a fixed selected example.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Student navigation\"><button aria-current=\"page\">Home</button><button>Quizzes</button><button>Homework</button><span class=\"ds-nav-line\" aria-hidden=\"true\"></span></nav>",
+      "css": ".ds-nav{position:relative;display:flex;gap:40px;height:54px;background:#321319;padding-inline:20px}.ds-nav button{font-family:var(--body,Figtree,\"IBM Plex Sans Arabic\",sans-serif);min-height:44px;padding:0 3px;background:transparent;border:0;font-size:13px;font-weight:500;color:#d2ad8a;cursor:pointer}.ds-nav button:hover,.ds-nav [aria-current]{color:#ffe0a5}.ds-nav [aria-current]{font-weight:700}.ds-nav-line{position:absolute;left:20px;bottom:0;width:40px;height:2px;background:#e5a75e;pointer-events:none;transform-origin:left center;transition:transform 230ms cubic-bezier(.16,1,.3,1),opacity 120ms}.ds-nav button:focus-visible{outline:3px solid var(--focus,#ffbd69);outline-offset:4px}.ds-nav button:active{background:#54232b}.ds-nav:focus-within>.ds-nav-line{transition:none}@media(max-width:750px){.ds-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));height:auto;min-height:88px;padding:0 16px 4px;gap:0 4px}.ds-nav button{display:flex;align-items:center;justify-content:center;font-size:12px;line-height:1.4;padding:8px 2px;white-space:normal;text-align:center}.ds-nav [aria-current]{background:#54232b}.ds-nav-line{left:16px;bottom:48px;width:calc((100% - 40px)/3)}}@media(prefers-reduced-motion:reduce){.ds-nav-line{transition:none}}"
     },
     {
       "name": "Tent door with pixel cushion",
@@ -626,7 +676,7 @@
       "refersTo": "lantern",
       "description": "Stable native button; click or keyboard activation toggles local orange light. Production supplies bilingual labels and offscreen/hidden loop pausing.",
       "html": "<div class=\"ds-lamp-stage\"><button type=\"button\" class=\"ds-lantern\" aria-label=\"Brighten lantern\" aria-pressed=\"false\" onclick=\"const bright=this.getAttribute('aria-pressed')!=='true';this.setAttribute('aria-pressed',String(bright));this.setAttribute('aria-label',bright?'Dim lantern':'Brighten lantern')\"><span class=\"ds-lantern-halo\" aria-hidden=\"true\"></span><span class=\"ds-lantern-boost\" aria-hidden=\"true\"></span><svg class=\"ds-lantern-body\" viewBox=\"0 0 80 170\" fill=\"none\" aria-hidden=\"true\"><path d=\"M40 0v39\" stroke=\"#745031\" stroke-width=\"1.5\"/><path d=\"M33 45a7 7 0 1 1 14 0\" stroke=\"#745031\" stroke-width=\"2\"/><path d=\"m40 45-18 15h36L40 45Z\" fill=\"#936434\" stroke=\"#553a25\" stroke-width=\"1.5\"/><path d=\"m26 63-6 48 20 13 20-13-6-48H26Z\" fill=\"#5b3a25\" stroke=\"#4b3222\" stroke-width=\"2\"/><path class=\"ds-lantern-glass\" d=\"m29 67-5 42 13 9V67H29Zm14 0v51l13-9-5-42h-8Z\" fill=\"#ffb651\"/><path d=\"m29 68 8 4v37l-11-3 3-38Zm14 4 8-4 4 38-12 3V72Z\" fill=\"#ffda9a\" opacity=\".5\"/><path d=\"M40 65v57M24 109h32M26 64h28\" stroke=\"#704825\" stroke-width=\"2\"/><path d=\"M27 123h26l5 7H22l5-7Zm-5 8h36v4H22v-4Z\" fill=\"#80552e\" stroke=\"#513923\" stroke-width=\"1.5\"/><path d=\"M33 139h14m-7-3v8\" stroke=\"#91683b\" stroke-width=\"1.5\"/><path d=\"M31 57h18M26 126h28\" stroke=\"#d1aa68\" stroke-width=\"1.5\"/></svg></button></div>",
-      "css": ".ds-lamp-stage{display:grid;place-items:start center;position:relative;background:#5b222b;min-height:220px;overflow:hidden}.ds-lantern{position:relative;width:80px;height:170px;background:transparent;border:0;padding:0;border-radius:5px;display:block;cursor:pointer;animation:none}.ds-lantern:focus-visible{outline:2px solid #ffd396;outline-offset:5px}.ds-lantern-body{position:relative;z-index:1;display:block;width:100%;height:100%;transform-origin:50% 0;animation:ds-sway 8s cubic-bezier(.45,0,.55,1) infinite;animation-play-state:var(--lantern-play-state,running);transition:filter 180ms ease}.ds-lantern:hover .ds-lantern-body,.ds-lantern[aria-pressed=\"true\"] .ds-lantern-body{filter:drop-shadow(0 3px 8px #fc8c3b50)}.ds-lantern-halo{position:absolute;width:210px;height:210px;top:-8px;left:50%;margin-left:-105px;background:radial-gradient(ellipse,#ff9a3f94 0%,#fa7b343d 35%,#f16e2100 70%);pointer-events:none;animation:ds-light 4.3s ease-in-out infinite;animation-play-state:var(--lantern-play-state,running)}.ds-lantern-boost{position:absolute;width:245px;height:245px;top:-25px;left:50%;margin-left:-122.5px;pointer-events:none;background:radial-gradient(ellipse,#ffb85fbd 0%,#ff8b384d 38%,#ec5c1c00 72%);opacity:0;transition:opacity 220ms ease}.ds-lantern[aria-pressed=\"true\"] .ds-lantern-boost{opacity:1}.ds-lantern-glass{animation:ds-glass 4.3s ease-in-out infinite;animation-play-state:var(--lantern-play-state,running)}@keyframes ds-sway{0%,100%{transform:rotate(-1deg)}50%{transform:rotate(1deg)}}@keyframes ds-light{0%,100%{opacity:.72;transform:scale(.98)}37%{opacity:.91}64%{opacity:.78;transform:scale(1.025)}}@keyframes ds-glass{0%,100%{opacity:.83}37%{opacity:1}64%{opacity:.9}}@media(prefers-reduced-motion:reduce){.ds-lantern-body,.ds-lantern-halo,.ds-lantern-glass{animation:none!important}.ds-lantern-body,.ds-lantern-boost{transition:none}.ds-lantern-halo{opacity:.8;transform:none}}"
+      "css": ".ds-lamp-stage{display:grid;place-items:start center;position:relative;background:#5b222b;min-height:220px;overflow:hidden}.ds-lantern{position:relative;width:80px;height:170px;background:transparent;border:0;padding:0;border-radius:5px;display:block;cursor:pointer;animation:none}.ds-lantern:focus-visible{outline:2px solid #ffd396;outline-offset:5px}.ds-lantern-body{position:relative;z-index:1;display:block;width:100%;height:100%;transform-origin:50% 0;animation:ds-sway 8s cubic-bezier(.45,0,.55,1) infinite;animation-play-state:var(--lantern-play-state,running);transition:filter 380ms cubic-bezier(.16,1,.3,1)}.ds-lantern:hover .ds-lantern-body{filter:drop-shadow(0 3px 8px #fc8c3b50)}.ds-lantern[aria-pressed=\"true\"] .ds-lantern-body{filter:drop-shadow(0 3px 12px #fc8c3b85)}.ds-lantern-halo{position:absolute;width:210px;height:210px;top:-8px;left:50%;margin-left:-105px;background:radial-gradient(ellipse,#ff9a3f94 0%,#fa7b343d 35%,#f16e2100 70%);pointer-events:none;animation:ds-light 4.3s ease-in-out infinite;animation-play-state:var(--lantern-play-state,running)}.ds-lantern-boost{position:absolute;width:245px;height:245px;top:-25px;left:50%;margin-left:-122.5px;pointer-events:none;background:radial-gradient(ellipse,#ffb85fbd 0%,#ff8b384d 38%,#ec5c1c00 72%);opacity:0;transition:opacity 550ms cubic-bezier(.16,1,.3,1)}.ds-lantern[aria-pressed=\"true\"] .ds-lantern-boost{opacity:1}.ds-lantern-glass{animation:ds-glass 4.3s ease-in-out infinite;animation-play-state:var(--lantern-play-state,running)}@keyframes ds-sway{0%,100%{transform:rotate(-1deg)}50%{transform:rotate(1deg)}}@keyframes ds-light{0%,100%{opacity:.72;transform:scale(.98)}37%{opacity:.91}64%{opacity:.78;transform:scale(1.025)}}@keyframes ds-glass{0%,100%{opacity:.83}37%{opacity:1}64%{opacity:.9}}@media(prefers-reduced-motion:reduce){.ds-lantern-body,.ds-lantern-halo,.ds-lantern-glass{animation:none!important}.ds-lantern-body,.ds-lantern-boost{transition:none}.ds-lantern-halo{opacity:.8;transform:none}}"
     },
     {
       "name": "Shared Qur’an reader",
@@ -635,16 +685,32 @@
       "description": "Reading-tab and Homework range reader. Structural preview uses clearly labeled placeholders rather than invented verse text; production loads unmodified attributed Uthmani text.",
       "html": "<section class=\"ds-quran-reader\" aria-label=\"Qur’an reader\"><form class=\"ds-quran-controls\"><label>Surah<select aria-label=\"Surah\" disabled><option>Loading…</option></select></label><label>From ayah<input type=\"number\" min=\"1\" value=\"1\" required></label><label>To ayah<input type=\"number\" min=\"1\" value=\"7\" required></label><button class=\"ds-quran-action\" type=\"button\">Read ayahs</button></form><div class=\"ds-quran-reading\" translate=\"no\"><header class=\"ds-quran-heading\"><h2 lang=\"ar\" dir=\"rtl\">اسم السورة</h2><p>Selected ayah range</p></header><ol class=\"ds-quran-verses\" dir=\"rtl\"><li><p lang=\"ar\" dir=\"rtl\">تُعرض الآيات كما وردت من المصدر.</p><span class=\"ds-ayah-number\" aria-label=\"Ayah number\">—</span></li></ol></div><p class=\"ds-quran-source\"><a href=\"https://alquran.cloud/api\" target=\"_blank\" rel=\"noopener noreferrer\">Qur’an text: Al Quran Cloud · Uthmani edition</a></p></section>",
       "css": ".ds-quran-reader{font-family:var(--body,Figtree,'IBM Plex Sans Arabic',sans-serif);color:var(--ink,#f0dfc2);background:var(--paper,#3d151b);padding:20px}.ds-quran-controls{display:grid;grid-template-columns:minmax(180px,1fr) 110px 110px auto;align-items:end;gap:16px;margin-bottom:26px}.ds-quran-controls label{display:grid;gap:8px;font-size:14px;color:#f0d7b1}.ds-quran-controls input,.ds-quran-controls select{width:100%;min-height:48px;font-size:16px}.ds-quran-controls input{background:#f5e5c7;color:#3a2920;border:1px solid #b99263;border-radius:5px;padding:12px 14px}.ds-quran-controls input:hover{border-color:#a78d6e}.ds-quran-action{min-height:48px;padding:11px 20px;border:1px solid transparent;border-radius:5px;font:600 15px var(--body,Figtree,'IBM Plex Sans Arabic',sans-serif);background:#e7b479;color:#3c1920;cursor:pointer;transition:background 160ms,transform 160ms cubic-bezier(.16,1,.3,1)}.ds-quran-action:hover{background:#f1c790}.ds-quran-action:active{transform:scale(.98)}.ds-quran-controls input:focus-visible,.ds-quran-controls select:focus-visible,.ds-quran-action:focus-visible,.ds-quran-source a:focus-visible{outline:3px solid var(--focus,#ffbd69);outline-offset:4px}.ds-quran-reading{background:#ead3ab;color:#3a2920;padding:30px 40px}.ds-quran-heading{text-align:center;padding-bottom:22px;border-bottom:1px solid #ad8a61}.ds-quran-heading h2{font:400 35px/1.8 'Amiri Quran',Amiri,serif;margin:0 0 8px}.ds-quran-heading p{margin:0;color:#6a4b31;font-size:14px}.ds-quran-verses{list-style:none;padding:0;margin:0 auto;max-width:880px}.ds-quran-verses li{display:grid;grid-template-columns:minmax(0,1fr) 32px;align-items:baseline;gap:22px;padding-block:22px;border-bottom:1px solid #c3a278}.ds-quran-verses li>p{font:400 32px/2.6 'Amiri Quran',Amiri,serif;letter-spacing:0;margin:0}.ds-ayah-number{font:400 16px/2.6 'IBM Plex Sans Arabic',sans-serif;color:#75502e;text-align:center}.ds-quran-source{color:#d0ad8c;font-size:12px;margin-top:18px}.ds-quran-source a{color:inherit;text-underline-offset:3px}.ds-quran-source a:hover{text-decoration-thickness:2px}@media(max-width:750px){.ds-quran-controls{grid-template-columns:1fr 1fr;gap:14px}.ds-quran-controls>label:first-child,.ds-quran-controls>button{grid-column:1/-1}.ds-quran-reading{padding:24px 18px}.ds-quran-heading h2{font-size:30px}.ds-quran-verses li{gap:12px;grid-template-columns:minmax(0,1fr) 22px;padding-block:18px}.ds-quran-verses li>p{font-size:28px;line-height:2.6}.ds-ayah-number{font-size:14px}}@media(prefers-reduced-motion:reduce){.ds-quran-action{transition:none}}"
+    },
+    {
+      "name": "Warm profile portrait",
+      "kind": "custom",
+      "refersTo": "avatar-large",
+      "description": "Account identity: a real photo or initials inside bounded amber rings.",
+      "html": "<span class=\"ds-avatar\" aria-label=\"Account initials\">A</span>",
+      "css": ".ds-avatar{position:relative;display:inline-grid;place-items:center;width:136px;height:136px;border-radius:50%;background:#5e2634;color:#f5d8a0;font:400 44px/1 Figtree,\"IBM Plex Sans Arabic\",sans-serif}.ds-avatar:before,.ds-avatar:after{content:\"\";position:absolute;border-radius:50%;pointer-events:none}.ds-avatar:before{inset:-6px;border:2px solid #e9b576;box-shadow:0 4px 28px #ec8e3c59}.ds-avatar:after{inset:-13px;border:1px solid #e9b57666;opacity:.65} .ds-avatar>img{width:100%;height:100%;border-radius:50%;object-fit:cover}"
+    },
+    {
+      "name": "Pixel-art radiant dish heater",
+      "kind": "custom",
+      "refersTo": "heater",
+      "description": "Portable inline-geometry preview of the live two-asset native heater button; aria-pressed selects boosted warmth.",
+      "html": "<button class=\"ds-heater\" type=\"button\" aria-label=\"Increase heater warmth\" aria-pressed=\"false\"><span class=\"ds-heater-spill\" aria-hidden=\"true\"></span><span class=\"ds-heater-halo\" aria-hidden=\"true\"></span><svg class=\"ds-heater-shell\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 112 144\" shape-rendering=\"crispEdges\">\n<path fill=\"#26151c\" d=\"M42 4h28v4h12v4h8v8h8v12h4v40h-4v12h-8v8h-8v4H70v4H42v-4H30v-4h-8v-8h-8V72h-4V32h4V20h8v-8h8V8h12z\"/>\n<path fill=\"#78533f\" d=\"M42 8h28v4h12v4h8v8h4v12h4v32h-4v12h-4v8h-8v4H70v4H42v-4H30v-4h-8v-8h-4V68h-4V36h4V24h4v-8h8v-4h12z\"/>\n<path fill=\"#d3ad76\" d=\"M42 12h28v4h12v4h4v8h4v12h4v24h-4v12h-4v8h-4v4H70v4H42v-4H30v-4h-4v-8h-4V64h-4V40h4V28h4v-8h4v-4h12z\"/>\n<path fill=\"#8e6043\" d=\"M42 20h28v4h12v8h4v12h4v16h-4v16h-4v8H70v4H42v-4H30v-8h-4V60h-4V44h4V32h4v-8h12z\"/>\n<path fill=\"#3b2420\" d=\"M42 24h28v4h8v8h4v12h4v8h-4v16h-4v8h-8v4H42v-4h-8v-8h-4V56h-4v-8h4V36h4v-8h8z\"/>\n<path fill=\"#b78954\" d=\"M42 28h28v4h8v8h4v8h-4v-8h-8v-4H42v4h-8v8h-4v-8h4v-8h8z\"/>\n<path fill=\"#694332\" d=\"M42 80h28v4H42zM30 48h4v16h-4zm48 0h4v16h-4z\"/>\n<path fill=\"#27171c\" d=\"M48 96h16v24h-4v12H48zM24 132h64v8H24zM18 136h12v4H18zm64 0h12v4H82z\"/>\n<path fill=\"#aa7852\" d=\"M48 100h8v24h-4v8h-4zM28 130h56v4H28z\"/>\n<path fill=\"#72503d\" d=\"M58 100h4v24h-4zm-30 34h56v4H28z\"/>\n<path fill=\"#cea16c\" d=\"M50 104h2v14h-2zm-14 26h30v2H36zM46 12h20v2H46z\"/>\n<path fill=\"#5b342d\" d=\"M64 108h8v12h-8z\"/>\n<path fill=\"#dc9c60\" d=\"M66 110h4v6h-4z\"/>\n<path fill=\"#c9aa7b\" d=\"M24 20h4v4h-4zm62 60h4v4h-4z\"/>\n<path fill=\"#291a1b\" d=\"M38 36h2v36h-2zm10-6h2v48h-2zm14 0h2v48h-2zm10 6h2v36h-2zM30 44h52v2H30zm0 18h52v2H30z\"/>\n</svg>\n<span class=\"ds-heater-coils\" aria-hidden=\"true\"><svg aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 112 144\" shape-rendering=\"crispEdges\">\n<path fill=\"#fa7435\" d=\"M42 32h28v4h8v8h4v20h-4v8h-8v4H42v-4h-8v-8h-4V44h4v-8h8zm0 4v4h-4v8h-4v12h4v8h4v4h28v-4h4v-8h4V48h-4v-8h-4v-4z\"/>\n<path fill=\"#ffb85e\" d=\"M46 40h20v4h4v4h4v12h-4v4h-4v4H46v-4h-4v-4h-4V48h4v-4h4zm0 4v4h-4v12h4v4h20v-4h4V48h-4v-4z\"/>\n<path fill=\"#ffe1a0\" d=\"M50 48h12v4h4v4h-4v4H50v-4h-4v-4h4z\"/>\n<path fill=\"#382321\" d=\"M38 36h2v36h-2zm10-6h2v48h-2zm14 0h2v48h-2zm10 6h2v36h-2zM30 44h52v2H30zm0 18h52v2H30z\"/>\n</svg>\n</span><span class=\"ds-heater-light\" aria-hidden=\"true\"></span></button>",
+      "css": ".ds-heater{position:relative;display:block;width:112px;height:144px;padding:0;border:0;border-radius:5px;background:transparent;cursor:pointer;isolation:isolate;touch-action:manipulation}.ds-heater:focus-visible{outline:3px solid #ffc56e;outline-offset:5px}.ds-heater-shell,.ds-heater-coils{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;image-rendering:pixelated}.ds-heater-coils{opacity:.48;transition:opacity 720ms cubic-bezier(.16,1,.3,1)}.ds-heater-coils>svg{width:100%;height:100%}.ds-heater-halo,.ds-heater-spill,.ds-heater-light{position:absolute;pointer-events:none}.ds-heater-halo{z-index:-1;inset:-24% -80% 5%;background:radial-gradient(ellipse at 50% 44%,#ff8c326b,transparent 65%);opacity:.48;transform:scale(.94);transition:opacity 650ms cubic-bezier(.16,1,.3,1),transform 900ms cubic-bezier(.16,1,.3,1)}.ds-heater-spill{z-index:-1;width:260%;height:65%;left:-80%;bottom:-15%;background:radial-gradient(ellipse,#ff842b45,transparent 68%);opacity:.35;transform:scaleX(.8);transition:opacity 650ms cubic-bezier(.16,1,.3,1),transform 900ms cubic-bezier(.16,1,.3,1)}.ds-heater-light{left:59%;top:77%;width:3.5%;height:3%;background:#e47942;opacity:.6;transition:background-color 300ms,opacity 300ms}.ds-heater[aria-pressed=true]>.ds-heater-coils{opacity:1}.ds-heater[aria-pressed=true]>.ds-heater-halo{opacity:1;transform:scale(1.08)}.ds-heater[aria-pressed=true]>.ds-heater-spill{opacity:1;transform:scaleX(1.12)}.ds-heater[aria-pressed=true]>.ds-heater-light{background:#ffcd76;opacity:1}.ds-heater-coils:after{content:\"\";position:absolute;inset:17% 24% 44%;background:radial-gradient(ellipse,#ffba7836,transparent 70%);animation:ds-heater-radiance 5.5s cubic-bezier(.45,0,.55,1) infinite;animation-play-state:var(--lantern-play-state,running)}@keyframes ds-heater-radiance{0%,100%{opacity:.45;transform:scale(.95)}50%{opacity:1;transform:scale(1.05)}}@media(hover:hover) and (pointer:fine){.ds-heater:hover>.ds-heater-halo{opacity:.8}.ds-heater[aria-pressed=true]:hover>.ds-heater-halo{opacity:1}}@media(max-width:750px){.ds-heater{width:80px;height:104px}}@media(prefers-reduced-motion:reduce){.ds-heater-coils:after{animation:none}.ds-heater-halo,.ds-heater-spill,.ds-heater-coils,.ds-heater-light{transition:none}}"
     }
   ],
   "narrative": {
     "northStar": "Deep oxblood and orange lamplight",
-    "overview": "Deep oxblood textile, warm ivory ink and interactive orange lamplight place this bilingual learning circle inside its Najdi gathering. Intricacy comes from an authored geometric Najdi rug, upholstered majlis side rails, Sadu geometry, stepped plaster, fine brass-colored rules, separate pixel-art Sadu cushions and actual Arabic lettering. Generous space around sections, tables and actions makes the dark setting welcoming and readable.\n\nAmiri carries the Arabic identity; Lora gives English headings a quiet literary character. Figtree and IBM Plex Sans Arabic keep controls and reading clear. The muted diamond rug carries the continuous public ground; calm red surfaces carry task content and cards, and clay is reserved for focused reading forms. Reference photographs never appear in the interface.\n\nIndividual floor, backrest, square and cylindrical cushion silhouettes add a small crafted accent. Each is hand-drawn crisp-edge SVG; keep them separate and clear of reading and controls. The bilingual remembered-name/password tent door uses the same red, brass, cream fields and lantern vocabulary.",
+    "overview": "Deep oxblood textile, warm ivory ink and interactive orange lamplight place this bilingual learning circle inside its Najdi gathering. Intricacy comes from an authored geometric Najdi rug, upholstered majlis side rails, Sadu geometry, stepped plaster, fine brass-colored rules, separate pixel-art Sadu cushions and actual Arabic lettering. Generous space around sections, tables and actions makes the dark setting welcoming and readable.\n\nAmiri carries the Arabic identity; Lora gives English headings a quiet literary character. Figtree and IBM Plex Sans Arabic keep controls and reading clear. The muted diamond rug carries the continuous public ground; calm red surfaces carry task content and cards, and clay is reserved for focused reading forms. Reference photographs never appear in the interface.\n\nIndividual floor, backrest, square and cylindrical cushion silhouettes add a small crafted accent. A separate pixel-art dish heater shares their stepped geometry and gives the gathering a bounded, interactive source of radiant warmth. Each is hand-drawn crisp-edge SVG; keep them separate and clear of reading and controls. The bilingual remembered-name/password tent door uses the same red, brass, cream fields and lantern vocabulary.",
     "keyCharacteristics": [
       "Deep oxblood rug ground with quiet geometric motifs, warm ivory reading and amber actions.",
       "Black, ivory and ochre Sadu, upholstered majlis side rails, stepped plaster and brass detail.",
       "Equal English and Arabic functionality, with RTL and mixed-script isolation.",
-      "Stable interactive lantern buttons, orange glow and restrained motion.",
+      "Stable interactive lantern and dish-heater buttons, bounded orange warmth and fluid control feedback.",
       "Roomy sections, generous table rows and a wider desktop shell.",
       "Separate hand-drawn pixel-art Sadu cushions, never a complete seating scene."
     ],
@@ -661,7 +727,7 @@
       },
       {
         "name": "The Bounded Light Rule",
-        "body": "Keep orange light local to the lanterns and their stable button targets. Pause loops offscreen and when the document is hidden; retain the header pause control and static reduced-motion path.",
+        "body": "Concentrate orange light around lanterns, heater coils and profile portraits; keep any room spill faint and behind readable content. Keep interactive object targets stable. Pause loops offscreen and when the document is hidden; retain the shared pause control and static reduced-motion path.",
         "section": "elevation"
       }
     ],
