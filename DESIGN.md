@@ -68,6 +68,10 @@ typography:
     fontSize: 55px
     fontWeight: 400
     lineHeight: 1.6
+  door-change-title:
+    fontFamily: Lora, Georgia, serif
+    fontSize: 32px
+    lineHeight: 1.4
 rounded:
   material: 2px
   compact: 3px
@@ -236,7 +240,7 @@ Answer options are large label targets with native radio inputs, letter markers 
 
 ### Tent door
 
-The remembered-name/password entry sheet inherits the red panel, woven top edge, cream fields and amber full-width action. Its Amiri name is (55px / 1.6), reducing to (45px) at (750px) and (38px) at (380px). Fields have visible labels, a (48px) minimum height and native name/password autocomplete. Creation, returning-name and alternate-name modes retain the upstream controller and translated copy. Validation appears as a live alert. Language and pause controls stay above the form; small interactive lanterns frame the sheet, and a separate cylindrical cushion sits below its edge. Do not turn decorative cushion hover into an implied form action.
+The remembered-name/password entry sheet inherits the red panel, woven top edge, cream fields and amber full-width action. Its Amiri name is (55px / 1.6), reducing to (45px) at (750px) and (38px) at (380px). Fields have visible labels, a (48px) minimum height and native name/password autocomplete. Creation, returning-name, alternate-name, recovery-word and password-change modes retain the upstream controller and translated copy. Recovery and password change reuse the same fields, lanterns, cushion and validation treatment. The English password-change heading uses Lora (32px / 1.4), with (34px 0 20px) block margins; Arabic follows the existing Amiri display family. Validation appears as a live alert. The signed-in header exposes password change with a translated label and title; below (750px), its text yields to the inline SVG icon while the remembered name can shrink. Language and pause controls stay above the form; small interactive lanterns frame the sheet, and a separate cylindrical cushion sits below its edge. Do not turn decorative cushion hover into an implied form action.
 
 ### Pixel-art cushions
 

@@ -10,7 +10,7 @@ Run `python3 preview.py --port 4181`, then open http://127.0.0.1:4181. The previ
 
 GitHub Pages serves `index.html`, `app.js`, `components.js`, `i18n.js`, `runtime.js`, `styles.css`, and `assets/` directly. No build or new runtime dependencies are required. Publish all of those files together.
 
-`app.js` is the readable application extracted from the latest published bundle (commit `0c2261c`). `runtime.js` preserves its bundled React and Lucide dependencies. `i18n.js` contains interface translations and the persistent language preference. The home page, shared standings table, lanterns and shared shell are authored in `components.js`. The latest upstream quiz controller preserves local missed-question practice, saved progress, and the remembered-name/password tent door.
+`app.js` is the readable application extracted from the latest published bundle (commit `499c84f`). `runtime.js` preserves its bundled React and Lucide dependencies. `i18n.js` contains interface translations and the persistent language preference. The home page, shared standings table, lanterns and shared shell are authored in `components.js`. The latest upstream quiz controller preserves local missed-question practice, saved progress, and the remembered-name/password tent door and password recovery.
 
 Quizzes, scores, submissions, and approved funny answers still use the existing Tamkeen server. Teacher sign-in still opens that server; its private interface is a separate application and is outside this repository. No credentials, unpublished quiz content, or database exports are included here.
 

@@ -6114,6 +6114,37 @@ textarea::placeholder {
   gap: 22px;
 }
 @media (max-width: 750px) {
-  .header-inner { height: 100px; }
-  .header-actions { gap: 9px; }
+  .header-inner {
+    height: 100px;
+  }
+  .header-actions {
+    gap: 9px;
+  }
+}
+.door-sheet h1:not([lang]) {
+  font-family: var(--display);
+  font-size: 32px;
+  line-height: 1.4;
+  margin-block: 34px 20px;
+}
+.password-icon {
+  display: none;
+}
+@media (max-width: 750px) {
+  .teacher-account > span {
+    min-width: 0;
+    flex: 1;
+  }
+  .password-label {
+    display: none;
+  }
+  .teacher-account > .text-button > .password-icon {
+    display: block;
+  }
+  .teacher-account {
+    gap: 9px;
+  }
+  .teacher-account > button:has(.password-icon) {
+    min-width: 24px;
+  }
 }

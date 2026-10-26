@@ -21,3 +21,5 @@ Focal: Two brass lantern bodies sway one degree within stable button targets whi
 
 ## Latest user refinement
 Separate hand-drawn pixel-art red Sadu floor cushion, long backrest, square pillow and cylindrical armrest accents replace generated illustrations. No composite majlis seating scene. Place the square and backrest at hero edges, an armrest at the door and quiz, and a floor mattress at the shared footer. Keep ornament clear of controls. Their two-pixel breathing motion shares the lantern visibility pause, global pause and reduced-motion behavior.
+
+Latest upstream integration: Preserve commit 499c84f password recovery and password change. Both reuse the tent-door form system and bilingual controls; the mobile header password action is a labeled SVG button.

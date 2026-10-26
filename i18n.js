@@ -1,4 +1,37 @@
 const arabic = {
+  "Use at least 4 characters for the recovery word.":
+    "استخدم ٤ أحرف على الأقل لكلمة الاسترداد.",
+  "That recovery word is too long.": "كلمة الاسترداد طويلة جدًا.",
+  "Use a recovery word that is not the password.":
+    "اختر كلمة استرداد مختلفة عن كلمة المرور.",
+  "Enter the recovery word from when you set your name, then choose a new password.":
+    "أدخل كلمة الاسترداد التي اخترتها عند التسجيل، ثم اختر كلمة مرور جديدة.",
+  "Recovery word": "كلمة الاسترداد",
+  "Capital letters do not matter.": "لا فرق بين الحروف الكبيرة والصغيرة.",
+  "If you forget the password, this word makes a new one. Do not reuse the password.":
+    "تساعدك هذه الكلمة على تعيين كلمة مرور جديدة إذا نسيتها. اختر كلمة مختلفة عن كلمة المرور.",
+  "New password": "كلمة المرور الجديدة",
+  "At least 6 characters.": "٦ أحرف على الأقل.",
+  "Confirm new password": "تأكيد كلمة المرور الجديدة",
+  "Save new password": "حفظ كلمة المرور الجديدة",
+  "Forgot password": "نسيت كلمة المرور",
+  "Choose a password that is different from the current one.":
+    "اختر كلمة مرور مختلفة عن الحالية.",
+  "Change password": "تغيير كلمة المرور",
+  "The next time you sign in, use the new password.":
+    "استخدم كلمة المرور الجديدة عند تسجيل الدخول في المرة القادمة.",
+  "Current password": "كلمة المرور الحالية",
+  "Save password": "حفظ كلمة المرور",
+  "Back to the tent": "العودة إلى الخيمة",
+  "This name was saved without a recovery word. Choose This is someone else and set it up again.":
+    "حُفظ هذا الاسم دون كلمة استرداد. اختر «استخدام اسم آخر» وسجّل الاسم من جديد.",
+  "That recovery word does not match.": "كلمة الاسترداد غير مطابقة.",
+  "Could not save the new password. Please try again.":
+    "تعذّر حفظ كلمة المرور الجديدة. حاول مرة أخرى.",
+  "That password does not match.": "كلمة المرور غير مطابقة.",
+  "Password saved. Use it the next time you sign in.":
+    "حُفظت كلمة المرور. استخدمها عند تسجيل الدخول في المرة القادمة.",
+
   "Use the name the tent knows.": "اكتب الاسم الذي تعرفك به المجموعة.",
   "That name is too long.": "الاسم طويل جدًا.",
   "Use letters in your name.": "اكتب اسمك بالحروف.",
