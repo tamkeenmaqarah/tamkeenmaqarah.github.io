@@ -15,6 +15,8 @@ const door=load('app/door.ts',{'./revisit':revisit});
 const accounts=load('app/accounts.ts',{'./server':{db(){throw Error('no database in this check')}},'./revisit':revisit,'./door':door});
 assert.equal(door.nameProblem('A'),'Use the name the tent knows.');
 assert.equal(door.passwordProblem('short'),'Use at least 6 characters.');
+assert.equal(door.recoveryProblem('arak','arak'),'Use a recovery word that is not the password.');
+assert.equal(door.recoveryProblem('siwak','tentpass'),null);
 assert.equal(door.nameProblem('Yaseen'),null);
 const hash=await door.digest('tent-pass');
 assert.equal(hash.length,64);

@@ -1,6 +1,6 @@
 import {drop,readJson,tentKeys,writeJson} from './revisit';
 
-export type DoorProfile={name:string;passwordHash:string};
+export type DoorProfile={name:string;passwordHash:string;recoveryHash?:string};
 type Store=Pick<Storage,'getItem'|'setItem'|'removeItem'>|null;
 
 export async function digest(value:string){
@@ -19,6 +19,14 @@ export function nameProblem(name:string){
 export function passwordProblem(password:string){
  if(password.length<6)return 'Use at least 6 characters.';
  if(password.length>72)return 'That password is too long.';
+ return null;
+}
+export function recoveryKey(word:string){return word.trim().toLocaleLowerCase('en')}
+export function recoveryProblem(word:string,password?:string){
+ const clean=word.trim();
+ if(clean.length<4)return 'Use at least 4 characters for the recovery word.';
+ if(clean.length>40)return 'That recovery word is too long.';
+ if(password&&recoveryKey(clean)===password.trim().toLocaleLowerCase('en'))return 'Use a recovery word that is not the password.';
  return null;
 }
 export function readDoor(storage:Store){return readJson<DoorProfile>(storage,tentKeys.door)}

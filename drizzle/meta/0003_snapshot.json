@@ -255,6 +255,13 @@
           "notNull": true,
           "autoincrement": false
         },
+        "recovery_hash": {
+          "name": "recovery_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "review": {
           "name": "review",
           "type": "text",

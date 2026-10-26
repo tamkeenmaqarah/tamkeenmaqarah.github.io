@@ -1,6 +1,6 @@
 import {db} from './server';
 import {missesFrom} from './revisit';
-import {cleanName,digest,nameProblem,passwordProblem,sameHash} from './door';
+import {cleanName,digest,nameProblem,passwordProblem,recoveryKey,recoveryProblem,sameHash} from './door';
 
 export {digest,sameHash};
 export function bearer(req:Request){
@@ -53,15 +53,35 @@ async function openSessionFor(id:string,name:string){
  await db().prepare('INSERT INTO sessions (token_hash,student_id,created_at) VALUES (?,?,?)').bind(await digest(token),id,new Date().toISOString()).run();
  return {token,student:{id,name}};
 }
-export async function registerStudent(name:string,password:string){
+export async function registerStudent(name:string,password:string,recovery:string){
  const clean=cleanName(name);
- const problem=nameProblem(clean)||passwordProblem(password);
+ const problem=nameProblem(clean)||passwordProblem(password)||recoveryProblem(recovery,password);
  if(problem)throw Error(problem);
  const existing:any=await db().prepare('SELECT id FROM students WHERE name=? COLLATE NOCASE').bind(clean).first();
  if(existing)throw Error('That name is already in the tent. Sign in instead.');
  const id=crypto.randomUUID();
- await db().prepare('INSERT INTO students (id,name,password_hash,created_at) VALUES (?,?,?,?)').bind(id,clean,await digest(password),new Date().toISOString()).run();
+ await db().prepare('INSERT INTO students (id,name,password_hash,recovery_hash,created_at) VALUES (?,?,?,?,?)').bind(id,clean,await digest(password),await digest(recoveryKey(recovery)),new Date().toISOString()).run();
  return openSessionFor(id,clean);
+}
+export async function resetPassword(name:string,recovery:string,password:string){
+ const clean=cleanName(name);
+ const problem=passwordProblem(password)||recoveryProblem(recovery);
+ if(problem)throw Error(problem);
+ const row:any=await db().prepare('SELECT id,name,recovery_hash FROM students WHERE name=? COLLATE NOCASE').bind(clean).first();
+ if(!row?.recovery_hash||!sameHash(row.recovery_hash,await digest(recoveryKey(recovery))))return null;
+ await db().prepare('UPDATE students SET password_hash=? WHERE id=?').bind(await digest(password),row.id).run();
+ await db().prepare('DELETE FROM sessions WHERE student_id=?').bind(row.id).run();
+ return openSessionFor(row.id,row.name);
+}
+export async function changePassword(studentId:string,current:string,password:string){
+ const problem=passwordProblem(password);
+ if(problem)throw Error(problem);
+ const row:any=await db().prepare('SELECT password_hash FROM students WHERE id=?').bind(studentId).first();
+ if(!row||!sameHash(row.password_hash,await digest(current)))return null;
+ await db().prepare('UPDATE students SET password_hash=? WHERE id=?').bind(await digest(password),studentId).run();
+ await db().prepare('DELETE FROM sessions WHERE student_id=?').bind(studentId).run();
+ const student:any=await db().prepare('SELECT name FROM students WHERE id=?').bind(studentId).first();
+ return openSessionFor(studentId,student.name);
 }
 export async function openSession(name:string,password:string){
  const clean=cleanName(name);

@@ -1,0 +1,6 @@
+import {NextResponse} from 'next/server';
+import {accountsReady,changePassword,studentFrom} from '../../../accounts';
+import {allowedPublicOrigin,publicCors,publicPreflight} from '../../../public-cors';
+const known=['Use at least 6 characters.','That password is too long.'];
+export function OPTIONS(req:Request){return publicPreflight(req,'POST')}
+export async function POST(req:Request){const respond=(body:any,init?:ResponseInit)=>publicCors(req,NextResponse.json(body,init),'POST');if(!allowedPublicOrigin(req))return respond({error:'Invalid origin'},{status:403});try{if(!await accountsReady())return respond({error:'Accounts are not available on this server yet.'},{status:404});const student=await studentFrom(req);if(!student)return respond({error:'Sign in again.'},{status:401});const {current,password}=await req.json() as any;if(typeof current!=='string'||typeof password!=='string')return respond({error:'Enter the current password and a new one.'},{status:400});const session=await changePassword(student.id,current,password);if(!session)return respond({error:'That password does not match.'},{status:401});return respond(session)}catch(e:any){return respond({error:known.includes(e?.message)?e.message:'Could not save the new password. Please try again.'},{status:400})}}

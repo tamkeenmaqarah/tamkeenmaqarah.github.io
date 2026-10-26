@@ -1,0 +1,6 @@
+import {NextResponse} from 'next/server';
+import {accountsReady,resetPassword} from '../../../accounts';
+import {allowedPublicOrigin,publicCors,publicPreflight} from '../../../public-cors';
+const known=['Use at least 6 characters.','That password is too long.','Use at least 4 characters for the recovery word.','That recovery word is too long.'];
+export function OPTIONS(req:Request){return publicPreflight(req,'POST')}
+export async function POST(req:Request){const respond=(body:any,init?:ResponseInit)=>publicCors(req,NextResponse.json(body,init),'POST');if(!allowedPublicOrigin(req))return respond({error:'Invalid origin'},{status:403});try{if(!await accountsReady())return respond({error:'Accounts are not available on this server yet.'},{status:404});const {name,recovery,password}=await req.json() as any;if(typeof name!=='string'||typeof recovery!=='string'||typeof password!=='string')return respond({error:'Enter your name, recovery word, and a new password.'},{status:400});const session=await resetPassword(name,recovery,password);if(!session)return respond({error:'That recovery word does not match.'},{status:401});return respond(session)}catch(e:any){return respond({error:known.includes(e?.message)?e.message:'Could not save the new password. Please try again.'},{status:400})}}

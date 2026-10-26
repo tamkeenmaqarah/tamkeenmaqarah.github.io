@@ -36,11 +36,12 @@ small{font-size:13px}
 .door{min-height:100dvh;display:grid;align-items:center;background-color:#1a1214;background-image:var(--frieze),var(--stripe);background-repeat:repeat-x,no-repeat;background-size:16px 16px,100% 100%;background-position:left bottom,center top;padding:36px 20px 52px}
 .door-sheet{width:min(440px,100%);margin:auto;background:var(--white);color:var(--ink);border-radius:14px;padding:32px 28px 24px}
 .door-sheet h1{font-family:'Reem Kufi',Figtree,sans-serif;font-size:52px;font-weight:700;line-height:1.05;letter-spacing:0;margin:0 0 12px}
+.door-sheet h1:not([lang]){font-family:Figtree,sans-serif;font-size:32px;letter-spacing:-0.02em}
 .door-sheet>p{color:var(--muted);font-size:16px;max-width:38ch}
 .door-name{font-family:'Reem Kufi',Figtree,sans-serif;font-size:32px;line-height:1.15;margin:22px 0 0}
 .door-error{color:#7a1420;font-size:14px;margin:16px 0 0}
 .door-sheet .primary{width:100%;margin-top:22px}
-.door-switch{display:flex;justify-content:space-between;gap:16px;margin-top:8px}
+.door-switch{display:flex;justify-content:space-between;gap:8px 16px;margin-top:8px;flex-wrap:wrap}
 .door ::selection{background:#d7b56a;color:#241416}
 @media(max-width:580px){.door-sheet{padding:26px 20px 18px}.door-sheet h1{font-size:44px}.door-switch{flex-direction:column;align-items:flex-start;gap:0}}
 .brand{display:flex;align-items:center;gap:11px;color:#fff;text-decoration:none;line-height:1.2}
@@ -461,7 +462,7 @@ main{padding:28px 25px 50px}
 .home-teacher-tools>div:last-child{width:100%}
 .home-teacher-tools .primary,.home-teacher-tools .secondary{font-size:13px;padding:10px 12px;flex:1}
 .public-moments{grid-template-columns:1fr;gap:20px}
-.header-inner{padding:0 20px;height:73px;gap:15px}
+.header-inner{padding:8px 20px;height:auto;min-height:73px;gap:10px 15px}
 .brand-mark{width:35px;height:40px}
 .brand-mark>svg{width:22px}
 .brand b{font-size:21px}
