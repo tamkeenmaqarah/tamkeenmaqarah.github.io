@@ -248,8 +248,8 @@
           "notNull": true,
           "autoincrement": false
         },
-        "code_hash": {
-          "name": "code_hash",
+        "password_hash": {
+          "name": "password_hash",
           "type": "text",
           "primaryKey": false,
           "notNull": true,

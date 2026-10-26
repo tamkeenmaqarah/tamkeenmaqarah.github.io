@@ -5,7 +5,7 @@
 web
 
 ## Users
-Youth-group students take Islamic knowledge quizzes through shared links. A quiz still works with just a name. The teacher can also give a student a code so missed questions follow that sign-in to another phone. The teacher creates quizzes, records paper grades, reviews submitted attempts and shares summaries in WhatsApp.
+Youth-group students set a name and password once before they enter the tent. This phone remembers them after that. The teacher creates quizzes, records paper grades, reviews submitted attempts and shares summaries in WhatsApp.
 
 ## Product Purpose
 A quiz site for the Sunday-morning circle that meets in Yasin Naseri’s tent. Tamkeen is the wider youth group. This site is for the subset who sit in that tent, stay with the Quran, and quiz the Tamkeen halaqas. Easy navigation and readable text are confirmed priorities.
@@ -19,7 +19,7 @@ The circle meets Sunday mornings in Yasin Naseri’s tent. The teacher supplies 
 Students may use phones. Teacher tasks and quiz-taking must both work on mobile and desktop. Online quizzes have one point per question and explanations after submission. Teacher supports original paper marks plus bonus points.
 
 ## Capabilities and Constraints
-React/Vinext, Cloudflare Workers and D1 through Sites. Published quizzes and submissions synchronize through the database. Anyone with a student link may take a quiz without a code. A teacher-issued code is optional and does not replace the teacher’s secret link. Teacher controls, detailed submitted answers and answer keys remain private. The user explicitly authorized public group names, scores and teacher-approved funny answers on 25 October 2026. The teacher authenticates with a secret capability link. Original historical quiz grades: Yaseen 11/13, Hassonah 10/13 including bonus, Adam 8/13, Hamza 8/13, Aymen 5/13, Mohamed Mahmoud 4/13. Ties share rank. No manufactured attendance, streaks or additional quiz history. New online attempts use self-reported names. Full original corrected question document is unavailable; a separate three-question practice exercise is a draft.
+React/Vinext, Cloudflare Workers and D1 through Sites. Published quizzes and submissions synchronize through the database. A student sets a name and password on the first visit. The phone keeps that sign-in, so the next visit opens straight into the tent. The teacher’s secret link is separate. Teacher controls, detailed submitted answers and answer keys remain private. The user explicitly authorized public group names, scores and teacher-approved funny answers on 25 October 2026. The teacher authenticates with a secret capability link. Original historical quiz grades: Yaseen 11/13, Hassonah 10/13 including bonus, Adam 8/13, Hamza 8/13, Aymen 5/13, Mohamed Mahmoud 4/13. Ties share rank. No manufactured attendance, streaks or additional quiz history. New online attempts use self-reported names. Full original corrected question document is unavailable; a separate three-question practice exercise is a draft.
 
 ## Brand Commitments
 Name: the Sunday tent of Yasin Naseri, inside Tamkeen / خيمة ياسين. English and Arabic, with Arabic at the center of the name. The user rejected a generic green panel look and the later navy league look. On 25 October 2026 the user pinned the interior of a Saudi majlis tent: red striped cloth, black-and-white geometric bands, and floor seating. Historical grade names and scores stay unchanged.

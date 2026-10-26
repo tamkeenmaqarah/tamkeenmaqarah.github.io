@@ -1,7 +1,7 @@
 CREATE TABLE `students` (
 	`id` text PRIMARY KEY NOT NULL,
 	`name` text NOT NULL,
-	`code_hash` text NOT NULL,
+	`password_hash` text NOT NULL,
 	`review` text,
 	`created_at` text NOT NULL
 );

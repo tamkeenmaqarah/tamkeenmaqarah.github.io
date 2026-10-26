@@ -1,17 +1,8 @@
 import {db} from './server';
 import {missesFrom} from './revisit';
+import {cleanName,digest,nameProblem,passwordProblem,sameHash} from './door';
 
-const alphabet='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-
-export async function digest(value:string){
- const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value));
- return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
-}
-export function makeCode(){
- const bytes=crypto.getRandomValues(new Uint8Array(8));
- return [...bytes].map(b=>alphabet[b%alphabet.length]).join('');
-}
-export function sameHash(stored:string,given:string){let diff=stored.length===given.length?0:1;for(let i=0;i<Math.min(stored.length,given.length);i++)diff|=stored.charCodeAt(i)^given.charCodeAt(i);return diff===0}
+export {digest,sameHash};
 export function bearer(req:Request){
  const header=req.headers.get('authorization')||'';
  const token=header.startsWith('Bearer ')?header.slice(7).trim():'';
@@ -57,22 +48,25 @@ export async function latestMisses(studentId:string){
 export async function saveReview(studentId:string,review:StoredReview|null){
  await db().prepare('UPDATE students SET review=? WHERE id=?').bind(review?JSON.stringify({...review,name:''}):'',studentId).run();
 }
-export async function issueCode(name:string){
- const clean=name.trim().replace(/\s+/g,' ');
- if(!clean||clean.length>100)throw Error('Enter the student’s name.');
- const code=makeCode(),hash=await digest(code),now=new Date().toISOString();
- const existing:any=await db().prepare('SELECT id,name FROM students WHERE name=? COLLATE NOCASE').bind(clean).first();
- if(existing){await db().prepare('UPDATE students SET code_hash=? WHERE id=?').bind(hash,existing.id).run();await db().prepare('DELETE FROM sessions WHERE student_id=?').bind(existing.id).run();return {id:existing.id as string,name:existing.name as string,code}}
- const id=crypto.randomUUID();
- await db().prepare('INSERT INTO students (id,name,code_hash,created_at) VALUES (?,?,?,?)').bind(id,clean,hash,now).run();
- return {id,name:clean,code};
-}
-export async function openSession(name:string,code:string){
- const clean=name.trim().replace(/\s+/g,' ');
- const row:any=await db().prepare('SELECT id,name,code_hash FROM students WHERE name=? COLLATE NOCASE').bind(clean).first();
- const given=await digest(code.trim().toUpperCase());
- if(!row||!sameHash(row.code_hash,given))return null;
+async function openSessionFor(id:string,name:string){
  const token=await digest(crypto.randomUUID()+crypto.randomUUID());
- await db().prepare('INSERT INTO sessions (token_hash,student_id,created_at) VALUES (?,?,?)').bind(await digest(token),row.id,new Date().toISOString()).run();
- return {token,student:{id:row.id as string,name:row.name as string}};
+ await db().prepare('INSERT INTO sessions (token_hash,student_id,created_at) VALUES (?,?,?)').bind(await digest(token),id,new Date().toISOString()).run();
+ return {token,student:{id,name}};
+}
+export async function registerStudent(name:string,password:string){
+ const clean=cleanName(name);
+ const problem=nameProblem(clean)||passwordProblem(password);
+ if(problem)throw Error(problem);
+ const existing:any=await db().prepare('SELECT id FROM students WHERE name=? COLLATE NOCASE').bind(clean).first();
+ if(existing)throw Error('That name is already in the tent. Sign in instead.');
+ const id=crypto.randomUUID();
+ await db().prepare('INSERT INTO students (id,name,password_hash,created_at) VALUES (?,?,?,?)').bind(id,clean,await digest(password),new Date().toISOString()).run();
+ return openSessionFor(id,clean);
+}
+export async function openSession(name:string,password:string){
+ const clean=cleanName(name);
+ if(passwordProblem(password))return null;
+ const row:any=await db().prepare('SELECT id,name,password_hash FROM students WHERE name=? COLLATE NOCASE').bind(clean).first();
+ if(!row||!sameHash(row.password_hash,await digest(password)))return null;
+ return openSessionFor(row.id,row.name);
 }
