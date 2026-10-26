@@ -1,6 +1,11 @@
 name: Deploy teacher server
 on:
   workflow_dispatch:
+    inputs:
+      verify_quran:
+        description: Verify Quran Foundation production access before deploying
+        type: boolean
+        default: false
 permissions:
   contents: read
 jobs:
@@ -19,6 +24,7 @@ jobs:
       - run: node --test tests/quran-content.test.mjs
       - run: pnpm build
       - name: Verify Quran Foundation production access
+        if: ${{ inputs.verify_quran }}
         env:
           QURAN_CLIENT_ID: ${{ secrets.QURAN_CLIENT_ID }}
           QURAN_CLIENT_SECRET: ${{ secrets.QURAN_CLIENT_SECRET }}
