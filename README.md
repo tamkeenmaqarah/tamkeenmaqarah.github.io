@@ -30,7 +30,7 @@ Generate database migrations with `pnpm db:generate`. Inspect migrations before 
 
 Configure `TEACHER_KEY` and `GEMINI_API_KEY` as secret server runtime variables. Local development may use an untracked `.dev.vars` file. Never put actual credentials in this repository, client code or public links. Secret values and environment files are deliberately absent from this branch.
 
-Optional runtime settings include `GEMINI_MODEL` (default `gemini-3.5-flash-lite`), `GEMINI_DAILY_LIMIT` (default 20 teacher tasks per UTC day) and `PUBLIC_SITE_URL` (`https://tamkeenmaqarah.github.io/`). The hosted server already has its own configuration; cloning this source does not copy its secrets or data.
+Optional runtime settings include `GEMINI_MODEL` (default `gemini-3.5-flash-lite`), `GEMINI_DAILY_LIMIT` (default 20 teacher tasks per UTC day) and `PUBLIC_SITE_URL` (`https://tamkeenmaqarah.github.io/`). `GOOGLE_CLIENT_ID` can override the public Sign in with Google client id. It is not a secret. The Google Cloud client must allow JavaScript origins `https://tamkeenmaqarah.github.io` and the teacher site origin. The hosted server already has its own configuration; cloning this source does not copy its secrets or data.
 
 ## Public website build
 

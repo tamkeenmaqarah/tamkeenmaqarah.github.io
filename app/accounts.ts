@@ -1,6 +1,7 @@
 import {db} from './server';
 import {missesFrom} from './revisit';
 import {cleanName,digest,nameProblem,passwordProblem,recoveryKey,recoveryProblem,sameHash} from './door';
+import {googleIdentity} from './google';
 
 export {digest,sameHash};
 export function bearer(req:Request){
@@ -14,8 +15,14 @@ export async function accountsReady(){
 export async function studentFrom(req:Request){
  const token=bearer(req);
  if(!token)return null;
- const row:any=await db().prepare('SELECT s.id,s.name FROM sessions n JOIN students s ON s.id=n.student_id WHERE n.token_hash=?').bind(await digest(token)).first();
- return row?{id:row.id as string,name:row.name as string}:null;
+ const tokenHash=await digest(token);
+ try{
+  const row:any=await db().prepare('SELECT s.id,s.name,s.google_sub,s.has_password FROM sessions n JOIN students s ON s.id=n.student_id WHERE n.token_hash=?').bind(tokenHash).first();
+  return row?{id:row.id as string,name:row.name as string,google:Boolean(row.google_sub),hasPassword:row.has_password!==0}:null;
+ }catch{
+  const row:any=await db().prepare('SELECT s.id,s.name FROM sessions n JOIN students s ON s.id=n.student_id WHERE n.token_hash=?').bind(tokenHash).first();
+  return row?{id:row.id as string,name:row.name as string}:null;
+ }
 }
 export type StoredReview={quizId:string;title:string;name:string;score:number;max:number;misses:{prompt:string;options:string[];correct:number;explanation:string}[]};
 export function reviewFrom(value:string|null|undefined):StoredReview|null{
@@ -76,9 +83,13 @@ export async function resetPassword(name:string,recovery:string,password:string)
 export async function changePassword(studentId:string,current:string,password:string){
  const problem=passwordProblem(password);
  if(problem)throw Error(problem);
- const row:any=await db().prepare('SELECT password_hash FROM students WHERE id=?').bind(studentId).first();
- if(!row||!sameHash(row.password_hash,await digest(current)))return null;
- await db().prepare('UPDATE students SET password_hash=? WHERE id=?').bind(await digest(password),studentId).run();
+ let row:any;
+ try{row=await db().prepare('SELECT password_hash,has_password FROM students WHERE id=?').bind(studentId).first()}catch{row=await db().prepare('SELECT password_hash FROM students WHERE id=?').bind(studentId).first()}
+ if(!row)return null;
+ const unset=row.has_password===0;
+ if(!unset&&!sameHash(row.password_hash,await digest(current)))return null;
+ const next=await digest(password);
+ try{await db().prepare('UPDATE students SET password_hash=?,has_password=1 WHERE id=?').bind(next,studentId).run()}catch{await db().prepare('UPDATE students SET password_hash=? WHERE id=?').bind(next,studentId).run()}
  await db().prepare('DELETE FROM sessions WHERE student_id=?').bind(studentId).run();
  const student:any=await db().prepare('SELECT name FROM students WHERE id=?').bind(studentId).first();
  return openSessionFor(studentId,student.name);
@@ -86,7 +97,36 @@ export async function changePassword(studentId:string,current:string,password:st
 export async function openSession(name:string,password:string){
  const clean=cleanName(name);
  if(passwordProblem(password))return null;
- const row:any=await db().prepare('SELECT id,name,password_hash FROM students WHERE name=? COLLATE NOCASE').bind(clean).first();
+ let row:any;
+ try{row=await db().prepare('SELECT id,name,password_hash,has_password FROM students WHERE name=? COLLATE NOCASE').bind(clean).first();if(row?.has_password===0)return null}catch{row=await db().prepare('SELECT id,name,password_hash FROM students WHERE name=? COLLATE NOCASE').bind(clean).first()}
  if(!row||!sameHash(row.password_hash,await digest(password)))return null;
  return openSessionFor(row.id,row.name);
+}
+export async function signInWithGoogle(credential:string,name:string|undefined,clientId:string,linkedStudentId?:string,identify:typeof googleIdentity=googleIdentity){
+ let identity:{sub:string}|null;
+ try{identity=await identify(credential,clientId)}catch{identity=null}
+ if(!identity)throw Error('Google could not confirm this sign-in.');
+ const sub=identity.sub;
+ try{
+  if(linkedStudentId){
+   const owner:any=await db().prepare('SELECT id FROM students WHERE google_sub=?').bind(sub).first();
+   if(owner&&owner.id!==linkedStudentId)throw Error('That Google account is already used by another name.');
+   await db().prepare('UPDATE students SET google_sub=? WHERE id=?').bind(sub,linkedStudentId).run();
+   const student:any=await db().prepare('SELECT id,name,has_password FROM students WHERE id=?').bind(linkedStudentId).first();
+   const session=await openSessionFor(student.id,student.name);
+   return {...session,hasPassword:student.has_password!==0};
+  }
+  const existing:any=await db().prepare('SELECT id,name,has_password FROM students WHERE google_sub=?').bind(sub).first();
+  if(existing){const session=await openSessionFor(existing.id,existing.name);return {...session,hasPassword:existing.has_password!==0}}
+  if(!name?.trim())return {needsName:true as const};
+  const clean=cleanName(name);
+  const problem=nameProblem(clean);
+  if(problem)throw Error(problem);
+  const byName:any=await db().prepare('SELECT id FROM students WHERE name=? COLLATE NOCASE').bind(clean).first();
+  if(byName)throw Error('That name is already in the tent. Sign in with the password, then connect Google.');
+  const id=crypto.randomUUID();
+  await db().prepare('INSERT INTO students (id,name,password_hash,google_sub,has_password,created_at) VALUES (?,?,?,?,?,?)').bind(id,clean,await digest(crypto.randomUUID()),sub,0,new Date().toISOString()).run();
+  const session=await openSessionFor(id,clean);
+  return {...session,hasPassword:false};
+ }catch(e:any){const message=e?.message||'';if(/no such column/i.test(message))throw Error('Google sign-in is not available on this server yet.');if(/google_sub/i.test(message))throw Error('That Google account is already used by another name.');if(/unique|constraint/i.test(message))throw Error('That name is already in the tent. Sign in with the password, then connect Google.');throw e}
 }

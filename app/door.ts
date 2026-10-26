@@ -1,6 +1,6 @@
 import {drop,readJson,tentKeys,writeJson} from './revisit';
 
-export type DoorProfile={name:string;passwordHash:string;recoveryHash?:string};
+export type DoorProfile={name:string;passwordHash:string;recoveryHash?:string;google?:boolean};
 type Store=Pick<Storage,'getItem'|'setItem'|'removeItem'>|null;
 
 export async function digest(value:string){
