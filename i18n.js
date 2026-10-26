@@ -181,6 +181,27 @@ const arabic = {
     "تعذّر شرح هذا السؤال. ملاحظة الدرس ما زالت أعلاه.",
   "The simple explanations have reached the limit for today. The lesson note above still stands.":
     "وصل شرح الأسئلة البسيط إلى حد اليوم. ملاحظة الدرس ما زالت أعلاه.",
+  Homework: "الواجب",
+  "Write what you will prepare for Sunday. The tent can read it.":
+    "اكتب ما ستجهّزه ليوم الأحد. يقرؤه أهل الخيمة.",
+  "Previous Sunday": "الأحد السابق",
+  "Next Sunday": "الأحد التالي",
+  "Your homework": "واجبك",
+  "Surah and ayahs": "السورة والآيات",
+  "Save homework": "حفظ الواجب",
+  "Remove my homework": "حذف واجبي",
+  "Homework saved.": "حُفظ الواجب.",
+  "Saved on this phone.": "حُفظ على هذا الجهاز.",
+  "Homework cleared.": "حُذف الواجب.",
+  "That homework is too long.": "نص الواجب طويل جدًا.",
+  "Could not save homework. Please try again.":
+    "تعذّر حفظ الواجب. حاول مرة أخرى.",
+  "The shared list updates when the teacher site can store it. Until then, a change stays on this phone.":
+    "تظهر القائمة للجميع عندما يستطيع موقع المعلّم حفظها. إلى ذلك الحين يبقى التعديل على هذا الجهاز.",
+  "Come in with your name to add your homework.":
+    "ادخل باسمك لإضافة واجبك.",
+  "No one else has written homework for this Sunday yet.":
+    "لم يكتب أحد آخر واجبه لهذا الأحد بعد.",
   "Correct answer: ": "الإجابة الصحيحة: ",
   " Correct answer: ": " الإجابة الصحيحة: ",
   "Correct answer": "الإجابة الصحيحة",

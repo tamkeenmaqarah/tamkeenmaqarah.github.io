@@ -33,7 +33,7 @@ import {
   getLanguage,
   setLanguage,
   subscribeLanguage,
-} from "./i18n.js?v=10";
+} from "./i18n.js?v=11";
 import {
   Ze as Xe,
   $e as Qe,
@@ -49,7 +49,7 @@ import {
   HangingLanterns,
   Cushion,
   GatheringFooter,
-} from "./components.js?v=10";
+} from "./components.js?v=11";
 const el = y.createElement;
 const Ye = "https://tamkeen-maqraah-learning.modest-mink-0683.chatgpt.site";
 var et = {
@@ -760,6 +760,63 @@ var xt = `paper-original`,
     e.options.every((e) => e.trim()) &&
     e.correct >= 0 &&
     e.correct < 4;
+function HomeworkIcon({ size = 17 }) {
+  return (0, N.jsx)(`svg`, {
+    width: size,
+    height: size,
+    viewBox: `0 0 24 24`,
+    fill: `none`,
+    stroke: `currentColor`,
+    strokeWidth: 2,
+    strokeLinecap: `round`,
+    strokeLinejoin: `round`,
+    "aria-hidden": `true`,
+    children: [
+      (0, N.jsx)(`path`, { d: `M4 19.5A2.5 2.5 0 0 1 6.5 17H20` }, `cover`),
+      (0, N.jsx)(
+        `path`,
+        { d: `M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z` },
+        `page`,
+      ),
+    ],
+  });
+}
+function nextHomeworkSunday(from = new Date()) {
+  let date = new Date(from.getFullYear(), from.getMonth(), from.getDate());
+  let add = date.getDay() === 0 ? 7 : 7 - date.getDay();
+  date.setDate(date.getDate() + add);
+  return homeworkIso(date);
+}
+function homeworkIso(date) {
+  return (
+    date.getFullYear() +
+    `-` +
+    String(date.getMonth() + 1).padStart(2, `0`) +
+    `-` +
+    String(date.getDate()).padStart(2, `0`)
+  );
+}
+function shiftHomeworkWeek(iso, days) {
+  let [year, month, day] = iso.split(`-`).map(Number);
+  return homeworkIso(new Date(year, month - 1, day + days));
+}
+function formatHomeworkWeek(iso) {
+  let [year, month, day] = iso.split(`-`).map(Number);
+  return new Intl.DateTimeFormat(getLanguage() === `ar` ? `ar` : `en`, {
+    month: `long`,
+    day: `numeric`,
+  }).format(new Date(year, month - 1, day));
+}
+function homeworkKey(name) {
+  return lt(name).toLocaleLowerCase(`en`);
+}
+function readHomeworkLocal() {
+  try {
+    return JSON.parse(localStorage.getItem(`tamkeen-homework`) || `{}`);
+  } catch {
+    return {};
+  }
+}
 function Tt() {
   y.useSyncExternalStore(subscribeLanguage, getLanguage, getLanguage);
   let [e, t] = (0, y.useState)(null),
@@ -816,7 +873,13 @@ function Tt() {
     [googleBusy, setGoogleBusy] = (0, y.useState)(!1),
     [studyOn, setStudyOn] = (0, y.useState)(!1),
     [studyLines, setStudyLines] = (0, y.useState)({}),
-    [studyBusy, setStudyBusy] = (0, y.useState)(null);
+    [studyBusy, setStudyBusy] = (0, y.useState)(null),
+    [homeworkWeek, setHomeworkWeek] = (0, y.useState)(nextHomeworkSunday),
+    [homeworkEntries, setHomeworkEntries] = (0, y.useState)([]),
+    [homeworkDraft, setHomeworkDraft] = (0, y.useState)(``),
+    [homeworkLive, setHomeworkLive] = (0, y.useState)(!1),
+    [homeworkBusy, setHomeworkBusy] = (0, y.useState)(!1),
+    [homeworkReady, setHomeworkReady] = (0, y.useState)(!1);
   (0, y.useEffect)(() => {
     let stop = !1;
     fetch(Ye + `/api/study`, { method: `OPTIONS` })
@@ -915,7 +978,10 @@ function Tt() {
           l = e.get(`view`);
         l === `results` || l === `leaderboard`
           ? r(`leaderboard`)
-          : l === `home` || l === `quizzes` || l === `moments`
+          : l === `home` ||
+              l === `quizzes` ||
+              l === `moments` ||
+              l === `homework`
             ? r(l)
             : l === `grades` || l === `ai`
               ? r(c.teacher ? l : `login`)
@@ -968,7 +1034,26 @@ function Tt() {
         g >= 0 &&
         !S &&
         document.getElementById(`question-focus`)?.focus({ preventScroll: !0 });
-    }, [g, u, S]));
+    }, [g, u, S]),
+    (0, y.useEffect)(() => {
+      if (n !== `homework`) return;
+      let stop = !1;
+      setHomeworkReady(!1);
+      (async () => {
+        let pack = await loadHomeworkWeek(homeworkWeek);
+        if (stop) return;
+        setHomeworkLive(pack.live);
+        setHomeworkEntries(pack.entries);
+        let mine = pack.entries.find(
+          (item) => homeworkKey(item.name) === homeworkKey(v),
+        );
+        setHomeworkDraft(mine?.body || ``);
+        setHomeworkReady(!0);
+      })();
+      return () => {
+        stop = !0;
+      };
+    }, [n, homeworkWeek, v]));
   let an =
       de &&
       !!(
@@ -1731,6 +1816,95 @@ function Tt() {
       setStudyBusy(null);
     }
   }
+  async function loadHomeworkWeek(week) {
+    try {
+      let res = await fetch(
+        Ye + `/api/homework?week=` + encodeURIComponent(week),
+        { headers: { Accept: `application/json` } },
+      );
+      if (res.ok) {
+        let data = await res.json();
+        return {
+          live: !0,
+          entries: Array.isArray(data.entries) ? data.entries : [],
+        };
+      }
+    } catch {}
+    let shared = {};
+    try {
+      let file = await fetch(`./homework.json`, { cache: `no-store` });
+      if (file.ok) shared = await file.json();
+    } catch {}
+    let local = readHomeworkLocal(),
+      byName = new Map();
+    for (let item of shared[week] || [])
+      item?.name && item.body && byName.set(homeworkKey(item.name), item);
+    for (let [key, item] of Object.entries(local[week] || {}))
+      item?.body
+        ? byName.set(key, { name: item.name, body: item.body })
+        : byName.delete(key);
+    return {
+      live: !1,
+      entries: [...byName.values()].sort((a, b) =>
+        a.name.localeCompare(b.name, getLanguage() === `ar` ? `ar` : `en`),
+      ),
+    };
+  }
+  async function saveHomework() {
+    let name = lt(v),
+      problem = ut(name),
+      body = homeworkDraft.trim().replace(/\s+/g, ` `);
+    if (problem) {
+      a(problem);
+      return;
+    }
+    if (body.length > 500) {
+      a(translate(`That homework is too long.`));
+      return;
+    }
+    setHomeworkBusy(!0);
+    a(``);
+    try {
+      if (homeworkLive) {
+        await I(`/api/homework`, `POST`, {
+          week: homeworkWeek,
+          name,
+          body,
+        });
+        let pack = await loadHomeworkWeek(homeworkWeek);
+        setHomeworkLive(pack.live);
+        setHomeworkEntries(pack.entries);
+      } else {
+        let store = readHomeworkLocal();
+        store[homeworkWeek] = store[homeworkWeek] || {};
+        store[homeworkWeek][homeworkKey(name)] = body
+          ? { name, body }
+          : null;
+        localStorage.setItem(`tamkeen-homework`, JSON.stringify(store));
+        let pack = await loadHomeworkWeek(homeworkWeek);
+        setHomeworkEntries(pack.entries);
+      }
+      s(
+        translate(
+          body
+            ? homeworkLive
+              ? `Homework saved.`
+              : `Saved on this phone.`
+            : `Homework cleared.`,
+        ),
+      );
+    } catch (err) {
+      a(
+        translate(
+          err instanceof Error && err.message
+            ? err.message
+            : `Could not save homework. Please try again.`,
+        ),
+      );
+    } finally {
+      setHomeworkBusy(!1);
+    }
+  }
   let zn = m
       ? S?.score === S?.max
         ? translate(`Those answers are clear now`)
@@ -1752,6 +1926,7 @@ function Tt() {
     Un = [
       [`home`, translate(`Home`), ye],
       [`quizzes`, translate(`Quizzes`), ie],
+      [`homework`, translate(`Homework`), HomeworkIcon],
       ...(e?.teacher ? [[`grades`, translate(`Grades`), E]] : []),
       [`leaderboard`, translate(`Leaderboard`), ze],
       [`moments`, translate(`Funny answers`), ge],
@@ -2400,7 +2575,143 @@ function Tt() {
                               }),
                       ],
                     })
-                  : e && n === `home` && !de
+                  : e && n === `homework` && !de
+                    ? (0, N.jsxs)(`section`, {
+                        className: `homework`,
+                        children: [
+                          (0, N.jsx)(`h1`, { children: translate(`Homework`) }),
+                          (0, N.jsx)(`p`, {
+                            className: `homework-intro`,
+                            children: translate(
+                              `Write what you will prepare for Sunday. The tent can read it.`,
+                            ),
+                          }),
+                          (0, N.jsxs)(`div`, {
+                            className: `homework-week`,
+                            children: [
+                              (0, N.jsx)(`button`, {
+                                type: `button`,
+                                className: `secondary`,
+                                onClick: () =>
+                                  setHomeworkWeek((week) =>
+                                    shiftHomeworkWeek(week, -7),
+                                  ),
+                                children: translate(`Previous Sunday`),
+                              }),
+                              (0, N.jsx)(`h2`, {
+                                children: formatHomeworkWeek(homeworkWeek),
+                              }),
+                              (0, N.jsx)(`button`, {
+                                type: `button`,
+                                className: `secondary`,
+                                onClick: () =>
+                                  setHomeworkWeek((week) =>
+                                    shiftHomeworkWeek(week, 7),
+                                  ),
+                                children: translate(`Next Sunday`),
+                              }),
+                            ],
+                          }),
+                          v.trim()
+                            ? (0, N.jsxs)(`form`, {
+                                className: `homework-editor`,
+                                onSubmit: (e) => {
+                                  e.preventDefault();
+                                  saveHomework();
+                                },
+                                children: [
+                                  (0, N.jsxs)(`label`, {
+                                    htmlFor: `homework-body`,
+                                    children: [
+                                      translate(`Your homework`),
+                                      (0, N.jsx)(`textarea`, {
+                                        id: `homework-body`,
+                                        dir: `auto`,
+                                        maxLength: 500,
+                                        value: homeworkDraft,
+                                        placeholder: translate(`Surah and ayahs`),
+                                        onChange: (e) =>
+                                          setHomeworkDraft(e.target.value),
+                                      }),
+                                    ],
+                                  }),
+                                  (0, N.jsx)(`button`, {
+                                    className: `primary`,
+                                    disabled:
+                                      homeworkBusy ||
+                                      !homeworkReady ||
+                                      (!homeworkDraft.trim() &&
+                                        !homeworkEntries.some(
+                                          (item) =>
+                                            homeworkKey(item.name) ===
+                                            homeworkKey(v),
+                                        )),
+                                    children: homeworkBusy
+                                      ? translate(`Saving…`)
+                                      : homeworkDraft.trim() ||
+                                          !homeworkEntries.some(
+                                            (item) =>
+                                              homeworkKey(item.name) ===
+                                              homeworkKey(v),
+                                          )
+                                        ? translate(`Save homework`)
+                                        : translate(`Remove my homework`),
+                                  }),
+                                  homeworkReady &&
+                                    !homeworkLive &&
+                                    (0, N.jsx)(`p`, {
+                                      className: `help`,
+                                      children: translate(
+                                        `The shared list updates when the teacher site can store it. Until then, a change stays on this phone.`,
+                                      ),
+                                    }),
+                                ],
+                              })
+                            : (0, N.jsx)(`p`, {
+                                className: `help`,
+                                children: translate(
+                                  `Come in with your name to add your homework.`,
+                                ),
+                              }),
+                          (0, N.jsx)(`ul`, {
+                            className: `homework-list`,
+                            children: homeworkEntries
+                              .filter(
+                                (item) =>
+                                  homeworkKey(item.name) !== homeworkKey(v),
+                              )
+                              .map((item) =>
+                                (0, N.jsxs)(
+                                  `li`,
+                                  {
+                                    children: [
+                                      (0, N.jsx)(`strong`, {
+                                        dir: `auto`,
+                                        children: item.name,
+                                      }),
+                                      (0, N.jsx)(`p`, {
+                                        dir: `auto`,
+                                        children: item.body,
+                                      }),
+                                    ],
+                                  },
+                                  homeworkKey(item.name),
+                                ),
+                              ),
+                          }),
+                          homeworkReady &&
+                            !homeworkEntries.filter(
+                            (item) => homeworkKey(item.name) !== homeworkKey(v),
+                          ).length &&
+                            (0, N.jsx)(`p`, {
+                              className: `help`,
+                              children: translate(
+                                `No one else has written homework for this Sunday yet.`,
+                              ),
+                            }),
+                        ],
+                      })
+                    : e && n === `home` && !de
                     ? (0, N.jsx)(Xe, {
                         data: e,
                         recent: ne,

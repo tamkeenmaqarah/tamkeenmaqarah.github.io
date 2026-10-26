@@ -2200,7 +2200,7 @@ label > small {
     width: 15px;
   }
   .main-nav.student-nav {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 0;
     height: 67px;
     display: grid;
@@ -3586,20 +3586,29 @@ html[dir="rtl"] .optional {
   .language-switch > svg {
     width: 15px;
   }
-  .main-nav,
-  .main-nav.student-nav {
+  .main-nav {
     height: 53px;
     padding: 0 16px;
     display: flex;
     justify-content: space-between;
     gap: 12px;
   }
+  .main-nav.student-nav {
+    height: auto;
+    min-height: 58px;
+    padding: 6px 8px;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0;
+  }
   .main-nav.student-nav > button {
-    flex-direction: row;
-    font-size: 12px;
-    gap: 5px;
-    padding: 0 2px;
-    line-height: 1.4;
+    flex-direction: column;
+    font-size: 11px;
+    gap: 2px;
+    padding: 4px 0;
+    line-height: 1.15;
+    min-width: 0;
+    white-space: normal;
   }
   .main-nav > button > svg {
     width: 14px;
@@ -6463,6 +6472,74 @@ button.podium-place.is-picked .podium-block {
     transform: none;
   }
 }
+.homework h1 {
+  margin: 0 0 8px;
+  color: #f5e5c7;
+}
+.homework-intro {
+  max-width: 62ch;
+  margin: 0 0 22px;
+  color: #f0d7b1;
+  line-height: 1.55;
+}
+.homework-week {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 22px;
+}
+.homework-week h2 {
+  margin: 0;
+  color: #e7b479;
+  font-size: 1.7rem;
+  text-align: center;
+}
+.homework-editor {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.homework-editor label {
+  display: grid;
+  gap: 8px;
+  color: #f3ddc0;
+}
+.homework-list {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+}
+.homework-list li {
+  display: grid;
+  grid-template-columns: minmax(7rem, 12rem) minmax(0, 1fr);
+  gap: 8px 18px;
+  align-items: baseline;
+  padding: 16px 0;
+  border-top: 1px solid #7a4038;
+}
+.homework-list strong {
+  color: #e7b479;
+}
+.homework-list p {
+  margin: 0;
+  color: #f3ddc0;
+  line-height: 1.55;
+}
+@media (max-width: 640px) {
+  .homework-week {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .homework-week h2 {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+  .homework-list li {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
 .study-line {
   margin: 8px 0 0;
   color: #f1d1a3;
@@ -6481,5 +6558,31 @@ button.study-ask {
   .halaqa-mark {
     width: 72px;
     height: 42px;
+  }
+  .main-nav.student-nav {
+    height: auto;
+    min-height: 58px;
+  }
+  .header-inner {
+    flex-wrap: wrap;
+    height: auto;
+    row-gap: 6px;
+    padding-bottom: 8px;
+  }
+  .main-nav.student-nav {
+    flex: 1 0 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-inline: 4px;
+    grid-template-columns: none;
+  }
+  .main-nav.student-nav > button {
+    flex: 1 1 30%;
+    font-size: 12px;
+    letter-spacing: 0;
+    white-space: nowrap;
+    padding-inline: 2px;
   }
 }
