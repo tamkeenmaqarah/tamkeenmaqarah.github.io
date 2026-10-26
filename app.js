@@ -51,7 +51,7 @@ import {
   GatheringFooter,
 } from "./components.js?v=11";
 const el = y.createElement;
-const Ye = "https://tamkeen-maqraah-learning.modest-mink-0683.chatgpt.site";
+const Ye = "https://tamkeen-maqraah-teacher.ibrahiimmuhamud.workers.dev";
 var et = {
   revisit: `tamkeen-revisit`,
   draft: `tamkeen-draft`,
