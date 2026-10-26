@@ -33,7 +33,7 @@ import {
   getLanguage,
   setLanguage,
   subscribeLanguage,
-} from "./i18n.js";
+} from "./i18n.js?v=8";
 const Ge = (e) => (e.score / e.max) * 100,
   Ke = (e) =>
     e
@@ -48,30 +48,80 @@ function qe(e) {
     rank: 1 + t.filter((t) => Ge(t) > Ge(e)).length,
   }));
 }
-function Je({ rows: e }) {
+function Trophy() {
+  let mark = (0, y.useRef)(null);
+  (0, y.useEffect)(() => {
+    let node = mark.current;
+    if (!node || typeof IntersectionObserver !== `function`) return;
+    let watch = new IntersectionObserver(([entry]) => {
+      node.classList.toggle(`is-quiet`, !entry.isIntersecting);
+    });
+    watch.observe(node);
+    return () => watch.disconnect();
+  }, []);
+  return (0, M.jsxs)(`svg`, {
+    ref: mark,
+    className: `podium-trophy`,
+    viewBox: `0 0 48 62`,
+    width: `36`,
+    height: `46`,
+    "aria-hidden": true,
+    children: [
+      (0, M.jsx)(`path`, {
+        className: `trophy-flame`,
+        d: `M24 3.4c2.4 3.4 4.6 5 4.6 7.8a4.6 4.6 0 0 1-9.2 0c0-2.8 2.2-4.4 4.6-7.8z`,
+      }),
+      (0, M.jsx)(`path`, {
+        className: `trophy-flame-core`,
+        d: `M24 8c1.2 1.7 2.2 2.5 2.2 4a2.2 2.2 0 0 1-4.4 0c0-1.5 1-2.3 2.2-4z`,
+      }),
+      (0, M.jsx)(`path`, {
+        className: `trophy-cup`,
+        d: `M14.5 22h19l-1.4 9.2c-.8 5-4.6 8.6-8.1 9.2-3.5-.6-7.3-4.2-8.1-9.2L14.5 22z`,
+      }),
+      (0, M.jsx)(`path`, { className: `trophy-rim`, d: `M13.2 20.6h21.6` }),
+      (0, M.jsx)(`path`, {
+        className: `trophy-handle`,
+        d: `M14.5 24.5H10a4.8 4.8 0 0 0 0 8.4h4.2`,
+      }),
+      (0, M.jsx)(`path`, {
+        className: `trophy-handle`,
+        d: `M33.5 24.5H38a4.8 4.8 0 0 1 0 8.4h-4.2`,
+      }),
+      (0, M.jsx)(`path`, { className: `trophy-stem`, d: `M24 40.6v8` }),
+      (0, M.jsx)(`path`, { className: `trophy-base`, d: `M16 50.2h16` }),
+    ],
+  });
+}
+function Je({ rows: e, picked, onPick }) {
   let t = Array.from(new Set(e.map((e) => e.rank)))
     .slice(0, 3)
     .map((t) => ({ rank: t, students: e.filter((e) => e.rank === t) }));
   return (0, M.jsx)(`div`, {
     className: `podium`,
     "aria-label": translate(`Highest scoring students`),
-    children: (t.length > 1 ? [t[1], t[0], t[2]].filter(Boolean) : t).map((e) =>
-      (0, M.jsxs)(
-        `div`,
+    children: (t.length > 1 ? [t[1], t[0], t[2]].filter(Boolean) : t).map((e) => {
+      let names = e.students.map((e) => e.name).join(` & `);
+      let first = t.indexOf(e) === 0;
+      return (0, M.jsxs)(
+        `button`,
         {
-          className: `podium-place tier-` + (t.indexOf(e) + 1),
+          type: `button`,
+          className:
+            `podium-place tier-` +
+            (t.indexOf(e) + 1) +
+            (picked === e.rank ? ` is-picked` : ``),
+          "aria-pressed": picked === e.rank,
+          onClick: () => onPick?.(e.rank),
           children: [
-            (0, M.jsxs)(`div`, {
+            first && (0, M.jsx)(Trophy, {}),
+            (0, M.jsx)(`div`, {
               className: `podium-avatar`,
-              children: [
-                t.indexOf(e) === 0 && (0, M.jsx)(ze, { size: 17 }),
-                (0, M.jsx)(`span`, { children: Ke(e.students[0].name) }),
-              ],
+              children: (0, M.jsx)(`span`, {
+                children: Ke(e.students[0].name),
+              }),
             }),
-            (0, M.jsx)(`b`, {
-              className: `podium-name`,
-              children: e.students.map((e) => e.name).join(` & `),
-            }),
+            (0, M.jsx)(`b`, { className: `podium-name`, children: names }),
             (0, M.jsxs)(`div`, {
               className: `podium-points`,
               children: [
@@ -83,8 +133,8 @@ function Je({ rows: e }) {
           ],
         },
         e.rank,
-      ),
-    ),
+      );
+    }),
   });
 }
 function Ye({ moment: e }) {
@@ -124,6 +174,97 @@ function Ye({ moment: e }) {
   });
 }
 var Xe = `https://tamkeen-maqraah-learning.modest-mink-0683.chatgpt.site`;
+const HALAQAS = [
+  {
+    id: `latest`,
+    title: `Latest uploads`,
+    list: `UULUKG-xZKRTI8YI2nmOAi7g`,
+  },
+  { id: `_32iuirRwJI`, title: `TAMKEEN Halaqa 10 24 2026` },
+  { id: `hwHEpimlzao`, title: `TAMKEEN Halaqa 10 17 2026` },
+  {
+    id: `VF0cdNeOWK4`,
+    title: `Discussion on Music · Khatera 10/3/2026`,
+  },
+];
+function Halaqas() {
+  let [pick, setPick] = (0, y.useState)(HALAQAS[0].id);
+  let chosen = HALAQAS.find((item) => item.id === pick) || HALAQAS[0];
+  let src = chosen.list
+    ? `https://www.youtube-nocookie.com/embed/videoseries?list=` + chosen.list
+    : `https://www.youtube-nocookie.com/embed/` + chosen.id;
+  return el(
+    "section",
+    { className: "halaqas", "aria-labelledby": "halaqas-heading" },
+    el(
+      "div",
+      { className: "section-heading" },
+      el("h2", { id: "halaqas-heading" }, translate("Tamkeen halaqas")),
+      el(
+        "a",
+        {
+          className: "text-button",
+          href: "https://www.youtube.com/@TamkeenYouth",
+          target: "_blank",
+          rel: "noreferrer",
+        },
+        translate("Tamkeen Youth"),
+        el(w, { size: 15 }),
+      ),
+    ),
+    el(
+      "p",
+      { className: "halaqas-note" },
+      translate(
+        "Saturday and Tuesday lessons from the Tamkeen Youth channel.",
+      ),
+    ),
+    el(
+      "div",
+      { className: "halaqa-player" },
+      el("iframe", {
+        src: src,
+        title: translate(chosen.title),
+        allow:
+          "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share",
+        allowFullScreen: true,
+        referrerPolicy: "strict-origin-when-cross-origin",
+      }),
+    ),
+    el(
+      "div",
+      { className: "halaqa-picks" },
+      HALAQAS.map((item) =>
+        el(
+          "button",
+          {
+            key: item.id,
+            type: "button",
+            className: item.id === pick ? "is-playing" : "",
+            "aria-pressed": item.id === pick,
+            onClick: () => setPick(item.id),
+          },
+          item.list
+            ? el(
+                "svg",
+                {
+                  className: "halaqa-mark",
+                  viewBox: "0 0 92 52",
+                  "aria-hidden": true,
+                },
+                el("rect", { width: "92", height: "52", rx: "4" }),
+                el("path", { d: "M40 18v16l14-8z" }),
+              )
+            : el("img", {
+                src: "https://i.ytimg.com/vi/" + item.id + "/hqdefault.jpg",
+                alt: "",
+              }),
+          el("span", null, translate(item.title)),
+        ),
+      ),
+    ),
+  );
+}
 function Ze({
   data,
   recent,
@@ -204,6 +345,7 @@ function Ze({
         el(w, { size: 17 }),
       ),
     ),
+    el(Halaqas),
     revisit?.misses?.length > 0 &&
       el(PrivatePractice, { revisit, onPractice, onClearRevisit }),
     recent &&
@@ -276,7 +418,14 @@ function Ze({
   );
 }
 
-function Qe({ rows }) {
+function Qe({ rows, picked }) {
+  let signature = rows.map((row) => row.id + ":" + row.score).join("|");
+  let [drawn, setDrawn] = (0, y.useState)(false);
+  (0, y.useEffect)(() => {
+    setDrawn(false);
+    let frame = requestAnimationFrame(() => setDrawn(true));
+    return () => cancelAnimationFrame(frame);
+  }, [signature]);
   return el(
     "table",
     { className: "standings-table", "aria-label": translate("Quiz rankings") },
@@ -300,7 +449,10 @@ function Qe({ rows }) {
           {
             key: row.id,
             className:
-              row.rank === 1 ? "standing-row is-champion" : "standing-row",
+              "standing-row" +
+              (row.rank === 1 ? " is-champion" : "") +
+              (picked === row.rank ? " is-picked" : ""),
+            "data-rank": row.rank,
           },
           el("td", { className: "standing-rank" }, row.rank),
           el("td", { className: "standing-name" }, el("bdi", null, row.name)),
@@ -320,6 +472,20 @@ function Qe({ rows }) {
             "td",
             { className: "standing-percent" },
             el("bdi", null, Ge(row).toFixed(1), "%"),
+            el(
+              "span",
+              { className: "score-meter", "aria-hidden": true },
+              el("span", {
+                style: {
+                  transform:
+                    "scaleX(" +
+                    (drawn
+                      ? Math.max(0, Math.min(1, Ge(row) / 100))
+                      : 0) +
+                    ")",
+                },
+              }),
+            ),
           ),
         ),
       ),
@@ -332,7 +498,8 @@ function $e({ community: e, onNavigate: t }) {
       () => e.boards.find((e) => e.rows.length)?.id || e.boards[0]?.id || ``,
     ),
     i = e.boards.find((e) => e.id === n) || e.boards[0],
-    a = qe(i?.rows || []);
+    a = qe(i?.rows || []),
+    [picked, setPicked] = (0, y.useState)(0);
   return (0, M.jsxs)(`section`, {
     children: [
       (0, M.jsxs)(`div`, {
@@ -368,7 +535,10 @@ function $e({ community: e, onNavigate: t }) {
                       type: `radio`,
                       name: `public-leaderboard`,
                       checked: i?.id === e.id,
-                      onChange: () => r(e.id),
+                      onChange: () => {
+                        r(e.id);
+                        setPicked(0);
+                      },
                     }),
                     (0, M.jsxs)(`span`, {
                       children: [
@@ -418,8 +588,22 @@ function $e({ community: e, onNavigate: t }) {
                   ],
                 }),
               }),
-              null,
-              (0, M.jsx)(Qe, { rows: a }),
+              (0, M.jsx)(`section`, {
+                className: `leaderboard-podium`,
+                children: (0, M.jsx)(Je, {
+                  rows: a,
+                  picked: picked,
+                  onPick: (rank) => {
+                    setPicked(rank);
+                    requestAnimationFrame(() => {
+                      document
+                        .querySelector(`.standing-row.is-picked`)
+                        ?.scrollIntoView({ block: `nearest` });
+                    });
+                  },
+                }),
+              }),
+              (0, M.jsx)(Qe, { rows: a, picked: picked }),
               (0, M.jsx)(`p`, {
                 className: `help`,
                 children:

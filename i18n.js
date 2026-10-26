@@ -196,6 +196,15 @@ const arabic = {
   "The next quiz will appear here when your teacher publishes it. The leaderboard and funny answers are always here to explore.":
     "سيظهر الاختبار القادم هنا عندما ينشره معلّمك. ويمكنك الآن الاطّلاع على الترتيب وطرائف الحلقة.",
   "Our weekly halaqah": "لقاؤنا الأسبوعي",
+  "Tamkeen halaqas": "حلقات تمكين",
+  "Tamkeen Youth": "شباب تمكين",
+  "Saturday and Tuesday lessons from the Tamkeen Youth channel.":
+    "دروس السبت والثلاثاء من قناة شباب تمكين.",
+  "Latest uploads": "أحدث المقاطع",
+  "TAMKEEN Halaqa 10 24 2026": "حلقة تمكين ٢٤‏/١٠‏/٢٠٢٦",
+  "TAMKEEN Halaqa 10 17 2026": "حلقة تمكين ١٧‏/١٠‏/٢٠٢٦",
+  "Discussion on Music · Khatera 10/3/2026":
+    "نقاش عن الموسيقى · خاطرة ٣‏/١٠‏/٢٠٢٦",
   Saturday: "السبت",
   Tuesday: "الثلاثاء",
   "Main halaqah": "الحلقة الرئيسية",

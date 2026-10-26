@@ -6219,3 +6219,258 @@ textarea::placeholder {
     min-width: 24px;
   }
 }
+
+.leaderboard-podium {
+  background: #4a2228;
+  color: #f3ddc0;
+  border: 0;
+  border-radius: 8px;
+  margin: 4px 0 22px;
+  padding: 22px 18px 0;
+  border-top: 8px solid transparent;
+  border-image: url("./assets/sadu.svg") 16 repeat;
+}
+button.podium-place {
+  appearance: none;
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  padding: 8px 6px 0;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+button.podium-place .podium-name {
+  overflow-wrap: normal;
+  max-width: 100%;
+}
+button.podium-place .podium-block {
+  align-self: stretch;
+  width: 100%;
+}
+button.podium-place:hover {
+  transform: translateY(-4px);
+}
+button.podium-place:focus-visible {
+  outline: 3px solid #ffbd69;
+  outline-offset: 3px;
+}
+button.podium-place.is-picked .podium-block {
+  box-shadow: inset 0 0 0 2px #3c1920;
+}
+.podium-trophy {
+  display: block;
+  width: 48px;
+  height: 62px;
+  margin: 0 auto 2px;
+  overflow: visible;
+}
+.trophy-cup {
+  fill: #e7b479;
+}
+.trophy-handle,
+.trophy-stem,
+.trophy-base {
+  fill: none;
+  stroke: #ffdda0;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+.trophy-base {
+  stroke-width: 2.4;
+}
+.trophy-rim {
+  fill: none;
+  stroke: #ffdda0;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+}
+.trophy-flame,
+.trophy-flame-core {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+}
+.trophy-flame {
+  fill: #ffb651;
+  animation: trophy-flame 3.4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+.trophy-flame-core {
+  fill: #fff1cf;
+  animation: trophy-flame 2.2s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+.podium-trophy {
+  filter: drop-shadow(0 0 5px rgba(231, 180, 121, 0.55));
+  animation: trophy-glow 3.4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+.podium-trophy.is-quiet,
+.podium-trophy.is-quiet .trophy-flame,
+.podium-trophy.is-quiet .trophy-flame-core {
+  animation-play-state: paused;
+}
+.tier-1 .podium-block {
+  background: #e7b479;
+  color: #3c1920;
+}
+.tier-2 .podium-block {
+  background: #f5e5c7;
+  color: #3c1920;
+}
+.tier-3 .podium-block {
+  background: #c9a27a;
+  color: #3c1920;
+}
+.podium-name,
+.podium-points {
+  color: #f3ddc0;
+}
+.podium-points small {
+  color: #e8c9a7;
+}
+.score-meter {
+  display: block;
+  height: 3px;
+  margin-top: 7px;
+  background: #e4d3b8;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.score-meter > span {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: #a67c3d;
+  transform-origin: left center;
+  transition: transform 640ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+[dir="rtl"] .score-meter > span {
+  transform-origin: right center;
+}
+.standings-table tr.is-picked td {
+  background: #f6ead4;
+}
+.standings-table tr.is-picked td:first-child {
+  box-shadow: inset 3px 0 0 #e7b479;
+}
+[dir="rtl"] .standings-table tr.is-picked td:first-child {
+  box-shadow: inset -3px 0 0 #e7b479;
+}
+.halaqas {
+  margin: 6px 0 42px;
+}
+.halaqas .section-heading {
+  align-items: baseline;
+}
+.halaqas-note {
+  max-width: 62ch;
+  margin: 0 0 16px;
+  color: #e8c9a7;
+  font-size: 15px;
+  line-height: 1.55;
+}
+.halaqa-player {
+  aspect-ratio: 16 / 9;
+  margin: 0 0 14px;
+  background: #2b1016;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.halaqa-player iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.halaqa-picks {
+  display: grid;
+  gap: 8px;
+}
+.halaqa-picks button {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  min-height: 68px;
+  padding: 8px;
+  text-align: start;
+  color: #f3ddc0;
+  background: #4a2228;
+  border: 1px solid #8a5a3a;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 15px;
+  line-height: 1.35;
+  cursor: pointer;
+}
+.halaqa-picks button.is-playing {
+  border-color: #e7b479;
+  background: #54232b;
+}
+.halaqa-picks button:focus-visible {
+  outline: 3px solid #ffbd69;
+  outline-offset: 2px;
+}
+.halaqa-picks img,
+.halaqa-mark {
+  width: 92px;
+  height: 52px;
+  object-fit: cover;
+  border-radius: 4px;
+  background: #2b1016;
+}
+.halaqa-mark rect {
+  fill: #2b1016;
+}
+.halaqa-mark path {
+  fill: #e7b479;
+}
+@keyframes trophy-flame {
+  0%,
+  100% {
+    opacity: 0.75;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+@keyframes trophy-glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 3px rgba(231, 180, 121, 0.35));
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(255, 221, 160, 0.85));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .podium-trophy,
+  .trophy-flame,
+  .trophy-flame-core,
+  .score-meter > span,
+  button.podium-place {
+    animation: none;
+    transition: none;
+  }
+  button.podium-place:hover {
+    transform: none;
+  }
+}
+@media (max-width: 640px) {
+  .halaqa-picks button {
+    grid-template-columns: 72px minmax(0, 1fr);
+    font-size: 14px;
+  }
+  .halaqa-picks img,
+  .halaqa-mark {
+    width: 72px;
+    height: 42px;
+  }
+}

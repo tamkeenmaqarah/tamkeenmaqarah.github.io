@@ -33,7 +33,7 @@ import {
   getLanguage,
   setLanguage,
   subscribeLanguage,
-} from "./i18n.js";
+} from "./i18n.js?v=8";
 import {
   Ze as Xe,
   $e as Qe,
@@ -49,7 +49,7 @@ import {
   HangingLanterns,
   Cushion,
   GatheringFooter,
-} from "./components.js";
+} from "./components.js?v=8";
 const el = y.createElement;
 const Ye = "https://tamkeen-maqraah-learning.modest-mink-0683.chatgpt.site";
 var et = {
