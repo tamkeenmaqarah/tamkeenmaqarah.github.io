@@ -43,8 +43,14 @@ const arabic = {
     "اسمك محفوظ على هذا الجهاز. ادخل عبر غوغل.",
   "Google confirmed you. What name does the tent use?":
     "أكّد غوغل هويتك. ما الاسم الذي تستخدمه الخيمة؟",
-  "This is the name on the leaderboard, not the Google email.":
-    "هذا الاسم الذي يظهر في لوحة الترتيب، وليس بريد غوغل.",
+  "Use the name already on the leaderboard. This is not the Google email.":
+    "استخدم الاسم الموجود في لوحة الترتيب. هذا ليس بريد غوغل.",
+  "This phone already uses another name. Choose This is someone else before adding a new one.":
+    "هذا الجهاز يستخدم اسمًا آخر. اختر «هذا شخص آخر» قبل إضافة اسم جديد.",
+  "This Google account is not the one saved on this phone. Choose This is someone else if you are a different student.":
+    "حساب غوغل هذا ليس الحساب المحفوظ على هذا الجهاز. اختر «هذا شخص آخر» إن كنت طالبًا مختلفًا.",
+  "That name is already in the tent. Come in with the password for that name.":
+    "هذا الاسم موجود في الخيمة. ادخل بكلمة المرور الخاصة به.",
   "Google sign-in is not available on this server yet.":
     "تسجيل الدخول عبر غوغل غير متاح على الخادم بعد.",
   "Could not sign in with Google. Please try again.":

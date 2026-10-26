@@ -33,7 +33,7 @@ import {
   getLanguage,
   setLanguage,
   subscribeLanguage,
-} from "./i18n.js?v=8";
+} from "./i18n.js?v=9";
 import {
   Ze as Xe,
   $e as Qe,
@@ -49,7 +49,7 @@ import {
   HangingLanterns,
   Cushion,
   GatheringFooter,
-} from "./components.js?v=8";
+} from "./components.js?v=9";
 const el = y.createElement;
 const Ye = "https://tamkeen-maqraah-learning.modest-mink-0683.chatgpt.site";
 var et = {
@@ -424,7 +424,7 @@ function yt({
               ? (0, N.jsx)(`small`, {
                   className: `door-caption`,
                   children: translate(
-                    `This is the name on the leaderboard, not the Google email.`,
+                    `Use the name already on the leaderboard. This is not the Google email.`,
                   ),
                 })
               : c === `forgot`
@@ -1334,15 +1334,45 @@ function Tt() {
             ),
           ),
         ],
-        clean = tentName ? tt(lt(tentName), names) : ``;
+        store = T(),
+        existing = mt(store),
+        who = googleClaims(credential),
+        saved = existing?.name ? tt(lt(existing.name), names) : ``,
+        clean = tentName ? tt(lt(tentName), names) : ``,
+        admit = (name, token) => {
+          let same = !!(
+            existing &&
+            existing.name.toLocaleLowerCase(`en`) ===
+              name.toLocaleLowerCase(`en`)
+          );
+          (xn(
+            store,
+            name,
+            same ? existing.passwordHash || `` : ``,
+            same ? existing.recoveryHash : void 0,
+            token || ``,
+            !0,
+            who?.sub,
+          ),
+            setGoogleTicket(``));
+        };
       if (tentName) {
         let problem = ut(clean);
         if (problem) throw Error(problem);
+        if (
+          saved &&
+          saved.toLocaleLowerCase(`en`) !== clean.toLocaleLowerCase(`en`)
+        )
+          throw Error(
+            `This phone already uses another name. Choose This is someone else before adding a new one.`,
+          );
       }
-      let who = googleClaims(credential),
-        store = T(),
-        existing = mt(store),
-        server;
+      if (who && existing?.googleSub && existing.googleSub !== who.sub)
+        throw Error(
+          `This Google account is not the one saved on this phone. Choose This is someone else if you are a different student.`,
+        );
+      if (!clean && saved) clean = saved;
+      let server;
       try {
         server = await I(`/api/account/google`, `POST`, {
           credential,
@@ -1350,6 +1380,10 @@ function Tt() {
         });
       } catch (err) {
         let message = err?.message || ``;
+        if (/already in the tent|already used by another name/i.test(message))
+          throw Error(
+            `That name is already in the tent. Come in with the password for that name.`,
+          );
         if (
           !who ||
           !/not available|not connected|not found|failed to fetch|load failed|network|unexpected token/i.test(
@@ -1358,60 +1392,21 @@ function Tt() {
         )
           throw err;
         if (!clean) {
-          if (
-            existing?.google &&
-            (!existing.googleSub || existing.googleSub === who.sub)
-          ) {
-            (xn(
-              store,
-              existing.name,
-              existing.passwordHash || ``,
-              existing.recoveryHash,
-              ``,
-              !0,
-              who.sub,
-            ),
-              setGoogleTicket(``));
-            return;
-          }
           setGoogleTicket(credential);
           return;
         }
-        let same = !!(
-          existing &&
-          existing.name.toLocaleLowerCase(`en`) === clean.toLocaleLowerCase(`en`)
-        );
-        (xn(
-          store,
-          clean,
-          same ? existing.passwordHash || `` : ``,
-          same ? existing.recoveryHash : void 0,
-          ``,
-          !0,
-          who.sub,
-        ),
-          setGoogleTicket(``));
+        admit(clean, ``);
         return;
       }
       if (server.needsName) {
+        if (!tentName && saved) {
+          await finishGoogle(credential, saved);
+          return;
+        }
         setGoogleTicket(credential);
         return;
       }
-      let known = server.student.name,
-        same = !!(
-          existing &&
-          existing.name.toLocaleLowerCase(`en`) === known.toLocaleLowerCase(`en`)
-        );
-      (xn(
-        store,
-        known,
-        server.hasPassword && same ? existing?.passwordHash || `` : ``,
-        same ? existing?.recoveryHash : void 0,
-        server.token,
-        !0,
-        who?.sub,
-      ),
-        setGoogleTicket(``));
+      admit(server.student.name, server.token);
     } catch (err) {
       let message = err?.message || ``;
       kt(
@@ -1454,6 +1449,8 @@ function Tt() {
         name: r?.name || v,
         passwordHash: await st(t),
         ...(r?.recoveryHash ? { recoveryHash: r.recoveryHash } : {}),
+        ...(r?.google ? { google: !0 } : {}),
+        ...(r?.googleSub ? { googleSub: r.googleSub } : {}),
       }),
         a?.token && n?.setItem(P.token, a.token),
         jt(!1),
