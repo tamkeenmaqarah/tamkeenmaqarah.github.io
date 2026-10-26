@@ -5871,20 +5871,23 @@ textarea::placeholder {
 .door-sheet > p {
   color: #e8c9a7;
   font-size: 14px;
-  line-height: 1.85;
-  margin: 0 0 26px;
+  line-height: 1.6;
+  margin: 0 0 18px;
 }
 .door-sheet label {
   display: grid;
-  gap: 8px;
+  gap: 6px;
   font-size: 14px;
-  margin-bottom: 20px;
+  margin: 0 0 14px;
 }
 .door-sheet input {
   background: #f5e5c7;
   color: #3a2920;
+  caret-color: #3a2920;
   border: 1px solid #bb966a;
+  border-radius: 8px;
   min-height: 48px;
+  margin-top: 0;
 }
 .door-sheet input:focus-visible {
   outline-color: #ffbd69;
@@ -5912,30 +5915,40 @@ textarea::placeholder {
 .door-switch .text-button {
   font-size: 12px;
 }
-.door-error {
-  color: #ffe0b4;
-  padding: 12px 0;
+.door-error,
+.door-note {
+  color: #ffe7c4;
+  margin: 0 0 14px;
+  font-size: 14px;
+  line-height: 1.5;
 }
-.door-or {
+.door-sheet > p.door-or {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin: 0 0 18px;
+  margin: 14px 0 16px;
   color: #e8c9a7;
   font-size: 13px;
+  line-height: 1;
 }
-.door-or:before,
-.door-or:after {
+.door-sheet > p.door-or:before,
+.door-sheet > p.door-or:after {
   content: "";
   height: 1px;
   background: #bb966a;
   flex: 1;
 }
 .google-button {
-  min-height: 44px;
-  margin: 0 0 8px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: 40px;
   max-width: 100%;
+  margin: 0;
   overflow: hidden;
+}
+.google-button iframe {
+  max-width: 100%;
 }
 .door-sheet > small {
   display: block;

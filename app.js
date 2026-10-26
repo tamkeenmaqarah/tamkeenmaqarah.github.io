@@ -184,20 +184,19 @@ function GoogleSignIn({ onCredential: onCredential }) {
       if (!node) return;
       let cancelled = !1,
         last = 0,
-        widthFor = () => {
-          let sheet = node.closest(`.door-sheet`),
-            styles = sheet ? getComputedStyle(sheet) : null,
-            pad = styles
-              ? parseFloat(styles.paddingLeft) + parseFloat(styles.paddingRight)
-              : 0,
-            available = (sheet?.clientWidth || node.clientWidth) - pad;
-          return Math.max(200, Math.min(384, Math.floor(available) || 280));
-        },
+        timer = 0,
+        script = document.querySelector(`script[data-tamkeen-gsi]`),
+        widthFor = () =>
+          Math.max(200, Math.min(400, Math.floor(node.clientWidth) || 280)),
         draw = () => {
           let gis = window.google?.accounts?.id;
           if (cancelled || !node || !gis) return;
           let width = widthFor();
-          if (width === last && node.querySelector(`[role=button]`)) return;
+          if (
+            Math.abs(width - last) < 8 &&
+            node.querySelector(`iframe, [role=button]`)
+          )
+            return;
           ((last = width), node.replaceChildren());
           gis.initialize({
             client_id: GOOGLE_CLIENT_ID,
@@ -216,27 +215,23 @@ function GoogleSignIn({ onCredential: onCredential }) {
             logo_alignment: `left`,
           });
         },
-        sheet = node.closest(`.door-sheet`),
-        observer = new ResizeObserver(() => draw());
-      sheet && observer.observe(sheet);
-      if (window.google?.accounts?.id) draw();
-      else {
-        let script = document.querySelector(`script[data-tamkeen-gsi]`);
-        (script ||
-          ((script = document.createElement(`script`)),
-          (script.src = `https://accounts.google.com/gsi/client`),
-          (script.async = !0),
-          (script.dataset.tamkeenGsi = `1`),
-          document.head.appendChild(script)),
-          script.addEventListener(`load`, draw));
-        return () => {
-          ((cancelled = !0),
-            observer.disconnect(),
-            script.removeEventListener(`load`, draw));
+        onResize = () => {
+          (clearTimeout(timer), (timer = setTimeout(draw, 180)));
         };
-      }
+      script ||
+        ((script = document.createElement(`script`)),
+        (script.src = `https://accounts.google.com/gsi/client`),
+        (script.async = !0),
+        (script.dataset.tamkeenGsi = `1`),
+        document.head.appendChild(script));
+      script.addEventListener(`load`, draw);
+      window.google?.accounts?.id && requestAnimationFrame(draw);
+      window.addEventListener(`resize`, onResize);
       return () => {
-        ((cancelled = !0), observer.disconnect());
+        ((cancelled = !0),
+          clearTimeout(timer),
+          script.removeEventListener(`load`, draw),
+          window.removeEventListener(`resize`, onResize));
       };
     }, []),
     (0, N.jsx)(`div`, { className: `google-button`, ref: host })
@@ -254,7 +249,9 @@ function yt({
   onGoogle: onGoogle,
   onGoogleName: onGoogleName,
   onCancelGoogle: onCancelGoogle,
+  onClearError: onClearError,
   askTentName: askTentName,
+  googleBusy: googleBusy,
 }) {
   let [c, l] = (0, y.useState)(e ? `back` : `create`),
     [u, d] = (0, y.useState)(e),
@@ -262,9 +259,10 @@ function yt({
     [m, h] = (0, y.useState)(``),
     [g, _] = (0, y.useState)(``),
     [v, b] = (0, y.useState)(``),
-    x = v || n;
+    googleNote = /Google|غوغل/.test(n || ``) ? n : ``,
+    x = googleNote ? v : v || n;
   function ee(e) {
-    (l(e), p(``), h(``), _(``), b(``));
+    (l(e), p(``), h(``), _(``), b(``), onClearError?.());
   }
   async function S(t) {
     (t.preventDefault(), b(``));
@@ -338,13 +336,27 @@ function yt({
                 ? translate(
                     `This phone kept your name. Enter the password to come back in.`,
                   )
-                : translate(
-                    `Set your name once. This phone remembers you, and next time you come straight in.`,
-                  ),
+                : c === `enter`
+                  ? translate(
+                      `Enter the name and password you already chose.`,
+                    )
+                  : translate(
+                      `Set your name once. This phone remembers you, and next time you come straight in.`,
+                    ),
         }),
         !askTentName &&
           c !== `forgot` &&
           (0, N.jsx)(GoogleSignIn, { onCredential: onGoogle }),
+        !askTentName &&
+          c !== `forgot` &&
+          (googleBusy || googleNote) &&
+          (0, N.jsx)(`p`, {
+            className: `door-note`,
+            role: googleNote ? `alert` : `status`,
+            children: googleBusy
+              ? translate(`Checking with Google…`)
+              : translate(googleNote),
+          }),
         !askTentName &&
           c !== `forgot` &&
           (0, N.jsx)(`p`, { className: `door-or`, children: translate(`or`) }),
@@ -362,7 +374,7 @@ function yt({
                   (0, N.jsx)(`input`, {
                     id: `door-name`,
                     autoComplete: `name`,
-                    autoFocus: !0,
+                    autoFocus: c === `enter`,
                     maxLength: 40,
                     value: u,
                     onChange: (e) => d(e.target.value),
@@ -505,7 +517,7 @@ function yt({
               }),
             (0, N.jsxs)(`button`, {
               className: `primary`,
-              disabled: t,
+              disabled: t || googleBusy,
               children: [
                 t
                   ? translate(`Saving…`)
@@ -763,7 +775,8 @@ function Tt() {
     [Zt, Qt] = (0, y.useState)(``),
     [$t, en] = (0, y.useState)(!1),
     [tn, nn] = (0, y.useState)(!1),
-    [googleTicket, setGoogleTicket] = (0, y.useState)(``);
+    [googleTicket, setGoogleTicket] = (0, y.useState)(``),
+    [googleBusy, setGoogleBusy] = (0, y.useState)(!1);
   async function I(e, t = `GET`, n) {
     let r = T(),
       i = r?.getItem(P.token) || ``,
@@ -1273,7 +1286,7 @@ function Tt() {
     }
   }
   async function finishGoogle(credential, tentName) {
-    (l(!0), kt(``));
+    (setGoogleBusy(!0), kt(``));
     try {
       At || T()?.removeItem(P.token);
       let names = [
@@ -1318,12 +1331,11 @@ function Tt() {
         /not available|not connected|not found|failed to fetch|load failed|network/i.test(
           message,
         )
-          ? translate(`Google sign-in is not available on this server yet.`)
-          : message ||
-              translate(`Could not sign in with Google. Please try again.`),
+          ? `Google could not sign you in yet. Come in with your name and password.`
+          : message || `Could not sign in with Google. Please try again.`,
       );
     } finally {
-      l(!1);
+      setGoogleBusy(!1);
     }
   }
   async function Cn(e, t) {
@@ -1646,7 +1658,9 @@ function Tt() {
           onCancelGoogle: () => {
             (setGoogleTicket(``), kt(``));
           },
+          onClearError: () => kt(``),
           askTentName: !!googleTicket,
+          googleBusy: googleBusy,
         })
       : (0, N.jsxs)(`div`, {
           className: `site`,

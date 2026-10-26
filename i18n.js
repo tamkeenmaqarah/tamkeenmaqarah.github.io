@@ -32,6 +32,11 @@ const arabic = {
   "Password saved. Use it the next time you sign in.":
     "حُفظت كلمة المرور. استخدمها عند تسجيل الدخول في المرة القادمة.",
   or: "أو",
+  "Enter the name and password you already chose.":
+    "أدخل الاسم وكلمة المرور اللذين اخترتهما.",
+  "Checking with Google…": "جارٍ التحقق من غوغل…",
+  "Google could not sign you in yet. Come in with your name and password.":
+    "تعذّر الدخول عبر غوغل الآن. ادخل باسمك وكلمة المرور.",
   "Google confirmed you. What name does the tent use?":
     "أكّد غوغل هويتك. ما الاسم الذي تستخدمه الخيمة؟",
   "This is the name on the leaderboard, not the Google email.":
