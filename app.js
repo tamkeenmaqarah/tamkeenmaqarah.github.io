@@ -33,7 +33,7 @@ import {
   getLanguage,
   setLanguage,
   subscribeLanguage,
-} from "./i18n.js?v=14";
+} from "./i18n.js?v=16";
 import {
   Ze as Xe,
   $e as Qe,
@@ -44,12 +44,13 @@ import {
   qe as Ke,
   Qe as Ze,
   Brand,
+  AccountMenu,
   LanguageSwitcher,
   MotionToggle,
   HangingLanterns,
   Cushion,
   GatheringFooter,
-} from "./components.js?v=14";
+} from "./components.js?v=16";
 import {
   nextHomeworkSunday,
   homeworkSunday,
@@ -59,7 +60,7 @@ import {
   storeHomeworkDraft,
   clearHomeworkDraft,
 } from "./homework.js?v=1";
-import {QuranReader} from "./quran-reader.js?v=1";
+import {QuranReader} from "./quran-reader.js?v=3";
 import {quranReferences} from "./quran.js?v=1";
 const el = y.createElement;
 const Ye = "https://tamkeen-maqraah-teacher.ibrahiimmuhamud.workers.dev";
@@ -207,13 +208,16 @@ function googleClaims(credential) {
   }
 }
 function GoogleSignIn({ onCredential: onCredential }) {
-  let host = (0, y.useRef)(null),
+  let [googleStatus, setGoogleStatus] = y.useState("Loading Google sign-in…"),
+    host = (0, y.useRef)(null),
     onRef = (0, y.useRef)(onCredential);
   onRef.current = onCredential;
   return (
     (0, y.useEffect)(() => {
       let node = host.current;
       if (!node) return;
+      const failed = () => setGoogleStatus("Google sign-in could not load. Reload to try again.");
+      const deadline = setTimeout(failed, 8000);
       let cancelled = !1,
         last = 0,
         timer = 0,
@@ -223,6 +227,8 @@ function GoogleSignIn({ onCredential: onCredential }) {
         draw = () => {
           let gis = window.google?.accounts?.id;
           if (cancelled || !node || !gis) return;
+          clearTimeout(deadline);
+          setGoogleStatus("");
           let width = widthFor();
           if (
             Math.abs(width - last) < 8 &&
@@ -257,16 +263,21 @@ function GoogleSignIn({ onCredential: onCredential }) {
         (script.dataset.tamkeenGsi = `1`),
         document.head.appendChild(script));
       script.addEventListener(`load`, draw);
+      script.addEventListener(`error`, failed);
       window.google?.accounts?.id && requestAnimationFrame(draw);
       window.addEventListener(`resize`, onResize);
       return () => {
         ((cancelled = !0),
           clearTimeout(timer),
+          clearTimeout(deadline),
+          script.removeEventListener(`error`, failed),
           script.removeEventListener(`load`, draw),
           window.removeEventListener(`resize`, onResize));
       };
     }, []),
-    (0, N.jsx)(`div`, { className: `google-button`, ref: host })
+    el("div", {className: "google-sign-in"},
+      el("div", {className: "google-button", ref: host}),
+      googleStatus && el("p", {className: "google-sign-in-status", role: "status"}, translate(googleStatus)))
   );
 }
 function yt({
@@ -2025,7 +2036,6 @@ function Tt() {
             (0, N.jsxs)(`header`, {
               className: `app-header`,
               children: [
-                el(HangingLanterns, { compact: true }),
                 (0, N.jsxs)(`div`, {
                   className: `header-inner`,
                   children: [
@@ -2035,11 +2045,13 @@ function Tt() {
                         L("home");
                       },
                     }),
+                    el(HangingLanterns, { compact: true }),
                     (0, N.jsxs)(`div`, {
                       className: `header-actions`,
                       children: [
                         el(LanguageSwitcher),
                         el(MotionToggle),
+                        el(AccountMenu, {name: v || (e?.teacher ? translate("Teacher") : "")},
                         et === `in` && v && !e?.teacher
                           ? (0, N.jsxs)(`div`, {
                               className: `teacher-account`,
@@ -2108,6 +2120,7 @@ function Tt() {
                                 translate(`Teacher sign in`),
                               ],
                             }),
+                        ),
                       ],
                     }),
                   ],
@@ -2148,6 +2161,7 @@ function Tt() {
             }),
             (0, N.jsxs)(`main`, {
               id: `main`,
+              tabIndex: -1,
               children: [
                 i &&
                   (0, N.jsxs)(`div`, {

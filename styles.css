@@ -5082,7 +5082,7 @@ html[data-motion="off"] *:after {
   --brass: #d4a063;
 }
 body {
-  background: #3d151b;
+  background: #4c1b28 url("./assets/najdi-rug.svg") center top / 384px 384px repeat;
   color: var(--ink);
 }
 body:before,
@@ -5091,11 +5091,11 @@ body:after {
   position: fixed;
   top: 0;
   bottom: 0;
-  width: 16px;
-  background: #32151b url("./assets/sadu-side.svg") repeat-y center / 24px 144px;
+  width: 48px;
+  background: #32151b url("./assets/majlis-edge.svg") repeat-y center / 100% auto;
   pointer-events: none;
   z-index: 9;
-  opacity: 0.82;
+  opacity: 1;
 }
 body:before {
   left: 0;
@@ -6601,7 +6601,7 @@ button.study-ask {
 }
 .homework-date input {
   width: 174px;
-  min-height: 42px;
+  min-height: 44px;
   padding: 7px 10px;
   font-size: 16px;
   color-scheme: light;
@@ -6752,7 +6752,7 @@ button.study-ask {
   margin: 20px 0 26px;
 }
 .quran-homework-picker > button {
-  margin-bottom: 18px;
+  margin-bottom: 0;
 }
 .quran-homework-picker .quran-reader {
   border-block: 1px solid #7c4b3e;
@@ -6796,4 +6796,373 @@ button.study-ask {
   border: 1px solid #bfa272;
   border-radius: 5px;
   padding: 10px 12px;
+}
+
+/* The rug is the floor; upholstery frames it without entering the task area. */
+.app-header {
+  z-index: 12;
+}
+.header-inner {
+  gap: 24px;
+  z-index: 2;
+}
+.header-actions {
+  flex-wrap: nowrap;
+  max-width: none;
+  gap: 16px;
+}
+.motion-toggle,
+.icon-button {
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  min-height: 44px;
+}
+.text-button,
+.language-switch {
+  min-height: 44px;
+}
+.header-lanterns {
+  position: static;
+  inset: auto;
+  flex: 0 0 48px;
+  height: 88px;
+  overflow: visible;
+}
+.header-lanterns .lantern {
+  position: relative;
+  inset: auto;
+  width: 44px;
+  height: 88px;
+}
+.account-menu {
+  position: relative;
+  min-width: 0;
+}
+.account-menu > summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px 12px;
+  color: #f0cb98;
+  border: 1px solid #946443;
+  border-radius: 5px;
+  cursor: pointer;
+  list-style: none;
+}
+.account-menu > summary::-webkit-details-marker {
+  display: none;
+}
+.account-menu > summary > span {
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.account-menu[open] > summary,
+.account-menu > summary:hover {
+  background: #63312c;
+}
+.account-menu > summary:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+}
+.account-popover {
+  position: absolute;
+  inset-inline-end: 0;
+  top: calc(100% + 10px);
+  width: 250px;
+  max-width: calc(100vw - 32px);
+  padding: 14px;
+  color: var(--ink);
+  background: #321319;
+  border: 1px solid #946443;
+  border-radius: 5px;
+  z-index: 3;
+}
+.account-popover .teacher-account {
+  display: grid;
+  justify-content: stretch;
+  width: 100%;
+  gap: 4px;
+}
+.account-popover .teacher-account > span {
+  max-width: none;
+  padding: 4px 10px 12px;
+  overflow-wrap: anywhere;
+  white-space: normal;
+  color: #f0dfc2;
+}
+.account-popover .text-button,
+.account-popover .teacher-signin {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: none;
+  min-height: 44px;
+  padding: 10px;
+  text-align: start;
+  font-size: 14px;
+  border-radius: 3px;
+}
+.account-popover button:hover {
+  background: #54232b;
+}
+.account-popover .password-icon,
+.account-popover .password-label {
+  display: inline;
+}
+.account-popover > .teacher-signin {
+  border-top: 1px solid var(--line);
+  margin-top: 8px;
+  padding-top: 14px;
+}
+main:focus {
+  outline: none;
+}
+main > *,
+.section-heading > *,
+.page-heading > * {
+  min-width: 0;
+}
+.homework-list p,
+.standing-name,
+.moment-answer,
+.question legend {
+  overflow-wrap: anywhere;
+}
+.door {
+  background: #4c1b28 url("./assets/najdi-rug.svg") center / 384px 384px repeat;
+  padding-block: max(32px, env(safe-area-inset-top)) max(56px, env(safe-area-inset-bottom));
+}
+.door-tools {
+  gap: 16px;
+  min-height: 44px;
+}
+.door-switch {
+  gap: 8px 16px;
+}
+@media (max-width: 1100px) {
+  body:before,
+  body:after {
+    width: 18px;
+  }
+}
+@media (max-width: 750px) {
+  html {
+    scroll-padding-top: 172px;
+  }
+  .header-inner {
+    flex-wrap: nowrap;
+    min-height: 76px;
+    height: auto;
+    padding: 10px 20px 6px;
+    gap: 8px;
+  }
+  .header-actions {
+    gap: 6px;
+    justify-content: flex-end;
+  }
+  .header-lanterns {
+    display: none;
+  }
+  .account-menu > summary {
+    padding: 8px;
+  }
+  .account-menu > summary > span,
+  .account-chevron {
+    display: none;
+  }
+  .main-nav.student-nav {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    min-height: 88px;
+    height: auto;
+    padding: 0 16px 4px;
+    gap: 0 4px;
+    overflow: visible;
+  }
+  .main-nav.student-nav > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 8px 2px;
+    font-size: 12px;
+    line-height: 1.4;
+    white-space: normal;
+    text-align: center;
+    letter-spacing: 0;
+  }
+  .main-nav.student-nav > button.selected {
+    background: #54232b;
+  }
+  .section-heading {
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 16px;
+  }
+  .section-heading h2 {
+    margin-block: 0;
+  }
+  .page-heading {
+    gap: 16px;
+  }
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .homework-week .secondary {
+    min-height: 48px;
+  }
+  .homework-date input {
+    min-height: 44px;
+  }
+  .homework-intro {
+    font-size: 16px;
+    line-height: 1.65;
+  }
+  .homework-week h2 {
+    font-size: 23px;
+    line-height: 1.5;
+  }
+  .quran-homework-picker {
+    margin-block: 20px 24px;
+  }
+  .quran-homework-picker .quran-reader {
+    margin-top: 20px;
+  }
+}
+@media (max-width: 620px) {
+  body:before,
+  body:after {
+    width: 6px;
+    background-size: 14px 60px;
+    opacity: 1;
+  }
+  .header-inner {
+    padding-inline: 16px;
+  }
+  .header-actions {
+    gap: 4px;
+  }
+  .brand-arabic {
+    font-size: 27px;
+  }
+  .language-switch {
+    min-width: 44px;
+    font-size: 13px;
+  }
+  .weekly-quiz {
+    gap: 20px;
+  }
+  .weekly-quiz h2 {
+    font-size: 25px;
+  }
+  .weekly-quiz p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .majlis-purpose,
+  html[dir="rtl"] .majlis-purpose {
+    font-size: 12px;
+    line-height: 1.7;
+  }
+  .majlis-title {
+    padding-inline: 18px;
+  }
+  .app-footer {
+    padding-bottom: max(28px, env(safe-area-inset-bottom));
+  }
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  .app-header {
+    position: relative;
+  }
+  html {
+    scroll-padding-top: 24px;
+  }
+}
+.halaqa-media {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(260px, 1fr);
+  align-items: start;
+  gap: 24px;
+}
+.halaqa-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+  border: 0;
+  background: #2b1016;
+  color: #f0d0a0;
+  font: 500 24px/1.5 var(--display);
+  text-align: center;
+}
+.halaqa-preview:hover {
+  background: #3d151b;
+}
+.halaqa-preview:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: -6px;
+}
+.halaqa-play-label {
+  font: 500 14px/1.5 var(--body);
+  color: #edbd89;
+}
+.halaqa-external {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: -8px;
+  font-size: 14px;
+}
+.standings-table {
+  background: #35151bed;
+}
+.google-button:empty {
+  min-height: 0;
+}
+.google-sign-in-status {
+  margin: 0;
+  color: #f0d7b1;
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: center;
+}
+.door-google:has(.google-sign-in-status) .door-or {
+  display: none;
+}
+@media (max-width: 750px) {
+  .halaqa-media {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  .halaqa-preview {
+    gap: 10px;
+    font-size: 21px;
+  }
+}
+@media (max-width: 380px) {
+  .weekly-quiz {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  .weekly-quiz .primary {
+    align-self: stretch;
+  }
 }

@@ -33,7 +33,7 @@ import {
   getLanguage,
   setLanguage,
   subscribeLanguage,
-} from "./i18n.js?v=14";
+} from "./i18n.js?v=16";
 const Ge = (e) => (e.score / e.max) * 100,
   Ke = (e) =>
     e
@@ -189,6 +189,7 @@ const HALAQAS = [
 ];
 function Halaqas() {
   let [pick, setPick] = (0, y.useState)(HALAQAS[0].id);
+  const [playing, setPlaying] = y.useState(false);
   let chosen = HALAQAS.find((item) => item.id === pick) || HALAQAS[0];
   let src = chosen.list
     ? `https://www.youtube-nocookie.com/embed/videoseries?list=` + chosen.list
@@ -219,18 +220,22 @@ function Halaqas() {
         "Saturday and Tuesday lessons from the Tamkeen Youth channel.",
       ),
     ),
-    el(
-      "div",
-      { className: "halaqa-player" },
-      el("iframe", {
-        src: src,
-        title: translate(chosen.title),
-        allow:
-          "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share",
-        allowFullScreen: true,
-        referrerPolicy: "strict-origin-when-cross-origin",
-      }),
-    ),
+    el("div", {className: "halaqa-media"},
+    el("div", {className: "halaqa-viewer"},
+      el("div", {className: "halaqa-player"},
+        playing ? el("iframe", {
+          src: src + (chosen.list ? "&" : "?") + "autoplay=1",
+          title: translate(chosen.title),
+          allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share",
+          allowFullScreen: true,
+          referrerPolicy: "strict-origin-when-cross-origin",
+        }) : el("button", {className: "halaqa-preview", type: "button", onClick: () => setPlaying(true), "aria-label": translate("Play halaqa") + ": " + translate(chosen.title)},
+          el("svg", {width: 52, height: 52, viewBox: "0 0 52 52", fill: "none", "aria-hidden": true},
+            el("circle", {cx: 26, cy: 26, r: 24, stroke: "currentColor", strokeWidth: 1.5}),
+            el("path", {d: "m22 17 13 9-13 9z", fill: "currentColor"})),
+          el("span", null, translate(chosen.title)),
+          el("span", {className: "halaqa-play-label"}, translate("Play halaqa")))),
+      el("a", {className: "text-button halaqa-external", href: chosen.list ? "https://www.youtube.com/playlist?list=" + chosen.list : "https://www.youtube.com/watch?v=" + chosen.id, target: "_blank", rel: "noopener noreferrer"}, translate("Watch on YouTube"), el(w, {size: 15}))),
     el(
       "div",
       { className: "halaqa-picks" },
@@ -242,7 +247,7 @@ function Halaqas() {
             type: "button",
             className: item.id === pick ? "is-playing" : "",
             "aria-pressed": item.id === pick,
-            onClick: () => setPick(item.id),
+            onClick: () => {setPick(item.id); setPlaying(true);},
           },
           item.list
             ? el(
@@ -262,7 +267,7 @@ function Halaqas() {
           el("span", null, translate(item.title)),
         ),
       ),
-    ),
+    )),
   );
 }
 function Ze({
@@ -883,6 +888,35 @@ function LanguageSwitcher() {
     isArabic ? "English" : "العربية",
   );
 }
+function AccountMenu({ name, children }) {
+  const ref = y.useRef(null);
+  y.useEffect(() => {
+    const dismiss = (event) => {
+      const menu = ref.current;
+      if (!menu?.open) return;
+      if (event.type === "keydown") {
+        if (event.key !== "Escape") return;
+        menu.open = false;
+        menu.querySelector("summary").focus();
+      } else if (!menu.contains(event.target)) menu.open = false;
+    };
+    document.addEventListener("pointerdown", dismiss);
+    document.addEventListener("keydown", dismiss);
+    return () => {
+      document.removeEventListener("pointerdown", dismiss);
+      document.removeEventListener("keydown", dismiss);
+    };
+  }, []);
+  return el("details", {className: "account-menu", ref},
+    el("summary", {"aria-label": translate("Account") + (name ? ": " + name : "")},
+      el("svg", {width: 20, height: 20, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.5, "aria-hidden": true},
+        el("circle", {cx: 12, cy: 8, r: 3.5}),
+        el("path", {d: "M5 21v-2a7 7 0 0 1 14 0v2"})),
+      el("span", null, name || translate("Account")),
+      el("svg", {className: "account-chevron", width: 14, height: 14, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.5, "aria-hidden": true}, el("path", {d: "m6 9 6 6 6-6"}))),
+    el("div", {className: "account-popover", onClick: (event) => { if (event.target.closest("button")) ref.current.open = false; }}, children));
+}
+
 function Brand({ onClick }) {
   return el(
     "a",
@@ -971,6 +1005,7 @@ export {
   Ge,
   qe,
   Brand,
+  AccountMenu,
   LanguageSwitcher,
   MotionToggle,
   HangingLanterns,

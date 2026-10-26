@@ -1,4 +1,9 @@
 const arabic = {
+  "Account": "الحساب",
+  "Play halaqa": "تشغيل الحلقة",
+  "Watch on YouTube": "المشاهدة على يوتيوب",
+  "Loading Google sign-in…": "جارٍ تحميل الدخول بحساب غوغل…",
+  "Google sign-in could not load. Reload to try again.": "تعذّر تحميل الدخول بحساب غوغل. أعد تحميل الصفحة للمحاولة مجددًا.",
   "Qur’an": "القرآن الكريم",
   "Qur’an reader": "قراءة القرآن الكريم",
   "Choose ayahs from the Qur’an": "اختيار آيات من القرآن",

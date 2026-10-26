@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="384" height="384" viewBox="0 0 384 384" shape-rendering="crispEdges">
+<defs>
+  <pattern id="thread" width="8" height="8" patternUnits="userSpaceOnUse"><path fill="#bd815b" fill-opacity=".035" d="M0 0h3v1H0zM4 4h3v1H4z"/><path fill="#160b11" fill-opacity=".18" d="M0 2h8v1H0zM0 6h8v1H0z"/></pattern>
+  <g id="diamond"><path fill="#5e2634" d="m0-70 10 10v10h10v10h10v10h10v10h10v10h10v10h10l10 10-10 10H60v10H50v10H40v10H30v10H20v10H10v10L0 70l-10-10V50h-10V40h-10V30h-10V20h-10V10h-10L-70 0l10-10h10v-10h10v-10h10v-10h10v-10h10v-10z"/><path fill="#3d1822" d="m0-46 8 8v8h8v8h8v8h8v8h8l6 6-6 6h-8v8h-8v8h-8v8H8v8l-8 8-8-8v-8h-8v-8h-8v-8h-8V6h-8l-6-6 6-6h8v-8h8v-8h8v-8h8v-8z"/><path fill="#b77854" fill-opacity=".22" d="m0-18 6 6v6h6l6 6-6 6H6v6l-6 6-6-6V6h-6l-6-6 6-6h6v-6z"/><path fill="#51202c" d="m0-6 6 6-6 6-6-6z"/></g>
+</defs>
+<path fill="#4c1b28" d="M0 0h384v384H0z"/>
+<use href="#diamond" x="96" y="96"/><use href="#diamond" x="288" y="288"/>
+<g fill="#bf8b5f" fill-opacity=".12"><path d="m288 76 5 10h10v10l5 5-5 5v10h-10l-5 10-5-10h-10v-10l-5-5 5-5V86h10zM96 268l5 10h10v10l5 5-5 5v10h-10l-5 10-5-10H81v-10l-5-5 5-5v-10h10z"/></g>
+<path fill="url(#thread)" d="M0 0h384v384H0z"/>
+</svg>

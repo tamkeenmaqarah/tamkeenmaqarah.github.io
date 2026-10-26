@@ -1,5 +1,5 @@
 import { y } from "./runtime.js";
-import { t, getLanguage } from "./i18n.js?v=14";
+import { t, getLanguage } from "./i18n.js?v=16";
 import {
   loadSurahs,
   loadSurah,
@@ -197,7 +197,7 @@ export function QuranReader({ initialSelection, onAdd }) {
     data?.number === selection.surah &&
       el(
         "div",
-        { className: "quran-reading" },
+        { className: "quran-reading", translate: "no" },
         el(
           "header",
           { className: "quran-reading-heading" },
