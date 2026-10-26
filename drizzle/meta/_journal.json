@@ -43,6 +43,13 @@
       "when": 1792983600000,
       "tag": "0005_homework",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1792987200000,
+      "tag": "0006_paper_sunday",
+      "breakpoints": true
     }
   ]
 }

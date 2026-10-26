@@ -10,6 +10,6 @@ export async function getCommunity():Promise<Community>{
   db().prepare('SELECT id,name,question,chosen,correct,caption FROM moments ORDER BY created_at DESC LIMIT 30').all()
  ]);
  const boards:LeaderboardBoard[]=(quizzes.results||[]).map((q:any)=>({id:q.id,title:q.title,kind:'online',rows:(scores.results||[]).filter((s:any)=>s.quiz_id===q.id).map((s:any)=>({id:s.id,name:s.name,score:s.score,max:s.max}))}));
- if(paper.results?.length)boards.push({id:'paper-original',title:'Original etiquette quiz',kind:'paper',rows:paper.results.map((r:any)=>({id:r.id,name:r.name,score:r.regular+r.bonus,max:r.max,bonus:r.bonus}))});
+ if(paper.results?.length)boards.push({id:'paper-original',title:'Sunday 25 October · Original etiquette quiz',kind:'paper',rows:paper.results.map((r:any)=>({id:r.id,name:r.name,score:r.regular+r.bonus,max:r.max,bonus:r.bonus}))});
  return {boards,moments:(moments.results||[]).map((m:any)=>({id:m.id,name:m.name,question:m.question,chosen:m.chosen,correct:m.correct,caption:m.caption}))};
 }
