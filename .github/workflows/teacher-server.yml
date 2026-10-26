@@ -18,6 +18,11 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: node --test tests/quran-content.test.mjs
       - run: pnpm build
+      - name: Verify Quran Foundation production access
+        env:
+          QURAN_CLIENT_ID: ${{ secrets.QURAN_CLIENT_ID }}
+          QURAN_CLIENT_SECRET: ${{ secrets.QURAN_CLIENT_SECRET }}
+        run: node scripts/check-quran-connection.mjs
       - name: Bind the D1 database
         env:
           TAMKEEN_D1_DATABASE_ID: ${{ secrets.TAMKEEN_D1_DATABASE_ID }}
