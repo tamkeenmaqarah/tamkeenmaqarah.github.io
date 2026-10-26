@@ -6463,6 +6463,15 @@ button.podium-place.is-picked .podium-block {
     transform: none;
   }
 }
+.study-line {
+  margin: 8px 0 0;
+  color: #f1d1a3;
+  font-size: 15px;
+  line-height: 1.55;
+}
+button.study-ask {
+  margin-top: 8px;
+}
 @media (max-width: 640px) {
   .halaqa-picks button {
     grid-template-columns: 72px minmax(0, 1fr);

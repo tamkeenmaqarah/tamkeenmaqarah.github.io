@@ -175,6 +175,12 @@ const arabic = {
   " of ": " من ",
   " answered": " إجابات مكتملة",
   " answered ": " أجاب: ",
+  "Say it simply": "اشرحها ببساطة",
+  "Saying it simply…": "جارٍ الشرح ببساطة…",
+  "Could not explain this question. The lesson note is still above.":
+    "تعذّر شرح هذا السؤال. ملاحظة الدرس ما زالت أعلاه.",
+  "The simple explanations have reached the limit for today. The lesson note above still stands.":
+    "وصل شرح الأسئلة البسيط إلى حد اليوم. ملاحظة الدرس ما زالت أعلاه.",
   "Correct answer: ": "الإجابة الصحيحة: ",
   " Correct answer: ": " الإجابة الصحيحة: ",
   "Correct answer": "الإجابة الصحيحة",

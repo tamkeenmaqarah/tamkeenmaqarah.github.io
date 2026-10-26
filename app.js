@@ -33,7 +33,7 @@ import {
   getLanguage,
   setLanguage,
   subscribeLanguage,
-} from "./i18n.js?v=9";
+} from "./i18n.js?v=10";
 import {
   Ze as Xe,
   $e as Qe,
@@ -49,7 +49,7 @@ import {
   HangingLanterns,
   Cushion,
   GatheringFooter,
-} from "./components.js?v=9";
+} from "./components.js?v=10";
 const el = y.createElement;
 const Ye = "https://tamkeen-maqraah-learning.modest-mink-0683.chatgpt.site";
 var et = {
@@ -813,7 +813,23 @@ function Tt() {
     [$t, en] = (0, y.useState)(!1),
     [tn, nn] = (0, y.useState)(!1),
     [googleTicket, setGoogleTicket] = (0, y.useState)(``),
-    [googleBusy, setGoogleBusy] = (0, y.useState)(!1);
+    [googleBusy, setGoogleBusy] = (0, y.useState)(!1),
+    [studyOn, setStudyOn] = (0, y.useState)(!1),
+    [studyLines, setStudyLines] = (0, y.useState)({}),
+    [studyBusy, setStudyBusy] = (0, y.useState)(null);
+  (0, y.useEffect)(() => {
+    let stop = !1;
+    fetch(Ye + `/api/study`, { method: `OPTIONS` })
+      .then((r) => {
+        if (!stop) setStudyOn(r.ok);
+      })
+      .catch(() => {
+        if (!stop) setStudyOn(!1);
+      });
+    return () => {
+      stop = !0;
+    };
+  }, []);
   async function I(e, t = `GET`, n) {
     let r = T(),
       i = r?.getItem(P.token) || ``,
@@ -1039,6 +1055,7 @@ function Tt() {
       oe(o?.attemptId || c?.attemptId || crypto.randomUUID()),
       _(o ? Math.min(o.step, e.questions.length - 1) : -1),
       C(c && !o ? { score: c.score, max: c.max, review: c.review } : null),
+      setStudyLines({}),
       a(``),
       s(``),
       Nt(``),
@@ -1058,7 +1075,8 @@ function Tt() {
         C(null),
         _(-1),
         ee(Array(u.questions.length).fill(-1)),
-        oe(crypto.randomUUID())));
+        oe(crypto.randomUUID()),
+        setStudyLines({})));
   }
   function fn(e, t, n) {
     let r = T(),
@@ -1112,6 +1130,7 @@ function Tt() {
       ee(Array(se.misses.length).fill(-1)),
       oe(`practice`),
       C(null),
+      setStudyLines({}),
       a(``),
       s(``),
       r(`home`),
@@ -1689,6 +1708,29 @@ function Tt() {
         ));
     });
   }
+  async function saySimply(index, prompt, chosen) {
+    if (!u?.id || studyBusy !== null) return;
+    setStudyBusy(index);
+    a(``);
+    try {
+      let res = await I(`/api/study`, `POST`, {
+        quizId: u.id,
+        prompt,
+        ...(chosen ? { chosen } : {}),
+      });
+      setStudyLines((lines) => ({ ...lines, [index]: res.line }));
+    } catch (err) {
+      a(
+        translate(
+          err instanceof Error && err.message
+            ? err.message
+            : `Could not explain this question. The lesson note is still above.`,
+        ),
+      );
+    } finally {
+      setStudyBusy(null);
+    }
+  }
   let zn = m
       ? S?.score === S?.max
         ? translate(`Those answers are clear now`)
@@ -2092,6 +2134,36 @@ function Tt() {
                                               (0, N.jsx)(`p`, {
                                                 children: e.explanation,
                                               }),
+                                            studyOn &&
+                                              !f &&
+                                              !m &&
+                                              !e.right &&
+                                              (studyLines[t]
+                                                ? (0, N.jsx)(`p`, {
+                                                    className: `study-line`,
+                                                    children: studyLines[t],
+                                                  })
+                                                : (0, N.jsx)(`button`, {
+                                                    type: `button`,
+                                                    className: `text-button study-ask`,
+                                                    disabled: studyBusy === t,
+                                                    onClick: () =>
+                                                      saySimply(
+                                                        t,
+                                                        e.prompt,
+                                                        u.questions[t]?.options?.[
+                                                          x[t]
+                                                        ],
+                                                      ),
+                                                    children:
+                                                      studyBusy === t
+                                                        ? translate(
+                                                            `Saying it simply…`,
+                                                          )
+                                                        : translate(
+                                                            `Say it simply`,
+                                                          ),
+                                                  })),
                                           ],
                                         }),
                                       ],

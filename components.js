@@ -33,7 +33,7 @@ import {
   getLanguage,
   setLanguage,
   subscribeLanguage,
-} from "./i18n.js?v=9";
+} from "./i18n.js?v=10";
 const Ge = (e) => (e.score / e.max) * 100,
   Ke = (e) =>
     e
