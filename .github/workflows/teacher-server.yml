@@ -22,6 +22,8 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: node --test tests/quran-content.test.mjs
+      - run: node verify-profiles.mjs
+      - run: node verify-accounts.mjs
       - run: pnpm build
       - name: Verify Quran Foundation production access
         if: ${{ inputs.verify_quran }}
@@ -33,6 +35,14 @@ jobs:
         env:
           TAMKEEN_D1_DATABASE_ID: ${{ secrets.TAMKEEN_D1_DATABASE_ID }}
         run: node scripts/prepare-teacher-deploy.mjs
+      - name: Apply database migrations
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          test -d drizzle
+          cp -R drizzle dist/server/drizzle
+          pnpm exec wrangler d1 migrations apply tamkeen-maqraah --remote --config dist/server/wrangler.json
       - name: Publish the worker
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -57,11 +67,3 @@ jobs:
           test -n "$QURAN_CLIENT_ID" && test -n "$QURAN_CLIENT_SECRET"
           printf '%s' "$QURAN_CLIENT_ID" | pnpm exec wrangler secret put QURAN_CLIENT_ID --config dist/server/wrangler.json
           printf '%s' "$QURAN_CLIENT_SECRET" | pnpm exec wrangler secret put QURAN_CLIENT_SECRET --config dist/server/wrangler.json
-      - name: Apply database migrations
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: |
-          test -d drizzle
-          cp -R drizzle dist/server/drizzle
-          pnpm exec wrangler d1 migrations apply tamkeen-maqraah --remote --config dist/server/wrangler.json
