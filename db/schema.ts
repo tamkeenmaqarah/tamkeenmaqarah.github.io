@@ -6,3 +6,4 @@ export const sessions=sqliteTable('sessions',{tokenHash:text('token_hash').prima
 export const records=sqliteTable('records',{id:text('id').primaryKey(),name:text('name').notNull(),regular:integer('regular').notNull(),bonus:integer('bonus').notNull(),max:integer('max').notNull()});
 export const moments=sqliteTable('moments',{id:text('id').primaryKey(),name:text('name').notNull(),question:text('question').notNull(),chosen:text('chosen').notNull(),correct:text('correct').notNull(),caption:text('caption').notNull(),createdAt:text('created_at').notNull()});
 export const aiUsage=sqliteTable('ai_usage',{day:text('day').primaryKey(),requests:integer('requests').notNull().default(0)});
+export const homework=sqliteTable('homework',{id:text('id').primaryKey(),week:text('week').notNull(),name:text('name').notNull(),body:text('body').notNull(),updatedAt:text('updated_at').notNull()});
