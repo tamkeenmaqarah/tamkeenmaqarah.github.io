@@ -103,21 +103,23 @@ export async function openSession(name:string,password:string){
  return openSessionFor(row.id,row.name);
 }
 export async function signInWithGoogle(credential:string,name:string|undefined,clientId:string,linkedStudentId?:string,identify:typeof googleIdentity=googleIdentity){
- let identity:{sub:string}|null;
+ let identity:{sub:string;picture?:string|null}|null;
  try{identity=await identify(credential,clientId)}catch{identity=null}
  if(!identity)throw Error('Google could not confirm this sign-in.');
  const sub=identity.sub;
+ const syncPicture=async(id:string)=>{if(identity.picture!==undefined)await db().prepare('UPDATE students SET google_picture=? WHERE id=?').bind(identity.picture,id).run()};
  try{
   if(linkedStudentId){
    const owner:any=await db().prepare('SELECT id FROM students WHERE google_sub=?').bind(sub).first();
    if(owner&&owner.id!==linkedStudentId)throw Error('That Google account is already used by another name.');
    await db().prepare('UPDATE students SET google_sub=? WHERE id=?').bind(sub,linkedStudentId).run();
    const student:any=await db().prepare('SELECT id,name,has_password FROM students WHERE id=?').bind(linkedStudentId).first();
+   await syncPicture(student.id);
    const session=await openSessionFor(student.id,student.name);
    return {...session,hasPassword:student.has_password!==0};
   }
   const existing:any=await db().prepare('SELECT id,name,has_password FROM students WHERE google_sub=?').bind(sub).first();
-  if(existing){const session=await openSessionFor(existing.id,existing.name);return {...session,hasPassword:existing.has_password!==0}}
+  if(existing){await syncPicture(existing.id);const session=await openSessionFor(existing.id,existing.name);return {...session,hasPassword:existing.has_password!==0}}
   if(!name?.trim())return {needsName:true as const};
   const clean=cleanName(name);
   const problem=nameProblem(clean);
@@ -126,6 +128,7 @@ export async function signInWithGoogle(credential:string,name:string|undefined,c
   if(byName)throw Error('That name is already in the tent. Sign in with the password, then connect Google.');
   const id=crypto.randomUUID();
   await db().prepare('INSERT INTO students (id,name,password_hash,google_sub,has_password,created_at) VALUES (?,?,?,?,?,?)').bind(id,clean,await digest(crypto.randomUUID()),sub,0,new Date().toISOString()).run();
+  await syncPicture(id);
   const session=await openSessionFor(id,clean);
   return {...session,hasPassword:false};
  }catch(e:any){const message=e?.message||'';if(/no such column/i.test(message))throw Error('Google sign-in is not available on this server yet.');if(/google_sub/i.test(message))throw Error('That Google account is already used by another name.');if(/unique|constraint/i.test(message))throw Error('That name is already in the tent. Sign in with the password, then connect Google.');throw e}

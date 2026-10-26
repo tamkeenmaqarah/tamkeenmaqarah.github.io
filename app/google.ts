@@ -1,3 +1,7 @@
+export function googlePicture(value: unknown): string | null {
+ if (typeof value !== 'string' || value.length > 1000) return null;
+ try {const url=new URL(value); return url.protocol==='https:' && !url.username && !url.password && !url.port && (url.hostname==='googleusercontent.com'||url.hostname.endsWith('.googleusercontent.com')) ? url.href : null;} catch {return null;}
+}
 export const PUBLIC_GOOGLE_CLIENT_ID='883985581593-3sa5cjscjk0mhfdeiho8pi857qqqr2v3.apps.googleusercontent.com';
 export function activeGoogleClientId(value:unknown){return googleClientId(value)||googleClientId(PUBLIC_GOOGLE_CLIENT_ID)}
 export function googleClientId(value:unknown){
@@ -31,5 +35,5 @@ export async function googleIdentity(token:string,clientId:string,fetchImpl:type
  const key=await crypto.subtle.importKey('jwk',{kty:'RSA',n:jwk.n,e:jwk.e,alg:'RS256',ext:true},{name:'RSASSA-PKCS1-v1_5',hash:'SHA-256'},false,['verify']);
  const signed=new TextEncoder().encode(`${parts[0]}.${parts[1]}`);
  const ok=await crypto.subtle.verify('RSASSA-PKCS1-v1_5',key,bytes(parts[2]),signed);
- return ok?{sub:payload.sub}:null;
+ return ok?{sub:payload.sub,picture:googlePicture(payload.picture)}:null;
 }

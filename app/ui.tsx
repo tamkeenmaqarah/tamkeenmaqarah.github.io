@@ -1,4 +1,5 @@
 import {Check,Trophy,Smile} from 'lucide-react';
+import {t} from './i18n.js';
 export type Question={prompt:string;options:string[];correct:number;explanation:string;evidence?:string};
 export type Quiz={id:string;title:string;description:string;questions:Question[];published:number};
 export type Moment={id:string;name:string;question:string;chosen:string;correct:string;caption:string};
@@ -16,4 +17,4 @@ export function Podium({rows}:{rows:Ranked[]}){
  const ordered=tiers.length>1?[tiers[1],tiers[0],tiers[2]].filter(Boolean):tiers;
  return <div className="podium" aria-label="Highest scoring students">{ordered.map(t=><div className={'podium-place tier-'+(tiers.indexOf(t)+1)} key={t.rank}><div className="podium-avatar">{tiers.indexOf(t)===0&&<Trophy size={17}/>}<span>{initials(t.students[0].name)}</span></div><b className="podium-name">{t.students.map(x=>x.name).join(' & ')}</b><div className="podium-points">{t.students[0].score}<small>/{t.students[0].max}</small></div><div className="podium-block">{t.rank}</div></div>)}</div>
 }
-export function MomentCard({moment}:{moment:Moment}){return <article className="moment-card"><div className="moment-heading"><Smile size={21}/><h3>Funniest mix-up</h3></div><p className="moment-question">{moment.question}</p><p className="moment-answer"><b>{moment.name}</b> answered <strong dir="auto">“{moment.chosen}”</strong></p><p className="moment-correct"><Check size={16}/> Correct answer: <b dir="auto">{moment.correct}</b></p><p className="moment-caption">{moment.caption}</p></article>}
+export function MomentCard({moment}:{moment:Moment}){return <article className="moment-card"><div className="moment-heading"><Smile size={21}/><h3>{t("Funniest mix-up")}</h3></div><p className="moment-question">{moment.question}</p><p className="moment-answer"><b>{moment.name}</b> {t("answered")} <strong dir="auto">“{moment.chosen}”</strong></p><p className="moment-correct"><Check size={16}/> {t("Correct answer:")} <b dir="auto">{moment.correct}</b></p><p className="moment-caption">{moment.caption}</p></article>}

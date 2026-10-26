@@ -2,25 +2,26 @@
 version: 1
 slug: "app-page-tsx"
 primary_target: "app/page.tsx"
-related_targets: ["app/globals.css"]
+related_targets: ["app/teacher-dashboard.tsx", "app/teacher.css", "app/layout.tsx", "app/ui.tsx", "app/i18n.js", "app/globals.css"]
 ---
 
-# Task-first quiz website
+# Private teacher operating dashboard
 
-Mode: Operate. Targets: quiz library, student attempts, grades, leaderboard, funny answers, guided quiz builder and AI drafter. The user retains the selected League identity, asks for maximum intuitiveness and explicitly removes dropdowns. Code-first execution remains approved. The user explicitly authorizes public names, scores and teacher-approved funny answers; preserve private editing and full answer keys.
+Mode: Replace the obsolete teacher visual contract with the explicitly requested dashboard overhaul. The public student world remains the visual authority; the private working composition is distinct.
 
 ## Direction contract
-THESIS: This site is the Sunday tent inside Tamkeen, not a youth sports league. The quiz tasks stay in a normal top bar. The tent is the cloth, the Arabic name, and one stitched seam.
 
-OWN-WORLD: Najdi majlis cloth. Crimson vertical stripes, a black geometric band, brass-gold actions, ivory working sheets. Reem Kufi for the Arabic name, Figtree for the tasks, Barlow Condensed for scores.
+THESIS: A calm private operating dashboard for quiz publishing, grade editing, source-backed AI drafts, Sunday homework and teacher-approved funny answers.
+OWN-WORLD: The public circle’s dark burgundy Najdi rug, warm ivory ink, amber controls and local Amiri/Lora/IBM Plex Sans Arabic typography. Dark working ground and sidebar; clay editing forms with dark readable copy. A narrow Sadu seam marks the sidebar edge or mobile header. No ornamental animation.
+STORY: Sign in with the private teacher access key, review actual published/draft/recent-submission counts, open recent quizzes or go directly to grades, homework or AI drafting. Preserve quiz management, answer keys, validation, explicit save/publish, teacher approval and privacy boundaries.
+FIRST VIEWPORT: A 248px fixed logical-start sidebar beside the overview and Create a quiz action. Three real totals, up to five recent quizzes and direct work rows. At 1100px the sidebar becomes 220px. At 750px it becomes a sticky menu with labeled toggle and a two-column destination grid; the layout mirrors for Arabic RTL. Teacher entry is a separate centered dark sheet with a clay key form and student-site return link.
+FORM: Native date input with a localized full Sunday date. Initial date is strictly next Sunday in device-local time; weekday choices map forward to Sunday and week controls move seven days. Homework retains loading, empty, error and retry states. All task labels and navigation are available in English and Arabic. Preserve 44px targets, focus, skip navigation, readable clay selection/help/source contexts and reduced motion.
+FINISH: Source truth is app/teacher.css loaded after globals.css, teacher-dashboard.tsx, page.tsx, layout.tsx and ui.tsx. DESIGN.md and schemaVersion 2 sidecar now describe the actual teacher contract rather than the obsolete cream/Reem Kufi/no-sidebar or League contract. Documentation alone does not assert deployed production behavior.
 
-STORY: A visitor understands this circle meets in Yasin Naseri's tent on Sunday mornings, stays with the Quran, and quizzes the Tamkeen halaqas. Students start a quiz. Teachers still create, grade, and review.
+## Evidence
 
-FIRST VIEWPORT: Tent masthead with الخيمة and “Yasin Naseri's tent”, then the same task nav. Home leads with the Sunday gathering and the open quiz, then the real standings. No sidebar. Signature move: a stitched lamp-gold seam under the masthead. Question arrival, answer selection, and finite confetti stay, and reduced motion disables them.
+Reviewed reference captures are in the public sibling project at `/Users/ibrahiimmuhamud/Documents/ChatGPT/Tent web app/.impeccable/review/`: `teacher-final-home-1440.png`, `teacher-final-teacher-1440.png`, `teacher-final-home-390-ar.png`, plus AI, builder, grades, homework, management and moments captures. These are reference evidence from the UI review; final bounded contrast/number-direction corrections were verified in source for this documentation pass. No browser session, detector, data mutation or UI edit was performed here.
 
-FORM: Brief-pinned tent and Arabic lettering. The roll assigned another candidate; the brief outranks it. seed:aab9d84e1de57c1d. Honest risk: a tent costume could hide the quiz. The seam is the only ornament.
+## Motion thesis
 
-FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
-
-## Verification constraint for this refinement
-Local browser preview at 127.0.0.1:5173 was declined by the browser permission gate. Do not work around that refusal. Existing screenshots under .impeccable/review predate this refinement and are not final evidence. Source, TypeScript, build and API checks are available; responsive visual review remains pending renewed browser authorization. Gemini is configured and a live five-question draft passed source and quality checks on 25 October 2026.
+Keep the private shell still. Existing short control hover/press feedback is sufficient; no lantern, cushion or other ornament loop belongs in the dashboard. Reduced motion disables transitions, animations and smooth scrolling. Navigation and task content start visible and usable.

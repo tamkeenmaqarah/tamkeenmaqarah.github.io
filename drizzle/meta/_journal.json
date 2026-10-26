@@ -50,6 +50,13 @@
       "when": 1792987200000,
       "tag": "0006_paper_sunday",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1792998000000,
+      "tag": "0007_profile_photos",
+      "breakpoints": true
     }
   ]
 }

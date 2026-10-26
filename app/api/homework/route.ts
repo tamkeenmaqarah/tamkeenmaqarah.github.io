@@ -1,5 +1,5 @@
 import {NextResponse} from 'next/server';
-import {db} from '../../server';
+import {db,isTeacher} from '../../server';
 import {allowedPublicOrigin,publicCors} from '../../public-cors';
 const NAME=/^[\p{L}][\p{L}\s'.-]*$/u;
 const SEED=[
@@ -41,7 +41,7 @@ function cleanWeek(value:unknown){
 }
 export async function GET(req:Request){
  const respond=(body:any,init?:ResponseInit)=>cors(req,NextResponse.json(body,init));
- if(!allowedPublicOrigin(req))return respond({error:'Invalid origin'},{status:403});
+ if(!allowedPublicOrigin(req)&&!await isTeacher())return respond({error:'Invalid origin'},{status:403});
  try{
   await ensure();
   const week=cleanWeek(new URL(req.url).searchParams.get('week'));

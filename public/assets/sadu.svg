@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="64" viewBox="0 0 240 64" shape-rendering="crispEdges">
+<defs>
+<pattern id="stitch" width="8" height="4" patternUnits="userSpaceOnUse"><path fill="#e8ddc5" d="M0 0h3v2H0zM4 2h3v2H4z"/></pattern>
+<pattern id="edge" width="24" height="10" patternUnits="userSpaceOnUse"><path fill="#241e1a" d="M0 0h24v10H0z"/><path fill="#e8ddc5" d="M0 0h4v2h4v2h4v2h4V4h4V2h4V0H0zm0 10V8h4V6h4V4h4v2h4v2h4v2z"/></pattern>
+<g id="motif"><path fill="#241e1a" d="M0 31h4v-3h4v-3h4v-3h4v-3h4v26h-4v-3h-4v-3H8v-3H4v-3H0zm26-12h4v3h4v3h4v3h4v3h4v2h-4v3h-4v3h-4v3h-4v3h-4z"/><path fill="#8e2430" d="M17 23h2v18h-2zm12 0h2v18h-2z"/><path fill="#e8ddc5" d="m21 30 3-3 3 3-3 3z"/></g>
+</defs>
+<path fill="#8e2430" d="M0 0h240v64H0z"/>
+<path fill="url(#edge)" d="M0 0h240v10H0zM0 54h240v10H0z"/>
+<path fill="#be974d" d="M0 11h240v2H0zM0 51h240v2H0z"/>
+<path fill="#241e1a" d="M0 14h240v4H0zM0 46h240v4H0z"/>
+<path fill="url(#stitch)" d="M0 14h240v4H0zM0 46h240v4H0z"/>
+<use href="#motif" x="7"/><use href="#motif" x="87"/><use href="#motif" x="167"/>
+<path fill="#e8ddc5" d="M66 29h3v-2h3v2h3v4h-3v2h-3v-2h-3zm80 0h3v-2h3v2h3v4h-3v2h-3v-2h-3zm80 0h3v-2h3v2h3v4h-3v2h-3v-2h-3z"/>
+</svg>
