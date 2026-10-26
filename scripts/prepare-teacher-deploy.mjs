@@ -1,6 +1,7 @@
 // Point the built worker at a real Cloudflare D1 database.
 // ChatGPT Sites fills this in during its own publish. A direct deploy must set it here.
 import fs from 'node:fs';
+import path from 'node:path';
 
 const placeholder = '00000000-0000-4000-8000-000000000000';
 const id = process.env.TAMKEEN_D1_DATABASE_ID || '';
@@ -19,7 +20,7 @@ const visit = node => {
   }
   if (node.database_id === placeholder) node.database_id = id;
   if (node.database_name === 'site-creator-d1') node.database_name = 'tamkeen-maqraah';
-  if (node.binding === 'DB' && node.database_name === 'tamkeen-maqraah') node.migrations_dir = 'drizzle';
+  if (node.binding === 'DB' && node.database_name === 'tamkeen-maqraah') node.migrations_dir = path.resolve('drizzle');
   Object.values(node).forEach(visit);
 };
 visit(json);
