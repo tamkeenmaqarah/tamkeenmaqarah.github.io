@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-29T04:19:37.033097+00:00",
+  "generatedAt": "2026-10-29T14:37:45.604488+00:00",
   "title": "Design System: أصحاب الخيمة / Ashab Al Khaimah — Teacher dashboard",
   "extensions": {
     "colorMeta": {
@@ -416,6 +416,36 @@
         "name": "short-landscape",
         "value": "max-height:500px and orientation:landscape"
       }
+    ],
+    "sourceFiles": [
+      "app/page.tsx",
+      "app/teacher-dashboard.tsx",
+      "app/teacher-homework.tsx",
+      "app/teacher-students.tsx",
+      "app/teacher.css",
+      "app/assignments.ts",
+      "app/students.ts",
+      "app/accounts.ts",
+      "public/assets/quran-surahs.json",
+      "drizzle/0009_sunday_workflow.sql"
+    ],
+    "layouts": [
+      {
+        "name": "teacher-navigation",
+        "description": "Eight destinations; four-column mobile grid retaining visible utilities and RTL."
+      },
+      {
+        "name": "homework-views",
+        "description": "Visible Assigned work / Review in person, kind/range editor, status filters and review roster."
+      },
+      {
+        "name": "sunday-control",
+        "description": "Today on Sunday, otherwise upcoming; full mobile date heading above native input and 44px week arrows."
+      },
+      {
+        "name": "student-roster",
+        "description": "Search plus active/archived lists; management sheet and archived-only exact-name/count deletion preview."
+      }
     ]
   },
   "components": [
@@ -455,8 +485,8 @@
       "name": "Teacher navigation",
       "kind": "nav",
       "refersTo": "sidebar-item",
-      "description": "Seven persistent teacher destinations, including AI tools, visible as a four-column mobile grid.",
-      "html": "<nav class=\"ds-nav\" aria-label=\"Teacher navigation\"><button type=\"button\" aria-current=\"page\">Overview</button><button type=\"button\">Homework</button><button type=\"button\">Quizzes</button><button type=\"button\">AI tools</button><button type=\"button\">Grades</button><button type=\"button\">Leaderboard</button><button type=\"button\">Funny answers</button></nav>",
+      "description": "Eight persistent teacher destinations including Students; four-column mobile grid.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Teacher navigation\"><button type=\"button\" aria-current=\"page\">Overview</button><button type=\"button\">Homework</button><button type=\"button\">Quizzes</button><button type=\"button\">AI tools</button><button type=\"button\">Students</button><button type=\"button\">Grades</button><button type=\"button\">Leaderboard</button><button type=\"button\">Funny answers</button></nav>",
       "css": ".ds-nav{display:grid;gap:6px;max-width:248px;padding:22px;background:#321319}.ds-nav>button{min-height:49px;text-align:start;padding:12px 14px;border:0;border-radius:4px;background:transparent;color:#ddc0a0;font:400 15px/1.6 Figtree,\"IBM Plex Sans Arabic\",sans-serif;cursor:pointer}.ds-nav>button:hover{background:#482029;color:#ffe0a5}.ds-nav>button[aria-current]{background:#652b34;color:#ffe0a5}.ds-nav>button:focus-visible{outline:3px solid #ffbd69;outline-offset:4px}@media(max-width:750px){.ds-nav{max-width:none;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:10px 16px 8px}.ds-nav>button{min-height:44px;padding:6px 3px;text-align:center;font-size:11px;line-height:1.5;white-space:normal}}"
     },
     {
@@ -485,14 +515,21 @@
       "name": "Homework inline editor",
       "kind": "custom",
       "refersTo": "homework-editor",
-      "description": "Clay assignment editor with native recipient selection, cream fields and explicit burgundy save action. The live editor retains its authored Sadu top seam.",
-      "html": "<form class=\"ds-homework-editor\"><h3>Assign homework</h3><label>Homework title<input value=\"Sunday work\"></label><label>Assign to<select><option>Everyone</option></select></label><label>Instructions<textarea rows=\"3\" placeholder=\"Add the assigned work\"></textarea></label><button type=\"button\">Assign homework</button></form>",
-      "css": ".ds-homework-editor{padding:34px 28px 28px;background:#ead3ab;color:#3a2920;border-radius:5px;border-top:0;position:relative;font:16px/1.6 Figtree,\"IBM Plex Sans Arabic\",sans-serif}.ds-homework-editor h3{font:500 26px/1.4 Lora,Georgia,serif;margin:0 0 24px}.ds-homework-editor label{display:grid;gap:10px;margin-block:20px}.ds-homework-editor :is(input,select,textarea){width:100%;padding:12px 14px;min-height:46px;background:#f5e5c7;color:#3a2920;border:1px solid #ad8a61;border-radius:5px;font:16px/1.6 Figtree,sans-serif}.ds-homework-editor button{background:#742c34;color:#fff2d9;border:0;border-radius:8px;padding:11px 18px;min-height:44px;font:600 15px/1.6 Figtree,sans-serif}.ds-homework-editor button:hover{background:#5e222c}.ds-homework-editor button:active{transform:scale(.98)}.ds-homework-editor :is(input,select,textarea,button):focus-visible{outline:3px solid #ffbd69;outline-offset:4px}@media(max-width:750px){.ds-homework-editor{padding:34px 18px 22px}}@media(prefers-reduced-motion:reduce){.ds-homework-editor button:active{transform:none}}.ds-homework-editor:before{content:\"\";position:absolute;inset-inline:0;inset-block-start:0;height:8px;background:url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22240%22%20height%3D%2264%22%20viewBox%3D%220%200%20240%2064%22%20shape-rendering%3D%22crispEdges%22%3E%0A%3Cdefs%3E%0A%3Cpattern%20id%3D%22stitch%22%20width%3D%228%22%20height%3D%224%22%20patternUnits%3D%22userSpaceOnUse%22%3E%3Cpath%20fill%3D%22%23e8ddc5%22%20d%3D%22M0%200h3v2H0zM4%202h3v2H4z%22%2F%3E%3C%2Fpattern%3E%0A%3Cpattern%20id%3D%22edge%22%20width%3D%2224%22%20height%3D%2210%22%20patternUnits%3D%22userSpaceOnUse%22%3E%3Cpath%20fill%3D%22%23241e1a%22%20d%3D%22M0%200h24v10H0z%22%2F%3E%3Cpath%20fill%3D%22%23e8ddc5%22%20d%3D%22M0%200h4v2h4v2h4v2h4V4h4V2h4V0H0zm0%2010V8h4V6h4V4h4v2h4v2h4v2z%22%2F%3E%3C%2Fpattern%3E%0A%3Cg%20id%3D%22motif%22%3E%3Cpath%20fill%3D%22%23241e1a%22%20d%3D%22M0%2031h4v-3h4v-3h4v-3h4v-3h4v26h-4v-3h-4v-3H8v-3H4v-3H0zm26-12h4v3h4v3h4v3h4v3h4v2h-4v3h-4v3h-4v3h-4v3h-4z%22%2F%3E%3Cpath%20fill%3D%22%238e2430%22%20d%3D%22M17%2023h2v18h-2zm12%200h2v18h-2z%22%2F%3E%3Cpath%20fill%3D%22%23e8ddc5%22%20d%3D%22m21%2030%203-3%203%203-3%203z%22%2F%3E%3C%2Fg%3E%0A%3C%2Fdefs%3E%0A%3Cpath%20fill%3D%22%238e2430%22%20d%3D%22M0%200h240v64H0z%22%2F%3E%0A%3Cpath%20fill%3D%22url%28%23edge%29%22%20d%3D%22M0%200h240v10H0zM0%2054h240v10H0z%22%2F%3E%0A%3Cpath%20fill%3D%22%23be974d%22%20d%3D%22M0%2011h240v2H0zM0%2051h240v2H0z%22%2F%3E%0A%3Cpath%20fill%3D%22%23241e1a%22%20d%3D%22M0%2014h240v4H0zM0%2046h240v4H0z%22%2F%3E%0A%3Cpath%20fill%3D%22url%28%23stitch%29%22%20d%3D%22M0%2014h240v4H0zM0%2046h240v4H0z%22%2F%3E%0A%3Cuse%20href%3D%22%23motif%22%20x%3D%227%22%2F%3E%3Cuse%20href%3D%22%23motif%22%20x%3D%2287%22%2F%3E%3Cuse%20href%3D%22%23motif%22%20x%3D%22167%22%2F%3E%0A%3Cpath%20fill%3D%22%23e8ddc5%22%20d%3D%22M66%2029h3v-2h3v2h3v4h-3v2h-3v-2h-3zm80%200h3v-2h3v2h3v4h-3v2h-3v-2h-3zm80%200h3v-2h3v2h3v4h-3v2h-3v-2h-3z%22%2F%3E%0A%3C%2Fsvg%3E%0A\") center/120px 32px;pointer-events:none}"
+      "description": "Typed Qur’an/halaqa/quiz/other editor with native recipient/range/quiz fields, student-action preview and explicit progress-reset wording.",
+      "html": "<form class=\"ds-homework-editor\"><h3>Assign homework</h3><fieldset class=\"ds-kinds\"><legend>What are students preparing?</legend><label><input type=\"radio\" name=\"ds-kind\" checked>Qur’an</label><label><input type=\"radio\" name=\"ds-kind\">Halaqa</label><label><input type=\"radio\" name=\"ds-kind\">Quiz</label><label><input type=\"radio\" name=\"ds-kind\">Other work</label></fieldset><label>Homework title<input value=\"Sunday work\"></label><label>Assign to<select><option>Everyone</option></select></label><label>Extra instructions (optional)<textarea rows=\"3\" placeholder=\"Add the assigned work\"></textarea></label><button type=\"button\">Assign homework</button></form>",
+      "css": ".ds-homework-editor{padding:34px 28px 28px;background:#ead3ab;color:#3a2920;border-radius:5px;border-top:0;position:relative;font:16px/1.6 Figtree,\"IBM Plex Sans Arabic\",sans-serif}.ds-homework-editor h3{font:500 26px/1.4 Lora,Georgia,serif;margin:0 0 24px}.ds-homework-editor label{display:grid;gap:10px;margin-block:20px}.ds-homework-editor :is(input,select,textarea){width:100%;padding:12px 14px;min-height:46px;background:#f5e5c7;color:#3a2920;border:1px solid #ad8a61;border-radius:5px;font:16px/1.6 Figtree,sans-serif}.ds-homework-editor button{background:#742c34;color:#fff2d9;border:0;border-radius:8px;padding:11px 18px;min-height:44px;font:600 15px/1.6 Figtree,sans-serif}.ds-homework-editor button:hover{background:#5e222c}.ds-homework-editor button:active{transform:scale(.98)}.ds-homework-editor :is(input,select,textarea,button):focus-visible{outline:3px solid #ffbd69;outline-offset:4px}@media(max-width:750px){.ds-homework-editor{padding:34px 18px 22px}}@media(prefers-reduced-motion:reduce){.ds-homework-editor button:active{transform:none}}.ds-homework-editor:before{content:\"\";position:absolute;inset-inline:0;inset-block-start:0;height:8px;background:url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22240%22%20height%3D%2264%22%20viewBox%3D%220%200%20240%2064%22%20shape-rendering%3D%22crispEdges%22%3E%0A%3Cdefs%3E%0A%3Cpattern%20id%3D%22stitch%22%20width%3D%228%22%20height%3D%224%22%20patternUnits%3D%22userSpaceOnUse%22%3E%3Cpath%20fill%3D%22%23e8ddc5%22%20d%3D%22M0%200h3v2H0zM4%202h3v2H4z%22%2F%3E%3C%2Fpattern%3E%0A%3Cpattern%20id%3D%22edge%22%20width%3D%2224%22%20height%3D%2210%22%20patternUnits%3D%22userSpaceOnUse%22%3E%3Cpath%20fill%3D%22%23241e1a%22%20d%3D%22M0%200h24v10H0z%22%2F%3E%3Cpath%20fill%3D%22%23e8ddc5%22%20d%3D%22M0%200h4v2h4v2h4v2h4V4h4V2h4V0H0zm0%2010V8h4V6h4V4h4v2h4v2h4v2z%22%2F%3E%3C%2Fpattern%3E%0A%3Cg%20id%3D%22motif%22%3E%3Cpath%20fill%3D%22%23241e1a%22%20d%3D%22M0%2031h4v-3h4v-3h4v-3h4v-3h4v26h-4v-3h-4v-3H8v-3H4v-3H0zm26-12h4v3h4v3h4v3h4v3h4v2h-4v3h-4v3h-4v3h-4v3h-4z%22%2F%3E%3Cpath%20fill%3D%22%238e2430%22%20d%3D%22M17%2023h2v18h-2zm12%200h2v18h-2z%22%2F%3E%3Cpath%20fill%3D%22%23e8ddc5%22%20d%3D%22m21%2030%203-3%203%203-3%203z%22%2F%3E%3C%2Fg%3E%0A%3C%2Fdefs%3E%0A%3Cpath%20fill%3D%22%238e2430%22%20d%3D%22M0%200h240v64H0z%22%2F%3E%0A%3Cpath%20fill%3D%22url%28%23edge%29%22%20d%3D%22M0%200h240v10H0zM0%2054h240v10H0z%22%2F%3E%0A%3Cpath%20fill%3D%22%23be974d%22%20d%3D%22M0%2011h240v2H0zM0%2051h240v2H0z%22%2F%3E%0A%3Cpath%20fill%3D%22%23241e1a%22%20d%3D%22M0%2014h240v4H0zM0%2046h240v4H0z%22%2F%3E%0A%3Cpath%20fill%3D%22url%28%23stitch%29%22%20d%3D%22M0%2014h240v4H0zM0%2046h240v4H0z%22%2F%3E%0A%3Cuse%20href%3D%22%23motif%22%20x%3D%227%22%2F%3E%3Cuse%20href%3D%22%23motif%22%20x%3D%2287%22%2F%3E%3Cuse%20href%3D%22%23motif%22%20x%3D%22167%22%2F%3E%0A%3Cpath%20fill%3D%22%23e8ddc5%22%20d%3D%22M66%2029h3v-2h3v2h3v4h-3v2h-3v-2h-3zm80%200h3v-2h3v2h3v4h-3v2h-3v-2h-3zm80%200h3v-2h3v2h3v4h-3v2h-3v-2h-3z%22%2F%3E%0A%3C%2Fsvg%3E%0A\") center/120px 32px;pointer-events:none} .ds-kinds{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:0;border:0}.ds-homework-editor .ds-kinds label{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;margin:0;padding:10px;border:1px solid #ad8a61;border-radius:4px;font-size:14px}.ds-homework-editor .ds-kinds input{width:16px;min-height:16px;height:16px;padding:0;accent-color:#742c34}@media(max-width:750px){.ds-kinds{grid-template-columns:1fr 1fr}}"
+    },
+    {
+      "name": "Student roster and management",
+      "kind": "custom",
+      "description": "Searchable active/archived roster with quiet row actions. Permanent deletion appears only in an archived account’s management sheet with actual counts and exact-name confirmation.",
+      "html": "<section class=\"ds-roster\"><label>Find a student<input type=\"search\"></label><nav aria-label=\"Student accounts\"><button type=\"button\" aria-pressed=\"true\">Active students</button><button type=\"button\" aria-pressed=\"false\">Archived students</button></nav><p>Students appear here after they sign in with an account.</p></section>",
+      "css": ".ds-roster{padding:28px;background:#32151b;color:#f0dfc2;font:16px/1.8 Figtree,\"IBM Plex Sans Arabic\",sans-serif}.ds-roster label{display:grid;gap:10px}.ds-roster input{min-height:46px;padding:12px 14px;background:#f5e5c7;color:#3a2920;border:1px solid #b99263;border-radius:5px;font:16px/1.6 Figtree,sans-serif}.ds-roster nav{display:flex;flex-wrap:wrap;gap:8px;margin-block:20px}.ds-roster button{min-height:44px;padding:10px 16px;border:1px solid #7c4b3e;border-radius:4px;background:transparent;color:#f0cf9c;font:600 14px/1.5 Figtree,sans-serif;cursor:pointer}.ds-roster button[aria-pressed=true]{background:#e7b479;color:#3c1920}.ds-roster button:hover{border-color:#d4a063}.ds-roster :is(input,button):focus-visible{outline:3px solid #ffbd69;outline-offset:4px}@media(max-width:750px){.ds-roster{padding:22px 18px}}"
     }
   ],
   "narrative": {
     "northStar": "A quiet working room inside the Najdi circle",
-    "overview": "The teacher dashboard belongs to the same deep burgundy Najdi world as the public student site. A muted geometric rug, dark fabric, warm ivory reading, amber actions, Amiri Arabic headings and Lora English headings establish that relationship. A persistent task sidebar and restrained working sheets give private teaching work its own clear organization.\n\nThe dashboard is a calm operating surface for quizzes, grades, Sunday homework and approved funny answers. Actual counts and task rows carry the hierarchy. Keep the Sadu seam at the navigation edge and teacher entry; content receives space, fine rules and quiet tonal separation. There is no ornamental animation in the teacher shell.",
+    "overview": "The teacher dashboard belongs to the same deep burgundy Najdi world as the public student site. A muted geometric rug, dark fabric, warm ivory reading, amber actions, Amiri Arabic headings and Lora English headings establish that relationship. A persistent task sidebar and restrained working sheets give private teaching work its own clear organization.\n\nThe dashboard is a calm operating surface for quizzes, grades, Sunday preparation, in-person review, student accounts and approved funny answers. Actual counts and task rows carry the hierarchy. Keep the Sadu seam at the navigation edge and teacher entry; content receives space, fine rules and quiet tonal separation. There is no ornamental animation in the teacher shell.",
     "keyCharacteristics": [
       "Deep burgundy rug and dark working ground, with warm ivory reading and amber actions.",
       "A persistent logical-start sidebar that becomes a compact sticky navigation grid on mobile.",

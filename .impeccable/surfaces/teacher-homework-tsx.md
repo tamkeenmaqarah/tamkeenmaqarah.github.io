@@ -2,18 +2,18 @@
 version: 1
 slug: "teacher-homework-tsx"
 primary_target: "app/teacher-homework.tsx"
-related_targets: ["app/teacher-dashboard.tsx", "app/teacher.css", "app/assignments.ts", "app/api/assignments/route.ts", "app/api/assignments/progress/route.ts", "app/api/learning/route.ts", "app/ai.ts", "app/i18n.js"]
+related_targets: ["app/teacher-dashboard.tsx", "app/teacher.css", "app/assignments.ts", "app/api/assignments/route.ts", "app/api/assignments/progress/route.ts", "app/api/assignments/review/route.ts", "app/api/assignments/restore/route.ts", "public/assets/quran-surahs.json", "app/i18n.js", "drizzle/0009_sunday_workflow.sql"]
 ---
 
-# Teacher Sunday assignments
+# Teacher assignment and in-person review
 
-Mode: Operate. Extend the existing private Najdi dashboard and its sidebar; preserve all incumbent tokens and typography.
+Mode: Operate. Ordinary workflow extension; preserve the pinned Najdi world and incumbent token primitives.
 
 ## Direction contract
 
-THESIS: Assign the group’s next Sunday work or one student’s work, then inspect self-reported preparation separately from students’ own notes.
-OWN-WORLD: Existing dark working room, warm ivory rows and amber actions. A narrow Sadu seam finishes the dark Sunday selector and clay inline editor; cream fields and burgundy form actions retain their established contrast. No ornamental motion.
-STORY: Choose the Sunday, create a title and instructions for Everyone or a named account, optionally append the Tuesday playlist, then save. Edit or remove a row; inspect the preparation count and names directly in each row. Editing resets marks. Removal confirms its scope and atomically removes marks. Revision guards reject stale edits, removal and preparation. Students’ shared practice notes remain separately labeled below assignments; preparation is not a grade.
-FIRST VIEWPORT: Page title and Assign homework action, localized date between native week controls, then editor or assignment rows. Initial date is strictly next device-local Sunday; another weekday maps forward to Sunday. Preserve the permanently visible sidebar/mobile destination grid and RTL. At 750px, task headers stack and editor actions wrap; the editor keeps 34px top padding and 18px inline gutters.
-FORM: Visible labels, native account recipient selector, 100-character title and 1,000-character instructions. Account recipients appear after sign-in. Show a literal isolated Qur’an reference example; Add Tuesday playlist appends PLJHIkqUYcGAA without fetching a transcript. Retain unsaved-draft guards, request busy locks, retry, errors and explicit success. Authenticated teacher writes and account-scoped student reads preserve private boundaries.
-FINISH: Extracted from teacher-homework.tsx, teacher.css, assignments.ts and assignment/learning routes. Optional student Gemini support stays on explicit request, source-grounded and server-key-only. Deployment verification on 28 October 2026 confirmed the teacher server, assignment privacy projection, exact-excerpt English/Arabic cards and an Arabic 15-minute three-phase plan. This documentation pass performed no browser/detector runs or data writes.
+THESIS: Assign concrete practice, correct mistakes safely and review students face to face.
+OWN-WORLD: The pinned dark Najdi working room, warm ivory rows, amber actions, clay editors, cream fields and burgundy form actions. Narrow Sadu seams; Amiri/Lora/script pairing, RTL, 44px targets, focus and reduced motion. Keep the private shell still.
+STORY: Choose Qur’an/halaqa/quiz/other; assign to everyone or an active account. Qur’an uses validated exact range/goal; halaqa uses supported video/playlist and optional published quiz, quiz requires published quiz, other requires instructions. Show student-action preview. Title-only corrections keep progress; material edits reset it. Withdraw exposes Undo and later restore with previous progress.
+FIRST VIEWPORT: Date band and two visible Assigned work / Review in person actions precede rows. Review has an assignment selector, status filters and all assigned active students, including those without a digital check-in. Open a named review with private feedback, Practise again or Mark reviewed. Mobile kind choices become two columns and surah takes its own range row; date heading remains separate above input.
+FORM: Title 100 characters, instructions 1000, feedback 500; native controls and 114-surah bundled Al Quran Cloud metadata. Idempotent creation, assignment revisions/progress versions, 15-second requests and draft-preserving failures. Readiness is not verified recitation or points. Source text is untouched; no generic student AI or paid voice.
+FINISH: Source-grounded documentation of the current workflow; this pass changed no UI, test, asset or live data and ran no browser checks. Owner context and research are provisional research/persona inputs, not student interviews. Current implementation verification is synthetic; publication is tracked separately.

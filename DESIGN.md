@@ -143,7 +143,7 @@ components:
 
 The teacher dashboard belongs to the same deep burgundy Najdi world as the public student site. A muted geometric rug, dark fabric, warm ivory reading, amber actions, Amiri Arabic headings and Lora English headings establish that relationship. A persistent task sidebar and restrained working sheets give private teaching work its own clear organization.
 
-The dashboard is a calm operating surface for quizzes, grades, Sunday homework and approved funny answers. Actual counts and task rows carry the hierarchy. Keep the Sadu seam at the navigation edge and teacher entry; content receives space, fine rules and quiet tonal separation. There is no ornamental animation in the teacher shell.
+The dashboard is a calm operating surface for quizzes, grades, Sunday preparation, in-person review, student accounts and approved funny answers. Actual counts and task rows carry the hierarchy. Keep the Sadu seam at the navigation edge and teacher entry; content receives space, fine rules and quiet tonal separation. There is no ornamental animation in the teacher shell.
 
 **Key Characteristics:**
 
@@ -190,7 +190,7 @@ English headings use locally served Lora; Arabic headings use Amiri with zero tr
 
 The signed-in shell reserves (248px) at logical inline start for a fixed full-height sidebar. The working main caps at (1440px), with (44px 48px 70px) padding. Sidebar padding is (38px 22px 24px), with (6px) gaps between task destinations. At (1100px), the sidebar becomes (220px), main padding becomes (36px 28px 60px), and sidebar inline padding becomes (16px). Logical properties move the sidebar to the right in Arabic.
 
-At (750px), remove the sidebar reservation and use a full-width sticky top navigation header. All seven destinations stay visible in a four-column grid with (4px) gaps, (44px) minimum targets and (11px / 1.5) labels; icons hide and labels wrap. Student-site, language and sign-out controls remain visible below, with (44px) targets. Header padding is (10px 16px 8px), and scroll padding reserves (220px). Main padding becomes (28px 20px 48px). On landscape screens up to (500px) high, navigation scrolls with the page. Keep a skip link, visible focus and scroll clearance for the compact header.
+At (750px), remove the sidebar reservation and use a full-width sticky top navigation header. All eight destinations stay visible in a four-column grid with (4px) gaps, (44px) minimum targets and (11px / 1.5) labels; icons hide and labels wrap. Student-site, language and sign-out controls remain visible below, with (44px) targets. Header padding is (10px 16px 8px), and scroll padding reserves (220px). Main padding becomes (28px 20px 48px). On landscape screens up to (500px) high, navigation scrolls with the page. Keep a skip link, visible focus and scroll clearance for the compact header.
 
 The overview begins with a title and Create a quiz action, followed by three actual counts in a ruled horizontal band, then direct work rows before recent quizzes. Count cells share available width, with logical separators and padding that tightens on mobile. Quiz rows retain readable titles, status and a Manage action; the mobile main action spans available width. No invented charts, attendance or progress.
 
@@ -220,7 +220,7 @@ Cream inputs, textareas and native selectors use dark ink, visible labels and at
 
 ### Navigation
 
-Overview, Homework, Quizzes, AI tools, Grades, Leaderboard and Funny answers are labeled icon destinations. Hover raises the dark red tone; active navigation gains the selected fill and warm text plus `aria-current`. Mobile permanently shows the destination grid without a menu toggle. Student-site access, language switching and sign-out sit at the sidebar bottom or visibly below the mobile grid. Keep bilingual action labels and focus behavior.
+Overview, Homework, Quizzes, AI tools, Students, Grades, Leaderboard and Funny answers are labeled icon destinations. Hover raises the dark red tone; active navigation gains the selected fill and warm text plus `aria-current`. Mobile permanently shows the destination grid without a menu toggle. Student-site access, language switching and sign-out sit at the sidebar bottom or visibly below the mobile grid. Keep bilingual action labels and focus behavior.
 
 ### Overview and task rows
 
@@ -236,8 +236,17 @@ Publication badges and actual totals communicate real state. Preserve semantic r
 
 ### Sunday homework
 
-A localized full Sunday date sits above the native date input, between Previous Sunday and Next Sunday controls. The initial device-local date is strictly the next Sunday, including seven days ahead when opened on a Sunday. Choosing a weekday maps forward to that week’s following Sunday; week buttons move seven days. Mobile keeps the date above two wrapping navigation actions. The Sunday selector uses a dark fabric band and a narrow Sadu bottom seam. Teacher assignments use ruled rows with a title, recipient, instructions, Edit/Remove actions and a directly visible preparation count and name list. Names use `bdi`; instructions use automatic direction and isolated references. The inline editor reuses the clay editing sheet, cream fields, native recipient selector and burgundy form actions, with a narrow Sadu top seam. Its desktop padding is (34px 28px 28px); mobile uses (34px 18px 22px). Keep edit-reset wording, loading, empty, error, retry and success states close to their task. Students’ own practice notes occupy a separately labeled section below assignments. Preserve the persistent navigation and still dashboard behavior.
+A localized full Sunday date sits above the native date input between week arrows. The initial device-local date is today on Sunday, otherwise the upcoming Sunday; another weekday maps forward to Sunday and week buttons move seven days. Mobile reserves a separate date-heading area above the input and (44px) arrow controls. The Sunday selector retains its dark fabric band and narrow Sadu bottom seam.
 
+Visible Assigned work / Review in person controls use two equal amber-selected actions. The clay editor retains cream fields, burgundy form actions and its Sadu seam, with desktop padding (34px 28px 28px) and mobile padding (34px 18px 22px). Four native assignment-kind choices use a four-column grid, becoming two columns at (750px). The range editor uses surah/from/to columns; mobile gives the surah a full row and the two ayah fields a paired row. Preserve visible labels, native recipient and published-quiz selectors, the student-action preview and explicit title-only versus changed-work reset wording.
+
+Assignment rows show real type, recipient, exact range or lesson and Edit/Remove actions. Withdrawal exposes Undo removal and a native Removed homework disclosure with restore actions. The review view has an assignment selector, wrapping status filters and a ruled student roster on the dark upholstery ground. Each row pairs a name and textual status with a Review action. An opened review panel uses the existing red panel, labeled feedback and explicit Practise again / Mark reviewed actions. Teacher review can begin without a student check-in; readiness is not grading or leaderboard progress. Names use `bdi`, instructions use automatic direction and references stay isolated. Keep loading, empty, error, retry, draft and success states adjacent to the task.
+
+### Student roster and account management
+
+Search and Active students / Archived students controls lead into ruled rows using the review roster’s material and spacing. Rows use (20px 24px) padding, reducing to (18px) at (750px). The dark account-management sheet uses (28px) padding, reducing to (22px 18px). Its header wraps on narrow screens. Archive/restore is a visible secondary action with readable effects on sign-in and retained history.
+
+Permanent deletion appears only inside an archived account’s management sheet, separated by a fine rule. Show affected record counts in a definition list, an exact-name confirmation field and a distinct labeled destructive action. Keep all confirmation and stale-preview errors readable; never replace the count preview with a generic dialog. Bilingual copy, private access, focus, (44px) targets and reduced motion remain the existing system.
 ### Teacher entry
 
 A quiet dark sheet and clay access-key form establish the private area. Preserve password autocomplete, required validation, busy feedback, bilingual explanatory copy and the student-site return link. The Arabic name is identity, not a substitute for a clear Teacher sign in heading.
