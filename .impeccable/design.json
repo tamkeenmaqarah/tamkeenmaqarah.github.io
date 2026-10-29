@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-29T03:42:35.398777+00:00",
+  "generatedAt": "2026-10-29T04:19:37.033097+00:00",
   "title": "Design System: أصحاب الخيمة / Ashab Al Khaimah — Teacher dashboard",
   "extensions": {
     "colorMeta": {
@@ -455,9 +455,9 @@
       "name": "Teacher navigation",
       "kind": "nav",
       "refersTo": "sidebar-item",
-      "description": "Persistent operational destinations with a warm selected state.",
-      "html": "<nav class=\"ds-nav\" aria-label=\"Teacher navigation\"><button aria-current=\"page\">Overview</button><button>Quizzes</button><button>Grades</button><button>Homework</button></nav>",
-      "css": ".ds-nav{display:grid;gap:6px;max-width:248px;padding:22px;background:#321319}.ds-nav>button{min-height:49px;text-align:start;padding:12px 14px;border:0;border-radius:4px;background:transparent;color:#ddc0a0;font:400 15px/1.6 Figtree,\"IBM Plex Sans Arabic\",sans-serif;cursor:pointer}.ds-nav>button:hover{background:#482029;color:#ffe0a5}.ds-nav>button[aria-current]{background:#652b34;color:#ffe0a5}.ds-nav>button:focus-visible{outline:3px solid #ffbd69;outline-offset:4px}"
+      "description": "Seven persistent teacher destinations, including AI tools, visible as a four-column mobile grid.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Teacher navigation\"><button type=\"button\" aria-current=\"page\">Overview</button><button type=\"button\">Homework</button><button type=\"button\">Quizzes</button><button type=\"button\">AI tools</button><button type=\"button\">Grades</button><button type=\"button\">Leaderboard</button><button type=\"button\">Funny answers</button></nav>",
+      "css": ".ds-nav{display:grid;gap:6px;max-width:248px;padding:22px;background:#321319}.ds-nav>button{min-height:49px;text-align:start;padding:12px 14px;border:0;border-radius:4px;background:transparent;color:#ddc0a0;font:400 15px/1.6 Figtree,\"IBM Plex Sans Arabic\",sans-serif;cursor:pointer}.ds-nav>button:hover{background:#482029;color:#ffe0a5}.ds-nav>button[aria-current]{background:#652b34;color:#ffe0a5}.ds-nav>button:focus-visible{outline:3px solid #ffbd69;outline-offset:4px}@media(max-width:750px){.ds-nav{max-width:none;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:10px 16px 8px}.ds-nav>button{min-height:44px;padding:6px 3px;text-align:center;font-size:11px;line-height:1.5;white-space:normal}}"
     },
     {
       "name": "Published status",
@@ -495,7 +495,7 @@
     "overview": "The teacher dashboard belongs to the same deep burgundy Najdi world as the public student site. A muted geometric rug, dark fabric, warm ivory reading, amber actions, Amiri Arabic headings and Lora English headings establish that relationship. A persistent task sidebar and restrained working sheets give private teaching work its own clear organization.\n\nThe dashboard is a calm operating surface for quizzes, grades, Sunday homework and approved funny answers. Actual counts and task rows carry the hierarchy. Keep the Sadu seam at the navigation edge and teacher entry; content receives space, fine rules and quiet tonal separation. There is no ornamental animation in the teacher shell.",
     "keyCharacteristics": [
       "Deep burgundy rug and dark working ground, with warm ivory reading and amber actions.",
-      "A persistent logical-start sidebar that becomes a compact sticky menu on mobile.",
+      "A persistent logical-start sidebar that becomes a compact sticky navigation grid on mobile.",
       "Clay editing sheets, cream fields and visible save actions.",
       "Equal English and Arabic functionality with mirrored layout and isolated mixed-script numbers.",
       "Real operational counts, clear task rows and restrained Sadu detail."

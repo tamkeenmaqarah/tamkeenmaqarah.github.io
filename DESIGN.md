@@ -148,7 +148,7 @@ The dashboard is a calm operating surface for quizzes, grades, Sunday homework a
 **Key Characteristics:**
 
 - Deep burgundy rug and dark working ground, with warm ivory reading and amber actions.
-- A persistent logical-start sidebar that becomes a compact sticky menu on mobile.
+- A persistent logical-start sidebar that becomes a compact sticky navigation grid on mobile.
 - Clay editing sheets, cream fields and visible save actions.
 - Equal English and Arabic functionality with mirrored layout and isolated mixed-script numbers.
 - Real operational counts, clear task rows and restrained Sadu detail.
@@ -181,7 +181,7 @@ English headings use locally served Lora; Arabic headings use Amiri with zero tr
 - **Title:** section headings use the title token, reducing to (24px) on mobile. Arabic headings use (1.6) line height and no Latin tracking.
 - **Brand:** sidebar Arabic identity uses the brand token, reducing to (31px) at (1100px) and (29px / 1.5) at (750px).
 - **Body:** use the language-appropriate sans serif. Descriptions use (15px / 1.7) and a (65ch) maximum width. Authored quiz names in rows use (17px, 600) sans serif; long names wrap.
-- **Navigation:** desktop sidebar labels use (15px), mobile (14px). Its supporting dashboard label uses (13px), reducing to (11px) on mobile.
+- **Navigation:** desktop sidebar labels use (15px), mobile (11px). Its supporting dashboard label uses (13px), reducing to (10px) on mobile.
 - **Totals:** real operational counts use Lora tabular numerals, reducing to (29px) on mobile. Counts, ranking scores and percentages remain directionally isolated.
 
 **The Two Scripts Rule.** Mirror the interface with its language: Amiri for Arabic headings, Lora for English headings and the appropriate sans serif for reading and actions.
@@ -190,9 +190,9 @@ English headings use locally served Lora; Arabic headings use Amiri with zero tr
 
 The signed-in shell reserves (248px) at logical inline start for a fixed full-height sidebar. The working main caps at (1440px), with (44px 48px 70px) padding. Sidebar padding is (38px 22px 24px), with (6px) gaps between task destinations. At (1100px), the sidebar becomes (220px), main padding becomes (36px 28px 60px), and sidebar inline padding becomes (16px). Logical properties move the sidebar to the right in Arabic.
 
-At (750px), remove the sidebar reservation and use a full-width sticky top navigation header with a labeled (44px) menu toggle. Opening it reveals a two-column task grid plus student-site, language and sign-out controls; selecting a destination closes the menu. Main padding becomes (28px 20px 48px). On landscape screens up to (500px) high, navigation scrolls with the page. Keep a skip link, visible focus and scroll clearance for the compact header.
+At (750px), remove the sidebar reservation and use a full-width sticky top navigation header. All seven destinations stay visible in a four-column grid with (4px) gaps, (44px) minimum targets and (11px / 1.5) labels; icons hide and labels wrap. Student-site, language and sign-out controls remain visible below, with (44px) targets. Header padding is (10px 16px 8px), and scroll padding reserves (220px). Main padding becomes (28px 20px 48px). On landscape screens up to (500px) high, navigation scrolls with the page. Keep a skip link, visible focus and scroll clearance for the compact header.
 
-The overview begins with a title and Create a quiz action, followed by three actual counts in a ruled horizontal band, then recent quizzes and direct work rows. Count cells share available width, with logical separators and padding that tightens on mobile. Quiz rows retain readable titles, status and a Manage action; the mobile main action spans available width. No invented charts, attendance or progress.
+The overview begins with a title and Create a quiz action, followed by three actual counts in a ruled horizontal band, then direct work rows before recent quizzes. Count cells share available width, with logical separators and padding that tightens on mobile. Quiz rows retain readable titles, status and a Manage action; the mobile main action spans available width. No invented charts, attendance or progress.
 
 Focused quiz editing caps at (960px). Clay builders, AI forms, grade lists and funny-answer editors reuse the existing forms. At mobile widths, option fields wrap before their controls, save bars wrap and respect the safe area, and grade entry keeps its existing responsive row layout. Tables use a horizontal overflow wrapper where needed.
 
@@ -220,11 +220,11 @@ Cream inputs, textareas and native selectors use dark ink, visible labels and at
 
 ### Navigation
 
-Overview, Quizzes, Grades, Homework, Leaderboard and Funny answers are labeled icon destinations. Hover raises the dark red tone; active navigation gains the selected fill and warm text plus `aria-current`. The mobile toggle exposes its expanded state and controlled navigation region. Student-site access, language switching and sign-out sit at the sidebar bottom or inside the open mobile menu. Keep bilingual action labels and focus behavior.
+Overview, Homework, Quizzes, AI tools, Grades, Leaderboard and Funny answers are labeled icon destinations. Hover raises the dark red tone; active navigation gains the selected fill and warm text plus `aria-current`. Mobile permanently shows the destination grid without a menu toggle. Student-site access, language switching and sign-out sit at the sidebar bottom or visibly below the mobile grid. Keep bilingual action labels and focus behavior.
 
 ### Overview and task rows
 
-Use actual published-quiz count, draft count and the loaded recent-submission count. The recent-quiz list shows up to five available quizzes with question count, publication state and Manage action. Empty data uses a plain factual message and a useful next action. Work rows go directly to grade recording, Sunday homework and AI drafting.
+Use actual published-quiz count, draft count and the loaded recent-submission count. The recent-quiz list shows up to five available quizzes with question count, publication state and Manage action. Empty data uses a plain factual message and a useful next action. Work rows go directly to grade recording, Sunday homework and AI drafting, and appear above recent quizzes. Their margins are (28px 0 34px), reducing to (22px 0 30px) on mobile.
 
 ### Editing sheets and save bars
 
@@ -236,7 +236,7 @@ Publication badges and actual totals communicate real state. Preserve semantic r
 
 ### Sunday homework
 
-A localized full Sunday date sits above the native date input, between Previous Sunday and Next Sunday controls. The initial device-local date is strictly the next Sunday, including seven days ahead when opened on a Sunday. Choosing a weekday maps forward to that week’s following Sunday; week buttons move seven days. Mobile keeps the date above two wrapping navigation actions. The Sunday selector uses a dark fabric band and a narrow Sadu bottom seam. Teacher assignments use ruled rows with a title, recipient, instructions, Edit/Remove actions and a native prepared-name disclosure. Names use `bdi`; instructions use automatic direction and isolated references. The inline editor reuses the clay editing sheet, cream fields, native recipient selector and burgundy form actions, with a narrow Sadu top seam. Its desktop padding is (34px 28px 28px); mobile uses (34px 18px 22px). Keep edit-reset wording, loading, empty, error, retry and success states close to their task. Students’ own practice notes occupy a separately labeled section below assignments. Preserve the existing sidebar and still dashboard behavior.
+A localized full Sunday date sits above the native date input, between Previous Sunday and Next Sunday controls. The initial device-local date is strictly the next Sunday, including seven days ahead when opened on a Sunday. Choosing a weekday maps forward to that week’s following Sunday; week buttons move seven days. Mobile keeps the date above two wrapping navigation actions. The Sunday selector uses a dark fabric band and a narrow Sadu bottom seam. Teacher assignments use ruled rows with a title, recipient, instructions, Edit/Remove actions and a directly visible preparation count and name list. Names use `bdi`; instructions use automatic direction and isolated references. The inline editor reuses the clay editing sheet, cream fields, native recipient selector and burgundy form actions, with a narrow Sadu top seam. Its desktop padding is (34px 28px 28px); mobile uses (34px 18px 22px). Keep edit-reset wording, loading, empty, error, retry and success states close to their task. Students’ own practice notes occupy a separately labeled section below assignments. Preserve the persistent navigation and still dashboard behavior.
 
 ### Teacher entry
 
