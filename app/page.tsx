@@ -19,6 +19,7 @@ const complete = (q: Question) => q.prompt.trim() && q.options.every(o => o.trim
 export default function Page() {
     useTeacherLanguage();
     const [data, setData] = useState<Data | null>(null), [tab, setTab] = useState('home');
+    const [homeworkDirty,setHomeworkDirty]=useState(false);
     const [error, setError] = useState(''), [notice, setNotice] = useState(''), [busy, setBusy] = useState(false);
     const [active, setActive] = useState<Quiz | null>(null), [preview, setPreview] = useState(false), [practice, setPractice] = useState(false), [step, setStep] = useState(-1), [name, setName] = useState(''), [answers, setAnswers] = useState<number[]>([]), [outcome, setOutcome] = useState<any>(null), [recent, setRecent] = useState<any>(null), [attempt, setAttempt] = useState(''), [revisit, setRevisit] = useState<Revisit | null>(null);
     const phone = () => { try {
@@ -139,10 +140,10 @@ export default function Page() {
         document.getElementById('question-focus')?.focus({ preventScroll: true }); }, [step, active, outcome]);
     const editorDirty = creating && Boolean(title.trim() || description.trim() || questions.some(q => q.prompt.trim() || q.options.some(o => o.trim())));
     const attemptDirty = Boolean(active && !outcome && answers.some(a => a !== -1));
-    useEffect(() => { const guard = (e: BeforeUnloadEvent) => { if (editorDirty || attemptDirty || gradeDirty) {
+    useEffect(() => { const guard = (e: BeforeUnloadEvent) => { if (editorDirty || attemptDirty || gradeDirty || homeworkDirty) {
         e.preventDefault();
         e.returnValue = '';
-    } }; window.addEventListener('beforeunload', guard); return () => window.removeEventListener('beforeunload', guard); }, [editorDirty, attemptDirty, gradeDirty]);
+    } }; window.addEventListener('beforeunload', guard); return () => window.removeEventListener('beforeunload', guard); }, [editorDirty, attemptDirty, gradeDirty, homeworkDirty]);
     async function perform(fn: () => Promise<void>) { setBusy(true); setError(''); setNotice(''); try {
         await fn();
     }
@@ -153,7 +154,7 @@ export default function Page() {
     finally {
         setBusy(false);
     } }
-    function canLeave() { if (gradeDirty)
+    function canLeave() { if(homeworkDirty)return confirm(t('Leave without saving this homework draft?')); if (gradeDirty)
         return confirm('Leave without saving the grade changes?'); if (attemptDirty)
         return confirm('Leave this quiz? Your answers have not been submitted.'); if (editorDirty)
         return confirm('Leave the quiz editor? Unsaved changes will be lost.'); return true; }
@@ -401,7 +402,7 @@ export default function Page() {
                 setManage(quiz);
                 route('manage');
             } }}/> : data && tab === 'home' && !creating ? <CommunityHome data={data} recent={recent} revisit={revisit} onPractice={beginPractice} onClearRevisit={clearRevisit} onNavigate={navigate} onStart={start} onCreate={() => newQuiz()}/> :
-                data && data.teacher && tab === 'homework' ? <TeacherHomework /> : data && !data.teacher && tab === 'leaderboard' ? <CommunityLeaderboard community={data.community} onNavigate={navigate}/> :
+                data && data.teacher && tab === 'homework' ? <TeacherHomework onDirtyChange={setHomeworkDirty}/> : data && !data.teacher && tab === 'leaderboard' ? <CommunityLeaderboard community={data.community} onNavigate={navigate}/> :
                     data && !data.teacher && tab === 'moments' ? <CommunityMoments community={data.community} onNavigate={navigate}/> :
                         data && creating ? <section className="builder"><button className="text-button back" onClick={() => navigate('quizzes')}><ArrowLeft size={17}/>{t("Back to quizzes")}</button><div className="page-heading"><h1>{t(editingId ? 'Edit quiz' : 'Create a quiz')}</h1><span className="help">{t("Changes are not saved yet")}</span></div><ol className="builder-steps" aria-label={t("Quiz creation steps")}>{['Details', 'Questions', 'Publish'].map((s, i) => <li className={i === buildStep ? 'current' : i < buildStep ? 'complete' : ''} key={s} aria-current={i === buildStep ? 'step' : undefined}><span>{i < buildStep ? <Check size={15}/> : i + 1}</span>{t(s)}</li>)}</ol>
  <form onSubmit={e => { e.preventDefault(); if (buildStep === 0) {

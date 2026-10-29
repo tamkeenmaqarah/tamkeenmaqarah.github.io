@@ -1,6 +1,7 @@
 'use client';
 import {useEffect,useState,useSyncExternalStore} from 'react';
 import {House,BookOpen,ClipboardList,CalendarDays,Trophy,Smile,LogOut,ArrowUpRight,Plus,ArrowRight,ArrowLeft,Globe,Menu,X} from 'lucide-react';
+import {TeacherHomeworkPanel} from './teacher-homework';
 import type {Data,Quiz} from './ui';
 import {t,getLanguage,setLanguage,subscribeLanguage} from './i18n.js';
 export function useTeacherLanguage(){const language=useSyncExternalStore(subscribeLanguage,getLanguage,()=> 'en');useEffect(()=>{try{setLanguage(localStorage.getItem('tamkeen-language')==='ar'?'ar':'en');}catch{}},[]);return language;}
@@ -25,15 +26,4 @@ export function TeacherOverview({data,onNavigate,onCreate,onManage}:{data:Data;o
   <div className="teacher-work-links"><button onClick={()=>onNavigate('grades')}><ClipboardList size={22}/><span>{t('Record Sunday grades')}</span><ArrowRight size={19}/></button><button onClick={()=>onNavigate('homework')}><CalendarDays size={22}/><span>{t('Review Sunday homework')}</span><ArrowRight size={19}/></button><button onClick={()=>onNavigate('ai')}><BookOpen size={22}/><span>{t('Create an AI draft')}</span><ArrowRight size={19}/></button></div>
  </section>;
 }
-function iso(date:Date){return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;}
-export function nextSunday(){const date=new Date();date.setDate(date.getDate()+((7-date.getDay())||7));return iso(date);}
-function moveWeek(week:string,days:number){const [year,month,day]=week.split('-').map(Number);const date=new Date(year,month-1,day);date.setDate(date.getDate()+days);return iso(date);}
-function sunday(value:string){const date=new Date(value+'T12:00:00');if(Number.isNaN(date.getTime()))return '';date.setDate(date.getDate()+(7-date.getDay())%7);return iso(date);}
-export function TeacherHomework(){const language=useTeacherLanguage();const [week,setWeek]=useState(nextSunday),[entries,setEntries]=useState<{name:string;body:string}[]>([]),[error,setError]=useState(''),[loading,setLoading]=useState(true),[retry,setRetry]=useState(0);
- useEffect(()=>{const controller=new AbortController();let live=true;const timer=setTimeout(()=>controller.abort(),15000);setLoading(true);setEntries([]);setError('');fetch('/api/homework?week='+week,{signal:controller.signal,credentials:'same-origin'}).then(async response=>{if(!response.ok)throw Error();const data:any=await response.json();if(!Array.isArray(data.entries))throw Error();if(live)setEntries(data.entries);}).catch(()=>{if(live)setError('Could not load homework. Please try again.');}).finally(()=>{clearTimeout(timer);if(live)setLoading(false);});return ()=>{live=false;clearTimeout(timer);controller.abort();};},[week,retry]);
-
- const date=new Date(week+'T12:00:00');
- return <section className="teacher-homework"><div className="page-heading"><div><h1>{t('Homework')}</h1><p>{t('Review what students are preparing for Sunday.')}</p></div></div><div className="teacher-week"><button className="secondary" onClick={()=>setWeek(moveWeek(week,-7))}><ArrowLeft size={17}/>{t('Previous Sunday')}</button><label><span>{new Intl.DateTimeFormat(language==='ar'?'ar':'en',{weekday:'long',month:'long',day:'numeric',year:'numeric'}).format(date)}</span><input type="date" aria-label={t('Choose a date')} value={week} onChange={event=>{const value=sunday(event.target.value);if(value)setWeek(value);}}/></label><button className="secondary" onClick={()=>setWeek(moveWeek(week,7))}>{t('Next Sunday')}<ArrowRight size={17}/></button></div>
- {loading?<p role="status">{t('Loading homework…')}</p>:error?<div role="alert"><p>{t(error)}</p><button className="secondary" onClick={()=>setRetry(value=>value+1)}>{t('Try again')}</button></div>:entries.length?<ul className="teacher-homework-list">{entries.map(entry=><li key={entry.name}><strong><bdi>{entry.name}</bdi></strong><p dir="auto">{entry.body}</p></li>)}</ul>:<div className="teacher-empty"><CalendarDays size={28}/><p>{t('No homework has been saved for this Sunday yet.')}</p></div>}
- </section>;
-}
+export function TeacherHomework({onDirtyChange}:{onDirtyChange:(value:boolean)=>void}){const language=useTeacherLanguage();return <TeacherHomeworkPanel language={language} onDirtyChange={onDirtyChange}/>;}

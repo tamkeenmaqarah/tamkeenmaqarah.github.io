@@ -1,0 +1,25 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import ts from 'typescript';
+import vm from 'node:vm';
+function load(file,mocks){const exports={};vm.runInNewContext(ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText,{exports,URL,TextDecoder,require:name=>{if(!(name in mocks))throw Error('Unexpected import '+name);return mocks[name];}});return exports;}
+const server={sameOrigin:req=>req.headers.get('origin')===new URL(req.url).origin};
+const cors=load('app/public-cors.ts',{'./server':server});
+const ai=load('app/ai.ts',{'cloudflare:workers':{env:{}},'./server':{}});
+let identities=[],calls=[],record=null;
+const question={prompt:'What should you do when a point is unclear?',options:['Ask the teacher','Guess','Skip all notes','Interrupt'],correct:0,explanation:'Ask the teacher when a point remains unclear.'};
+const accounts={studentFrom:async req=>req.headers.get('authorization')==='Bearer verified'?{id:'one'}:null,latestMisses:async()=>({quizId:'private-quiz',misses:[question]})};
+const req=(path,body,auth=false,origin='https://tamkeenmaqarah.github.io')=>new Request('https://backend.example'+path,{method:'POST',headers:{Origin:origin,...(auth?{Authorization:'Bearer verified'}:{})},body:JSON.stringify(body)});
+const learning=load('app/api/learning/route.ts',{'next/server':{NextResponse:{json:Response.json}},'../../ai':{...ai,configured:()=>true,learning:async(body,subject)=>{calls.push({body,subject});return {ok:true}}},'../../accounts':accounts,'../../door':{digest:async value=>{identities.push(value);return 'a'.repeat(64)}},'../../public-cors':cors});
+assert.equal((await learning.POST(req('/api/learning',{kind:'cards'},true,'https://evil.example'))).status,403);assert.equal(calls.length,0);
+assert.equal((await learning.POST(req('/api/learning',{kind:'cards',studentId:'two'},true))).status,200);assert.equal(identities[0],'student:one');
+assert.equal((await learning.POST(req('/api/learning',{source:'x'.repeat(33000)},true))).status,413);assert.equal(calls.length,1);
+const study=load('app/api/study/route.ts',{'next/server':{NextResponse:{json:Response.json}},'../../server':{db:()=>({prepare(){return{bind(){return{async first(){return record}}}}}})},'../../ai':{...ai,configured:()=>true,explainMiss:async(q,language)=>{calls.push({q,language});return{line:'The lesson says to ask the teacher when a point remains unclear.'}}},'../../accounts':accounts,'../../public-cors':cors});
+const body={quizId:'private-quiz',prompt:question.prompt,language:'ar'};
+assert.equal((await study.POST(req('/api/study',body))).status,404);
+const response=await study.POST(req('/api/study',body,true));assert.equal(response.status,200);assert.equal(response.headers.get('cache-control'),'no-store');assert.equal(calls.at(-1).language,'ar');assert.equal(calls.at(-1).q.explanation,question.explanation);
+assert.equal((await study.POST(req('/api/study',{...body,quizId:'someone-elses-quiz'},true))).status,404);
+assert.equal((await study.POST(req('/api/study',{...body,chosen:'invented answer'},true))).status,400);
+assert.equal((await study.POST(req('/api/study',null,true))).status,400);
+record={questions:'null'};assert.equal((await study.POST(req('/api/study',body,true))).status,404);
+console.log('PASS learning origin/identity/body bounds and own saved-review explanations; no access to another student’s closed quiz and no provider calls.');

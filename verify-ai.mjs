@@ -30,7 +30,7 @@ const database = {prepare(sql) { return {bind() { return this; },
 }; }};
 const ai = {};
 vm.runInNewContext(compile('app/ai.ts'), {
-  exports: ai, crypto, AbortSignal, Uint32Array,
+  exports: ai, crypto, AbortSignal, Uint32Array, TextDecoder, Request,
   require: name => name === 'cloudflare:workers'
     ? {env: {GEMINI_API_KEY: 'mock-key-never-transmitted'}}
     : {db: () => database, validQuiz: serverExports.validQuiz},
@@ -123,7 +123,28 @@ queue = [{ok: false, note: 'The explanation never says why the other three optio
 const checked = await ai.checkQuestion(questions[0]);
 assert.equal(checked.ok, false);
 assert.match(checked.note, /other three/);
+assert.throws(()=>ai.validateLearning({kind:'plan',assignment:'Review',minutes:0,challenge:'',language:'en'}),/daily practice/);
+assert.throws(()=>ai.validateLearning({kind:'cards',source:'too short',language:'ar'}),/100/);
+assert.throws(()=>ai.validateLearning({kind:'cards',source,language:'xx'}),/English or Arabic/);
+const cardNotes='Listen without interrupting the speaker. Review the lesson notes before attempting the questions. Ask the teacher when a point remains unclear.';
+const cards=[{question:'How should you listen?',answer:'Listen without interrupting the speaker.'},{question:'What should happen before the questions?',answer:'Review the lesson notes before attempting the questions.'},{question:'What should you do if a point remains unclear?',answer:'Ask the teacher when a point remains unclear.'}];
+assert.equal(ai.validateCards({cards},cardNotes).cards.length,3);
+assert.throws(()=>ai.validateCards({cards:[...cards.slice(0,2),{...cards[2],answer:'An invented answer that was never taught.'}]},cardNotes),/matched/);
+assert.throws(()=>ai.validateCards({cards:[cards[0],cards[0],cards[2]]},cardNotes),/matched/);
+queue=[{cards}];calls=[];
+const cardResult=await ai.learning({kind:'cards',source:cardNotes,language:'ar'},'a'.repeat(64));
+assert.equal(cardResult.cards[0].answer,cards[0].answer);assert.equal(JSON.parse(calls[0].body.contents[0].parts[0].text).language,'Arabic');assert.ok(!JSON.stringify(calls[0]).includes('a'.repeat(64)));
+queue=[{tips:['Recite the assigned passage from memory and notice where you hesitate.','Compare those transitions with the original text before continuing.','Repeat the difficult links slowly, then join the passage together.']}];
+const plan=await ai.learning({kind:'plan',assignment:'Al-Mulk (67:1–10).',minutes:10,challenge:'I mix up transitions.',language:'en'},'b'.repeat(64));
+assert.equal(plan.steps.reduce((sum,step)=>sum+step.minutes,0),10);assert.deepEqual(Array.from(plan.steps,step=>step.phase),['recall','check','repeat']);
+queue=[{tips:['Add verses 25–30 to the assignment.','Compare the current passage carefully against the original.','Repeat the difficult transitions slowly until they feel familiar.']}];
+await assert.rejects(ai.learning({kind:'plan',assignment:'Al-Mulk (67:1–10).',minutes:10,challenge:'',language:'en'},'b'.repeat(64)),/unchanged/);
+await assert.rejects(ai.readAIInput(new Request('https://test/api',{method:'POST',body:'x'.repeat(8001)}),8000),error=>error.status===413);
+const vowelNotes='اسْتَمِعْ إلى المتحدّث دون مقاطعة. راجِعْ الملاحظات قبل الإجابة. اسْأَلْ المعلّم عمّا لم يتّضح لك.';
+const vowelCards=[{question:'كيف تستمع إلى المتحدّث؟',answer:'اسْتَمِعْ إلى المتحدّث دون مقاطعة.'},{question:'ماذا تراجع قبل الإجابة؟',answer:'راجِعْ الملاحظات قبل الإجابة.'},{question:'ماذا تفعل إن لم تتّضح نقطة؟',answer:'اسْأَلْ المعلّم عمّا لم يتّضح لك.'}];
+assert.equal(ai.validateCards({cards:vowelCards},vowelNotes).cards[0].answer,vowelCards[0].answer);assert.throws(()=>ai.validateCards({cards:vowelCards.map(card=>({...card,answer:card.answer.replace(/[\u064B-\u065F]/g,'')}))},vowelNotes),/matched/);
 quota = false;
 await assert.rejects(ai.explainMiss({prompt: questions[0].prompt, options: questions[0].options, correct: 0, chosen: questions[0].options[1], explanation: questions[0].explanation}), /limit for today/);
 await assert.rejects(ai.draftQuiz(request), /daily AI limit/);
+await assert.rejects(ai.learning({kind:'cards',source:cardNotes,language:'en'},'a'.repeat(64)),/daily limit/);
 console.log('PASS: structured requests, source evidence, raw-transcript drafts, answer shuffling, real-answer highlights, name minimization, grounded study lines, question checks, and daily quota. Provider calls were mocked; live Gemini quality is untested.');
