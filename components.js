@@ -1,6 +1,6 @@
-import {TeacherAssignments} from './assignments.js?v=5';
+import {TeacherAssignments} from './assignments.js?v=6';
 import {nextHomeworkSunday} from './homework.js?v=2';
-import {MissCoach} from './study-tools.js?v=5';
+import {MissCoach} from './study-tools.js?v=6';
 import {
   y,
   M,
@@ -36,7 +36,7 @@ import {
   getLanguage,
   setLanguage,
   subscribeLanguage,
-} from "./i18n.js?v=23";
+} from "./i18n.js?v=24";
 import {photoUrl} from "./profile.js?v=1";
 const Ge = (e) => (e.score / e.max) * 100,
   Ke = (e) =>

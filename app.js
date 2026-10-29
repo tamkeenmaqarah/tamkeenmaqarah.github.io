@@ -1,5 +1,5 @@
-import {TeacherAssignments,QuranStudy} from './assignments.js?v=5';
-import {MissCoach,ReferenceText} from './study-tools.js?v=5';
+import {TeacherAssignments,QuranStudy} from './assignments.js?v=6';
+import {MissCoach,ReferenceText} from './study-tools.js?v=6';
 import {
   y,
   M as N,
@@ -35,7 +35,7 @@ import {
   getLanguage,
   setLanguage,
   subscribeLanguage,
-} from "./i18n.js?v=23";
+} from "./i18n.js?v=24";
 import {
   Ze as Xe,
   $e as Qe,
@@ -55,7 +55,7 @@ import {
   MotionNav,
   GatheringFooter,
   StudyPage,
-} from "./components.js?v=23";
+} from "./components.js?v=24";
 import {
   nextHomeworkSunday,
   homeworkSunday,
@@ -65,8 +65,8 @@ import {
   storeHomeworkDraft,
   clearHomeworkDraft,
 } from "./homework.js?v=2";
-import {quranReferences} from "./quran.js?v=5";
-import {AccountPage} from "./account.js?v=6";
+import {quranReferences} from "./quran.js?v=6";
+import {AccountPage} from "./account.js?v=7";
 import {profileRequest} from "./profile.js?v=1";
 const el = y.createElement;
 function ProfileIcon({size=17}){return el('svg',{width:size,height:size,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor',strokeWidth:1.5,'aria-hidden':true},el('circle',{cx:12,cy:8,r:3.5}),el('path',{d:'M5 21v-2a7 7 0 0 1 14 0v2',strokeLinecap:'round'}));}

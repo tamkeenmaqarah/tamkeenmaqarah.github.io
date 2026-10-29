@@ -1,4 +1,10 @@
 const arabic = {
+  "Remove saved ayah": "إزالة الآية المحفوظة",
+  "Saved ayah removed from this device.": "أُزيلت الآية المحفوظة من هذا الجهاز.",
+  "Your saved place could not be removed. Please try again.": "تعذّرت إزالة موضع القراءة المحفوظ. حاول مجدّدًا.",
+  "Recite first, then reveal to check. Practise again retries this ayah; Remembered it moves on.": "سمّع أولًا، ثم أظهر الآية للتحقّق. «أراجعها مجدّدًا» يعيد الآية نفسها، و«تذكّرتها» ينقلك إلى التالية.",
+  "Same ayah. Try again, then reveal it to check.": "الآية نفسها. حاول مجدّدًا، ثم أظهرها للتحقّق.",
+
   "Remembered: {count}/{total}": "تذكّرت: {count}/{total}",
   "Read Qur’an": "قراءة القرآن",
   "Open assigned ayahs": "فتح الآيات المقرّرة",
