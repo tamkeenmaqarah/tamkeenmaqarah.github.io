@@ -144,9 +144,15 @@ components:
     rounded: '{rounded.control}'
     width: 112px
     height: 144px
-  heater-hero-mobile:
-    width: 80px
-    height: 104px
+  heater-week:
+    width: 88px
+    height: 114px
+  heater-week-mobile:
+    width: 70px
+    height: 90px
+  heater-week-narrow:
+    width: 58px
+    height: 76px
   heater-footer:
     width: 96px
     height: 124px
@@ -189,6 +195,20 @@ components:
     backgroundColor: '{colors.upholstery}'
     textColor: '{colors.ink}'
     padding: 34px 32px 28px
+  study-section:
+    backgroundColor: '{colors.upholstery}'
+    padding: 8px
+  study-section-selected:
+    backgroundColor: '{colors.action}'
+    textColor: '{colors.action-ink}'
+    rounded: '{rounded.panel}'
+    padding: 12px 16px
+    height: 52px
+  notes-source:
+    backgroundColor: '{colors.form-clay}'
+    textColor: '{colors.field-ink}'
+    rounded: '{rounded.control}'
+    padding: 22px
   quran-reading:
     backgroundColor: '{colors.form-clay}'
     textColor: '{colors.field-ink}'
@@ -246,7 +266,7 @@ Deep red is the continuous public ground; warm ivory and amber give it legibilit
 
 The Arabic identity is generous and calligraphic; English headings are literary without becoming ceremonial. Controls stay quiet and compact. English text that remains English retains its own family in the Arabic interface.
 
-- **Arabic display:** the gathering name uses the frontmatter display role (91px / 1.6); tablet becomes (77px), mobile (61px), and the narrowest breakpoint (51px).
+- **Arabic display:** the retained ceremonial/door identity uses the frontmatter display role (91px / 1.6); tablet becomes (77px), mobile (61px), and the narrowest breakpoint (51px).
 - **Headline:** English public page titles use (42px), reducing to (34px) on mobile. Arabic page titles preserve their existing Amiri treatment. Generic headings descend through (36px / 25px / 21px); home section headings use (29px), reducing to (27px) on mobile.
 - **Body:** the base is (16px); supporting public copy commonly uses (13–15px), with more generous Arabic line height. Page descriptions cap at (59ch), and review explanations at (65ch).
 - **Labels:** action labels are (15px, 600); navigation is (13px), becoming (12px) on mobile. Table labels are (12px), becoming (10px) on mobile.
@@ -259,13 +279,15 @@ The Arabic identity is generous and calligraphic; English headings are literary 
 
 The centered shell has a maximum width of (1280px) and desktop inline gutters of (40px). The sticky masthead has a (7px) textile edge, (93px) brand row and (54px) text navigation. Main content uses (45px) top and (72px) bottom padding. The footer caps at (1200px). Fixed authored upholstered majlis side rails occupy (48px) at each viewport edge, narrowing to (18px) at (1100px) and (6px) at (620px), and cannot intercept input. The rug repeats at (384 × 384px) on the body and tent-door ground; keep text and controls on calm surfaces.
 
-Home standings and the approved moment use a (1.28fr / 1fr) grid with a (56px) gap and (42px) space above. Weekly quiz actions have (34px / 35px) vertical space. Table rows and cards breathe: standard table cells use (20px 17px), home cells (17px 14px), and public quiz panels (34px) padding.
+Home standings and the approved moment use a (1.28fr / 1fr) grid with a (56px) gap and (42px) space above. Home task and weekly-quiz panels use the compact paired layout described below. Table rows and cards breathe: standard table cells use (20px 17px), home cells (17px 14px), and public quiz panels (34px) padding.
 
 At (900px), gutters become (30px), main padding becomes (34px 30px 58px), and the community gap becomes (34px). At (620px), the grid becomes one column with a (38px) gap; main padding is (28px 20px 49px), with the compact header and navigation behavior described below. The Latin masthead label hides while Arabic identity and language controls remain. The weekly action stays beside its copy and permits wrapped labels, stacking across the available width at (380px).
 
-The gathering name is centered between two lanterns inside a fine frame, ending in stepped plaster and a broad textile band. Desktop minimum height is (374px), mobile (354px); mobile moves smaller lamps above the name. The woven bottom band is (48px), reducing to (38px). The (380px) breakpoint further reduces the title and action widths.
+Home uses a compact week/date introduction with a bounded lantern, heater and backrest at its side, followed by actual Sunday homework and the weekly quiz in a (1.3fr / 1fr) grid with a (24px) gap. The introduction uses (26px 32px) padding and a (176px) minimum height; its title is (42px / 1.3), with Amiri and (1.5) line height in Arabic. The compact hearth reserves (260px × 150px); its heater is (88px × 114px). At (750px), the introduction uses (22px 20px 28px), a (34px) title and a smaller hearth; homework and quiz stack with a (16px) gap. The task panels use (28px 30px), reducing to (22px 20px). At (380px), the introduction further tightens its inline padding and hearth.
 
-At (750px), the header brand row has a (76px) minimum height with (10px 20px 6px) padding and unwrapped utility controls; below (620px), inline padding becomes (16px). The six student destinations use a visible three-column, two-row grid with (44px) minimum targets and an (88px) minimum navigation height. The header lamp has reserved desktop flow space and hides at (750px); hero and door lamps remain. In landscape at heights up to (500px), the header scrolls with the page and scroll padding becomes (24px). Hero bottom padding is (194px), changing to (178px) at (750px) to clear the centered dish heater and side cushions. The shared footer leaves (100px) above its rule for a centered floor-cushion and heater grouping; the hearth group anchors (126px) above its edge, changing to (114px) at (750px). The tent door centers a sheet no wider than (520px) in a full-height red ground; its desktop sheet padding is (28px 46px 40px), reducing to (24px 24px 32px) at (750px).
+At (750px), the header brand row has a (76px) minimum height with (10px 20px 6px) padding and unwrapped utility controls; below (620px), inline padding becomes (16px). Eight student destinations use a visible four-column, two-row grid with (49px) minimum targets and a (104px) minimum navigation height. The header lamp hides at (750px); the compact Home hearth and tent-door lamps remain. In landscape at heights up to (500px), the header scrolls with the page. The shared footer retains its separate floor-cushion and heater grouping; footer heaters are (96px × 124px), reducing to (84px × 108px). The tent door centers a sheet no wider than (520px) in a full-height red ground; its desktop sheet padding is (28px 46px 40px), reducing to (24px 24px 32px) at (750px).
+
+The visible study launch band uses three equal action columns, stacking at (750px). Within Study, a three-column section bar uses (8px) gaps and padding, (52px) targets and amber selection. The notes workspace uses a (1.2fr / 1fr) source/action grid with a (30px) gap, becoming one column with a (22px) gap at (750px). Its clay source sheet uses (22px) padding, reducing to (16px); the textarea is at least (240px), reducing to (200px). Homework and Account jump links wrap with (44px) minimum targets.
 
 The shared Qur’an reader presents its controls in four columns (surah, from ayah, to ayah, action), with a (16px) gap. At (750px), controls use two columns with the surah selector and action spanning both. The clay reading panel uses (30px 40px) padding, reducing to (24px 18px). Its verse list caps at (880px); each RTL verse row reserves a separate index column (32px desktop, 22px mobile).
 
@@ -293,7 +315,7 @@ Cream fields with dark text, a thin warm border and control corners. Fields have
 
 ### Navigation
 
-Text tabs in the public masthead. Warm muted text brightens on hover; selection gains (700) weight and a (2px) amber underline. One positioned underline translates and resizes to the selected tab over (230ms) with the shared ease-out curve after pointer activation. Its position follows layout, font-size changes, resizing and RTL; keyboard navigation and resize placement are immediate. Tab changes reset scroll after the new surface commits, so a shorter destination cannot inherit a stale scroll position. Language and motion controls remain keyboard accessible with (44px) minimum targets. All six student destinations remain visible in the mobile three-by-two grid, with wrapped labels and a red selected fill. The pause control exposes its pressed state and translated action label. Its initial state reads the document’s existing motion setting, so pausing at the tent door remains paused inside the app.
+Text tabs in the public masthead. Warm muted text brightens on hover; selection gains (700) weight and a (2px) amber underline. One positioned underline translates and resizes to the selected tab over (230ms) with the shared ease-out curve after pointer activation. Its position follows layout, font-size changes, resizing and RTL; keyboard navigation and resize placement are immediate. Tab changes reset scroll after the new surface commits, so a shorter destination cannot inherit a stale scroll position. Language and motion controls remain keyboard accessible with (44px) minimum targets. All eight student destinations — Home, Homework, Halaqas & study, Quizzes, Qur’an, Leaderboard, Funny answers and Account — remain visible in the mobile four-by-two grid, with wrapped labels and a red selected fill. The pause control exposes its pressed state and translated action label. Its initial state reads the document’s existing motion setting, so pausing at the tent door remains paused inside the app.
 
 ### Account disclosure
 
@@ -301,7 +323,7 @@ A native `details` / `summary` disclosure groups the remembered name, password c
 
 ### Account and profile portrait
 
-The account page inherits the public rug, upholstered rails, masthead and script pairing. A centered identity column and a quiet dark settings sheet sit in a (220px / minmax(0, 1fr)) grid with a (64px) gap and (980px) maximum width. At (750px), they stack with a (24px) gap. Settings padding changes from (32px) to (24px 20px). The short Sadu seam stays below the identity, clear of the portrait and controls.
+The account page inherits the public rug, upholstered rails, masthead and script pairing. A centered identity column and a quiet dark settings sheet sit in a (220px / minmax(0, 1fr)) grid with a (64px) gap and (980px) maximum width. At (750px), they stack with a (24px) gap. Settings padding changes from (32px) to (24px 20px). The short Sadu seam stays below the identity, clear of the portrait and controls. Visible Profile photo and Sign-in settings jump links precede the layout; password and sign-out actions are also directly available on the page while the native header account/security utility remains.
 
 Circular portraits are (28px) in shared identity contexts and (136px) on the account page. Use the selected real Google picture, cropped upload or name initials; failed images fall back to initials. A fine amber inner ring and translucent outer ring make the portrait share the lanterns’ bounded warmth. The small glow is (0 2px 12px #ec8e3c5c); the account portrait uses (0 4px 28px #ec8e3c59). Only outer-ring opacity breathes, over (5s); the existing ambient hook respects global pause, offscreen/hidden state and reduced motion.
 
@@ -321,7 +343,7 @@ Use a semantic table with scoped headers, roomy row dividers, end-aligned scores
 
 ### Quiz feedback and results
 
-Answer options are large label targets with native radio inputs, letter markers and circular checks. Red surfaces carry light reading; selection changes the surface to warm burnt red, brightens the border and fills markers with amber. Desktop targets are at least (82px), mobile (80px). Fine-pointer hover shifts an option by (2px) toward reading flow; focus cancels movement. Progress uses subdued red, completed ochre and current amber. Questions enter over (250ms). Results use a red textile ground, warm score, amber medal and short settling motion; confetti is hidden. Private practice uses a quiet ruled section and shared review components.
+Answer options are large label targets with native radio inputs, letter markers and circular checks. Red surfaces carry light reading; selection changes the surface to warm burnt red, brightens the border and fills markers with amber. Desktop targets are at least (82px), mobile (80px). Fine-pointer hover shifts an option by (2px) toward reading flow; focus cancels movement. Progress uses subdued red, completed ochre and current amber. Questions enter over (250ms). Results use a red textile ground, warm score, amber medal and short settling motion; confetti is hidden. Private practice uses a quiet ruled section and shared review components, with its practice action above the missed-answer list. Existing teacher notes have a visible dark explanation panel and explicit Explain this note action. Home’s weekly quiz action reflects saved local attempts as Resume quiz or View result.
 
 ### Qur’an reader
 
@@ -329,13 +351,13 @@ The reading tab and Homework disclosure reuse one shared reader. Keep the famili
 
 Use dedicated Amiri Quran for the surah heading and verses. Preserve the returned Al Quran Cloud Uthmani text, diacritics and order exactly; sacred text is reading content, never ornament. Keep the page-level `notranslate` metadata and source-text `translate="no"` protection. A centered heading and fine warm divider introduce the range. Verse rows have (22px) vertical padding, reducing to (18px) on mobile, and a separate ochre-brown index so numbering does not disturb the text. Keep the index legible on clay. The attributed source link stays below the reader in quiet supporting text.
 
-Loading uses a status message; failed or incomplete loading uses readable feedback and an explicit retry action. Range validation stays visible and prevents invalid reading. Successful content is cached, and stale or slow requests are canceled. In Homework, adding a selected range appends its explicit reference to the existing draft; the normal Save action remains necessary. Saved explicit references can open the reading range directly, including after refresh. Do not infer a range from legacy free-form assignments or present an unsaved draft as shared homework.
+Loading uses a status message; failed or incomplete loading uses readable feedback and an explicit retry action. Range validation stays visible and prevents invalid reading. Successful content is cached, and stale or slow requests are canceled. In Homework, adding a selected range appends its explicit reference to the existing draft; the normal Save action remains necessary. Saved explicit references can open the reading range directly, including after refresh. A visible Practise this passage band offers Plan with AI beside loaded reading; its inline form submits the selected reference and the student’s difficulty, without uploading verse text. Do not infer a range from legacy free-form assignments or present an unsaved draft as shared homework.
 
 ### Assigned work and study aids
 
 Homework keeps the native Sunday control on a dark upholstered band with a narrow Sadu bottom seam. The teacher-assignment surface uses the upholstery and ink tokens, a narrow Sadu top seam and ruled task rows. Authored titles, instructions, reading/lesson actions and the native preparation checkbox establish the hierarchy. The checkbox sits in a small bordered paper-red control; checked preparation gains a panel fill and brass border. Keep mixed-script references isolated and unbroken. At (750px), the assignment surface uses (28px 18px 24px) padding and task headers stack.
 
-Optional study tools use native `details` / `summary` disclosures with a small brass book icon, visible Gemini label and chevron. Cream labeled fields and amber primary study actions stay within the existing palette. The three-phase review plan is a ruled horizontal timeline with small amber diamonds on desktop; at (750px), it becomes a vertical timeline. Revision questions use native disclosures, with the supplied-note excerpt on a paper-red inset. Opening a study body settles over (230ms) using the shared ease-out curve; reduced motion removes this animation and the chevron transition. Keep loading, failure and attribution adjacent to the requested aid, and keep the shared-note editor visibly separate from teacher work.
+Visible Plan with AI buttons beside assignments open inline review forms. Study uses a permanently visible Watch halaqas / My notes & AI / Missed questions section bar; its selected section persists through the URL. Tool shells are open sections with a small brass book icon and visible AI · Gemini attribution. The notes source textarea and two explicit card/Q&A actions are visible together, with adjacent input guidance and submission disclosure. Cream labeled fields, clay source sheets and amber actions use the existing palette. Source answers are exact excerpts or an explicit no-answer state. The three-phase review plan retains its ruled horizontal timeline and small amber diamonds, becoming vertical at (750px). Only revision answers use native disclosures, with visible Check answer / Hide answer labels and a paper-red excerpt inset. Keep loading, failure and attribution adjacent to each action and keep the shared practice-note editor visibly separate from teacher work.
 
 ### Tent door
 
@@ -343,7 +365,7 @@ The remembered-name/password entry sheet inherits the red panel, woven top edge,
 
 ### Radiant dish heater
 
-A separate hand-authored pixel-art dish heater joins the approved cushion vocabulary. The live shell is `assets/majlis-heater.svg` in an image, with `assets/heater-coils.svg` as its separate coil-layer background; both preserve crisp stepped geometry and pixelated rendering. Do not replace the object with a photograph or a composite seating scene. The reusable heater target is (112 × 144px); the hero uses (80 × 104px) at (750px). Footer heaters are (96 × 124px), reducing to (84 × 108px). The door uses (86 × 112px), reducing to (76 × 98px), and follows the form/actions in keyboard order while retaining its visual position beside the sheet.
+A separate hand-authored pixel-art dish heater joins the approved cushion vocabulary. The live shell is `assets/majlis-heater.svg` in an image, with `assets/heater-coils.svg` as its separate coil-layer background; both preserve crisp stepped geometry and pixelated rendering. Do not replace the object with a photograph or a composite seating scene. The reusable heater target is (112 × 144px); the compact Home hearth uses (88 × 114px), (70 × 90px) at (750px) and (58 × 76px) at (380px). Footer heaters are (96 × 124px), reducing to (84 × 108px). The door uses (86 × 112px), reducing to (76 × 98px), and follows the form/actions in keyboard order while retaining its visual position beside the sheet.
 
 Each heater is a stationary native button with bilingual Increase heater warmth / Lower heater warmth labels and `aria-pressed`. Pointer, Enter or Space toggles its own normal/boosted warmth. Its shell and decorative layers cannot intercept input. Normal coils stay visible; boost raises coil opacity over (720ms), halo/spill opacity over (650ms), and halo/spill scale over (900ms), all with `cubic-bezier(.16,1,.3,1)`. The small power light settles over (300ms). Focus uses a (3px) warm ring offset by (5px).
 
@@ -351,7 +373,7 @@ The core breathes over (5.5s), using only opacity and a restrained scale from (0
 
 ### Pixel-art cushions
 
-Use only the four authored SVGs: floor mattress, long backrest, square pillow and cylindrical armrest. These are separate decorations, not a composite seating scene or generated illustration. Keep their crisp pixel silhouettes at the existing small accent scale. The square and long backrest sit at hero edges; a floor mattress marks the shared footer; the cylindrical armrest appears beside quiz entry and the tent door. The decorative wrappers are hidden from assistive technology.
+Use only the four authored SVGs: floor mattress, long backrest, square pillow and cylindrical armrest. These are separate decorations, not a composite seating scene or generated illustration. Keep their crisp pixel silhouettes at the existing small accent scale. The compact Home hearth uses the long backrest, hidden at (750px); a floor mattress marks the shared footer; the cylindrical armrest appears beside quiz entry and the tent door. The decorative wrappers are hidden from assistive technology.
 
 Ambient breathing moves only the inner artwork by (2px) over a (7s) loop, with staggered delays. Hover-capable pointers lift the wrapper by (3px) and rotate it (−2°) over (220ms). Cushions use the same ambient-motion hook as lanterns: pause outside the viewport and when the document is hidden, and honor the global pause. Reduced motion stops breathing and removes the hover transition. Preserve the underlying content and controls at all times.
 
