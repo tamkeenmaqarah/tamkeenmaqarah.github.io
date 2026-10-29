@@ -306,3 +306,48 @@ main:focus{outline:none}
 
 [dir=rtl] .teacher-week>.secondary>svg{transform:scaleX(-1)}
 .review-empty{padding:20px 0;color:#d0ad8c;line-height:1.8}
+.quran-progress-heading{margin-bottom:24px}
+.quran-progress-heading h2{margin-bottom:8px}
+.quran-progress-heading .help{margin-block:6px}
+.quran-progress-layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:28px;align-items:start}
+.quran-progress-students{background:#32151b;padding:20px;scroll-margin-top:24px}
+.quran-progress-students>label{display:grid;gap:10px;font-size:14px}
+.quran-progress-students input{width:100%;min-height:48px}
+.quran-progress-students .review-filters{gap:6px;margin-block:14px}
+.quran-progress-students .review-filters>button{font-size:12px;padding:8px}
+.quran-progress-students ul{list-style:none;margin:0;padding:0}
+.quran-progress-students li>button{display:grid;gap:7px;width:100%;min-height:88px;text-align:start;padding:16px 12px;background:transparent;color:#f0dfc2;border:0;border-top:1px solid #7c4b3e;border-radius:0;font:inherit}
+.quran-progress-students li>button[aria-pressed=true]{background:#742c34}
+.quran-progress-students strong{font-size:16px}
+.quran-progress-students span{font-size:13px;color:#f0cf9c;line-height:1.7}
+.quran-progress-students small{font-size:11px;color:#d0ad8c;line-height:1.6}
+.quran-progress-detail{min-width:0;scroll-margin-top:24px}
+.quran-progress-detail>header{display:flex;justify-content:space-between;align-items:start;gap:16px;flex-wrap:wrap}
+.quran-progress-detail h3{font-size:29px;margin:0 0 10px}
+.quran-progress-detail>header p{font-size:15px;line-height:1.8;margin:0}
+.quran-progress-detail>.primary{margin-block:14px}
+.quran-progress-passages{list-style:none;margin:12px 0 0;padding:0}
+.quran-progress-passages>li{padding:24px 0;border-top:1px solid #7c4b3e}
+.quran-progress-passages>li>header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.quran-progress-passages h4{font-size:23px;line-height:1.7;margin:0}
+.quran-progress-passages li>.help{margin-block:8px}
+.teacher-check-result{font-size:14px;line-height:1.8;margin-block:14px;color:#f0cf9c}
+.teacher-check-result.reviewed{color:#e1d69f}
+.teacher-check-result.repeat{color:#ffbf99}
+.quran-passage-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:18px}
+.quran-passage-actions>.text-button{display:flex;align-items:center;gap:8px;min-height:44px}
+.quran-check-editor{margin-top:22px;padding:24px;scroll-margin-top:24px}
+.quran-check-editor h5{font:600 18px/1.7 Figtree,'IBM Plex Sans Arabic',sans-serif;margin:0 0 20px}
+.quran-check-editor label{display:grid;gap:10px}
+.quran-check-editor textarea{width:100%;margin:0}
+.quran-check-editor .form-actions{flex-wrap:wrap;gap:12px;justify-content:flex-start}
+@media(max-width:1050px){.quran-progress-layout{grid-template-columns:1fr}.quran-progress-students ul{max-height:340px;overflow:auto}.quran-progress-detail{scroll-margin-top:20px}}
+@media(max-width:750px){.teacher-homework-tabs{flex-wrap:wrap}.teacher-homework-tabs>button{font-size:12px;padding:10px 8px;flex:1 1 30%}.quran-progress-students{padding:18px}.quran-progress-passages h4{font-size:21px}.quran-check-editor{padding:22px 18px}.quran-progress-detail h3{font-size:26px}}
+.quran-history-cutoff{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-block:22px;font-size:14px}
+.quran-history-cutoff input{width:180px;min-height:48px;font-size:16px}
+.quran-progress-detail:focus{outline:0}
+@media(max-width:750px){.quran-history-cutoff{justify-content:space-between;gap:10px}.quran-history-cutoff input{width:164px}}
+.quran-check-editor .homework-admin-error,.quran-check-editor .homework-admin-error p{color:#742c34}
+.quran-history-cutoff{max-width:520px}
+.quran-history-cutoff>span{flex:1;min-width:0}
+.quran-history-cutoff input{flex-shrink:0}
