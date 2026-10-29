@@ -1,284 +1,87 @@
-import { y } from "./runtime.js";
-import { t, getLanguage } from "./i18n.js?v=21";
-import {
-  loadSurahs,
-  loadSurah,
-  loadRecitation,
-  validAyahRange,
-  quranReference,
-} from "./quran.js?v=3";
-const el = y.createElement;
+import { y } from './runtime.js';
+import { t, getLanguage } from './i18n.js?v=22';
+import {loadSurahs,loadSurah,loadReciters,loadRecitation,DEFAULT_RECITER,minshawi,TAJWEED_RULES,tajweedParts,validAyahRange,quranReference} from './quran.js?v=4';
+const el=y.createElement;
+const audioFailure='Recitation audio could not be loaded. You can still read and practise.';
+const savedValue=key=>{try{return localStorage.getItem(key);}catch{return null;}};
+function store(key,value){try{localStorage.setItem(key,value);return true;}catch{return false;}}
+function savedPlace(){try{const value=JSON.parse(savedValue('tamkeen-quran-place'));return Number.isInteger(value?.surah)&&value.surah>=1&&value.surah<=114&&Number.isInteger(value?.ayah)&&value.ayah>=1&&value.ayah<=286?value:null;}catch{return null;}}
+const searchText=value=>String(value).normalize('NFD').replace(/\p{M}/gu,'').replace(/[أإآٱ]/g,'ا').toLowerCase();
+function TajweedText({text}){return tajweedParts(text).map((part,index)=>part.rule?el('span',{key:index,className:'tajweed-run','data-rule':part.rule,style:{color:TAJWEED_RULES[part.rule][2]},title:TAJWEED_RULES[part.rule][getLanguage()==='ar'?1:0]},part.text):part.text);}
+function Icon({name}){return el('svg',{width:18,height:18,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor',strokeWidth:1.6,'aria-hidden':true},el('path',{d:name==='play'?'m9 5 11 7-11 7Z':name==='book'?'M12 5c-3-2-6-2-10-1v15c4-1 7-1 10 1 3-2 6-2 10-1V4c-4-1-7-1-10 1Zm0 0v15':'M6 3h12v18l-6-4-6 4Z'}));}
 
-export function QuranReader({ initialSelection, onAdd, practice=false, locked=false, onPractised }) {
-  const initial = initialSelection || { surah: 1, from: 1, to: 7 };
-  const [surahs, setSurahs] = y.useState([]);
-  const [surah, setSurah] = y.useState(initial.surah);
-  const [from, setFrom] = y.useState(String(initial.from));
-  const [to, setTo] = y.useState(String(initial.to));
-  const [selection, setSelection] = y.useState(initial);
-  const [data, setData] = y.useState(null);
-  const [error, setError] = y.useState("");
-  const [retry, setRetry] = y.useState(0);
-  const [recall,setRecall]=y.useState(practice),[step,setStep]=y.useState(0),[revealed,setRevealed]=y.useState(false),[finished,setFinished]=y.useState(false),[audio,setAudio]=y.useState(''),[audioError,setAudioError]=y.useState(''),[audioBusy,setAudioBusy]=y.useState(false);
-  const audioRequest=y.useRef(null);
-  y.useEffect(()=>{setAudio('');setAudioError('');setAudioBusy(false);setRevealed(false);const old=audioRequest.current;audioRequest.current=null;old?.abort();return()=>{const old=audioRequest.current;audioRequest.current=null;old?.abort();};},[selection,step,recall]);
-  y.useEffect(()=>{setStep(0);setFinished(false);},[selection]);
-  function moveAyah(delta){const old=audioRequest.current;audioRequest.current=null;old?.abort();setAudio('');setAudioBusy(false);setRevealed(false);setStep(value=>value+delta);}
-  async function listen(){audioRequest.current?.abort();const controller=new AbortController();audioRequest.current=controller;const timer=setTimeout(()=>controller.abort(),15000);setAudioBusy(true);setAudioError('');try{const chapter=await loadRecitation(selection.surah,controller.signal,data.numberOfAyahs);if(!controller.signal.aborted)setAudio(chapter.ayahs[selection.from-1+step].audio);}catch{if(!controller.signal.aborted)setAudioError('Recitation audio could not be loaded. You can still read and practise.');}finally{clearTimeout(timer);if(!controller.signal.aborted)setAudioBusy(false);else if(audioRequest.current===controller){setAudioBusy(false);setAudioError('Recitation audio could not be loaded. You can still read and practise.');}}}
-
-  const [loading, setLoading] = y.useState(true);
-
-  y.useEffect(() => {
-    setLoading(true);
-    setError("");
-    let active = true;
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 15000);
-    loadSurahs(controller.signal)
-      .then((list) => {
-        if (active) setSurahs(list);
-      })
-      .catch(() => {
-        if (active) {
-          setError("The surah list could not be loaded. Please try again.");
-          setLoading(false);
-        }
-      })
-      .finally(() => clearTimeout(timer));
-    return () => {
-      active = false;
-      controller.abort();
-      clearTimeout(timer);
-    };
-  }, [retry]);
-
-  y.useEffect(() => {
-    if (!surahs.length) return;
-    let active = true;
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 15000);
-    setLoading(true);
-    setError("");
-    setData(null);
-    const meta = surahs.find((item) => item.number === selection.surah);
-    if (
-      !meta ||
-      !validAyahRange(selection.from, selection.to, meta.numberOfAyahs)
-    ) {
-      setError("Choose a valid ayah range.");
-      setLoading(false);
-      clearTimeout(timer);
-      return;
-    }
-    loadSurah(selection.surah, controller.signal)
-      .then((chapter) => {
-        if (chapter.numberOfAyahs !== meta.numberOfAyahs)
-          throw Error(
-            "The ayahs could not be loaded completely. Please try again.",
-          );
-        if (active) setData(chapter);
-      })
-      .catch((err) => {
-        if (active)
-          setError(
-            err.name === "AbortError"
-              ? "Qur’an is unavailable right now. Please try again."
-              : err.message,
-          );
-      })
-      .finally(() => {
-        clearTimeout(timer);
-        if (active) setLoading(false);
-      });
-    return () => {
-      active = false;
-      controller.abort();
-      clearTimeout(timer);
-    };
-  }, [surahs, selection, retry]);
-
-  function read(event) {
-    event.preventDefault();
-    const count = surahs.find((item) => item.number === surah)?.numberOfAyahs;
-    if (!validAyahRange(Number(from), Number(to), count)) {
-      setError("Choose a valid ayah range.");
-      return;
-    }
-    setData(null);
-    setSelection({ surah, from: Number(from), to: Number(to) });
-  }
-  const meta = surahs.find((item) => item.number === surah);
-  const loaded = surahs.find((item) => item.number === selection.surah);
-  return el(
-    "section",
-    { className: "quran-reader", "aria-label": t("Qur’an reader") },
-    !locked&&el(
-      "form",
-      { className: "quran-controls", onSubmit: read },
-      el(
-        "label",
-        null,
-        t("Surah"),
-        el(
-          "select",
-          {
-            value: surah,
-            disabled: !surahs.length,
-            "aria-label": t("Surah"),
-            onChange: (event) => {
-              const number = Number(event.target.value);
-              setSurah(number);
-              setFrom("1");
-              setTo(
-                String(
-                  Math.min(
-                    10,
-                    surahs.find((item) => item.number === number).numberOfAyahs,
-                  ),
-                ),
-              );
-            },
-          },
-          ...surahs.map((item) =>
-            el(
-              "option",
-              { key: item.number, value: item.number },
-              `${item.number}. ${getLanguage() === "ar" ? item.name : item.englishName}`,
-            ),
-          ),
-        ),
-      ),
-      el(
-        "label",
-        null,
-        t("From ayah"),
-        el("input", {
-          type: "number",
-          min: 1,
-          max: meta?.numberOfAyahs,
-          value: from,
-          required: true,
-          disabled: !surahs.length,
-          "aria-label": t("From ayah"),
-          onChange: (event) => setFrom(event.target.value),
-        }),
-      ),
-      el(
-        "label",
-        null,
-        t("To ayah"),
-        el("input", {
-          type: "number",
-          min: 1,
-          max: meta?.numberOfAyahs,
-          value: to,
-          required: true,
-          disabled: !surahs.length,
-          "aria-label": t("To ayah"),
-          onChange: (event) => setTo(event.target.value),
-        }),
-      ),
-      el(
-        "button",
-        { className: "primary", disabled: !surahs.length },
-        t("Read ayahs"),
-      ),
-    ),
-    !onAdd&&data?.number===selection.surah&&el('div',{className:'reader-mode'},el('button',{className:recall?'secondary':'primary',type:'button','aria-pressed':!recall,onClick:()=>setRecall(false)},t('Read passage')),el('button',{className:recall?'primary':'secondary',type:'button','aria-pressed':recall,onClick:()=>setRecall(true)},t('Practise from memory'))),
-    error &&
-      el(
-        "div",
-        { className: "quran-error", role: "alert" },
-        el("p", null, t(error)),
-        error !== "Choose a valid ayah range." &&
-          el(
-            "button",
-            {
-              className: "secondary",
-              type: "button",
-              onClick: () => setRetry((value) => value + 1),
-            },
-            t("Try again"),
-          ),
-      ),
-    loading &&
-      el("p", { className: "help", role: "status" }, t("Loading Qur’an…")),
-    data?.number === selection.surah && (recall?el('section',{className:'memorisation-practice'},
-      el('header',null,el('h2',{lang:'ar',dir:'rtl'},data.name),el('p',null,t('Ayah {current} of {total}',{current:step+1,total:selection.to-selection.from+1}))),
-      el('p',{className:'recall-instruction'},t('Recite ayah {number} from memory, then reveal it to check.',{number:selection.from+step})),
-      revealed?el('p',{className:'recall-ayah',lang:'ar',dir:'rtl',translate:'no'},data.ayahs[selection.from-1+step]?.text):el('button',{className:'reveal-ayah',type:'button',onClick:()=>setRevealed(true)},t('Reveal ayah')),
-      el('div',{className:'recall-audio'},el('button',{className:'text-button',type:'button',disabled:audioBusy,onClick:listen},t(audioBusy?'Loading recitation…':'Listen to this ayah')),audio&&el('audio',{key:audio,controls:true,preload:'none',autoPlay:true,src:audio,'aria-label':t('Ayah recitation'),onError:()=>{setAudio('');setAudioError('Recitation audio could not be loaded. You can still read and practise.');}}),audioError&&el('p',{className:'quran-error',role:'status'},t(audioError))),
-      el('div',{className:'recall-controls'},el('button',{className:'secondary',type:'button',disabled:step===0,onClick:()=>moveAyah(-1)},t('Previous ayah')),step<selection.to-selection.from?el('button',{className:'primary',type:'button',onClick:()=>moveAyah(1)},t('Next ayah')):el('button',{className:'primary',type:'button',onClick:()=>{setFinished(true);onPractised?.();}},t('Finish practice'))),
-      finished&&el('p',{role:'status'},t('Practice finished. Your teacher will check your recitation in person.'))
-    ):el(
-        "div",
-        { className: "quran-reading", translate: "no" },
-        el(
-          "header",
-          { className: "quran-reading-heading" },
-          el("h2", { lang: "ar", dir: "rtl" }, data.name),
-          el(
-            "p",
-            null,
-            t("Ayahs {from}–{to}", { from: selection.from, to: selection.to }),
-          ),
-        ),
-        el(
-          "ol",
-          { className: "quran-verses", dir: "rtl", start: selection.from },
-          ...data.ayahs.slice(selection.from - 1, selection.to).map((ayah) =>
-            el(
-              "li",
-              { key: ayah.numberInSurah },
-              el("p", { lang: "ar", dir: "rtl" }, ayah.text),
-              el(
-                "span",
-                {
-                  className: "quran-ayah-number",
-                  "aria-label": t("Ayah {number}", {
-                    number: ayah.numberInSurah,
-                  }),
-                },
-                new Intl.NumberFormat("ar").format(ayah.numberInSurah),
-              ),
-            ),
-          ),
-        ),
-        onAdd &&
-          el(
-            "button",
-            {
-              className: "primary quran-add",
-              type: "button",
-              disabled:
-                surah !== selection.surah ||
-                Number(from) !== selection.from ||
-                Number(to) !== selection.to,
-              onClick: () =>
-                onAdd(
-                  quranReference(
-                    loaded,
-                    selection.from,
-                    selection.to,
-                    getLanguage(),
-                  ),
-                ),
-            },
-            t("Add to homework"),
-          ),
-      )),
-    el(
-      "p",
-      { className: "quran-source" },
-      el(
-        "a",
-        {
-          href: "https://alquran.cloud/api",
-          target: "_blank",
-          rel: "noopener noreferrer",
-        },
-        t("Qur’an text: Al Quran Cloud · Uthmani edition"),
-      ),
-    ),
-  );
+export function QuranReader({initialSelection,onAdd,practice=false,locked=false,onPractised,library=false}){
+ const initial=initialSelection||{surah:1,from:1,to:7};
+ const [surahs,setSurahs]=y.useState([]),[surah,setSurah]=y.useState(initial.surah),[from,setFrom]=y.useState(String(initial.from)),[to,setTo]=y.useState(String(initial.to)),[selection,setSelection]=y.useState(initial);
+ const [data,setData]=y.useState(null),[error,setError]=y.useState(''),[loading,setLoading]=y.useState(true),[retry,setRetry]=y.useState(0);
+ const [recall,setRecall]=y.useState(practice),[step,setStep]=y.useState(0),[revealed,setRevealed]=y.useState(false),[finished,setFinished]=y.useState(false);
+ const [reciters,setReciters]=y.useState([minshawi]),[reciter,setReciter]=y.useState(DEFAULT_RECITER),[reciterError,setReciterError]=y.useState(''),[reciterRetry,setReciterRetry]=y.useState(0);
+ const [audio,setAudio]=y.useState(''),[audioError,setAudioError]=y.useState(''),[audioBusy,setAudioBusy]=y.useState(false),[continuous,setContinuous]=y.useState(false);
+ const [search,setSearch]=y.useState(''),[place,setPlace]=y.useState(savedPlace),[fontSize,setFontSize]=y.useState(36),[savedNotice,setSavedNotice]=y.useState(false);
+ const audioRequest=y.useRef(null),heading=y.useRef(null),focusReading=y.useRef(false),libraryDetails=y.useRef(null);
+ const language=getLanguage(),label=item=>language==='ar'?item.name:item.englishName;
+ function stopAudio(){const old=audioRequest.current;audioRequest.current=null;old?.abort();setAudio('');setAudioError('');setAudioBusy(false);setContinuous(false);}
+ y.useEffect(()=>{stopAudio();setStep(0);setFinished(false);setRevealed(false);setSavedNotice(false);return()=>{audioRequest.current?.abort();audioRequest.current=null;};},[selection,recall]);
+ y.useEffect(()=>{
+  let active=true;const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),15000);setReciterError('');
+  loadReciters(controller.signal).then(list=>{if(!active)return;setReciters(list);const saved=savedValue('tamkeen-quran-reciter');setReciter(list.some(item=>item.identifier===saved)?saved:list.some(item=>item.identifier===DEFAULT_RECITER)?DEFAULT_RECITER:list[0].identifier);}).catch(()=>{if(active)setReciterError('More reciters could not be loaded. You can still listen to Al-Minshawi.');}).finally(()=>clearTimeout(timer));
+  return()=>{active=false;controller.abort();clearTimeout(timer);};
+ },[reciterRetry]);
+ y.useEffect(()=>{
+  let active=true;const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),15000);setLoading(true);setError('');
+  loadSurahs(controller.signal).then(list=>{if(active)setSurahs(list);}).catch(()=>{if(active){setError('The surah list could not be loaded. Please try again.');setLoading(false);}}).finally(()=>clearTimeout(timer));
+  return()=>{active=false;controller.abort();clearTimeout(timer);};
+ },[retry]);
+ y.useEffect(()=>{
+  if(!surahs.length)return;let active=true;const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),15000);setLoading(true);setError('');setData(null);
+  const meta=surahs.find(item=>item.number===selection.surah);
+  if(!meta||!validAyahRange(selection.from,selection.to,meta.numberOfAyahs)){setError('Choose a valid ayah range.');setLoading(false);clearTimeout(timer);return;}
+  loadSurah(selection.surah,controller.signal).then(chapter=>{if(chapter.numberOfAyahs!==meta.numberOfAyahs)throw Error('The ayahs could not be loaded completely. Please try again.');if(active)setData(chapter);}).catch(err=>{if(active)setError(err.name==='AbortError'?'Qur’an is unavailable right now. Please try again.':err.message);}).finally(()=>{clearTimeout(timer);if(active)setLoading(false);});
+  return()=>{active=false;controller.abort();clearTimeout(timer);};
+ },[surahs,selection,retry]);
+ y.useEffect(()=>{if(data&&focusReading.current){focusReading.current=false;heading.current?.scrollIntoView({block:'start'});heading.current?.focus({preventScroll:true});}},[data]);
+ function chooseSurah(number,first=1){const meta=surahs.find(item=>item.number===number);if(!meta||first>meta.numberOfAyahs)return;stopAudio();setData(null);setSurah(number);setFrom(String(first));setTo(String(meta.numberOfAyahs));setSelection({surah:number,from:first,to:meta.numberOfAyahs});setSearch('');if(libraryDetails.current&&matchMedia('(max-width:999px)').matches)libraryDetails.current.open=false;focusReading.current=library;}
+ function read(event){event.preventDefault();const count=surahs.find(item=>item.number===surah)?.numberOfAyahs;if(!validAyahRange(Number(from),Number(to),count)){setError('Choose a valid ayah range.');return;}stopAudio();setData(null);setSelection({surah,from:Number(from),to:Number(to)});}
+ function moveAyah(delta){stopAudio();setRevealed(false);setSavedNotice(false);setStep(value=>value+delta);}
+ async function listen(index=step,all=false){
+  stopAudio();setStep(index);if(index!==step)setRevealed(false);setSavedNotice(false);const controller=new AbortController();audioRequest.current=controller;const timer=setTimeout(()=>controller.abort(),15000);setAudioBusy(true);
+  try{const chapter=await loadRecitation(selection.surah,reciter,controller.signal,data.numberOfAyahs);if(!controller.signal.aborted){setContinuous(all);setAudio(chapter.ayahs[selection.from-1+index].audio);}}
+  catch{if(!controller.signal.aborted)setAudioError(audioFailure);}
+  finally{clearTimeout(timer);if(!controller.signal.aborted)setAudioBusy(false);else if(audioRequest.current===controller){setAudioBusy(false);setAudioError(audioFailure);}}
+ }
+ function savePlace(){const next={surah:selection.surah,ayah:selection.from+step};if(store('tamkeen-quran-place',JSON.stringify(next))){setPlace(next);setSavedNotice(true);}else setAudioError('Your place could not be saved on this device.');}
+ const current=surahs.find(item=>item.number===selection.surah),meta=surahs.find(item=>item.number===surah),bookmarked=surahs.find(item=>item.number===place?.surah),count=selection.to-selection.from+1;
+ const filtered=surahs.filter(item=>searchText(`${item.number} ${item.name} ${item.englishName} ${item.englishNameTranslation||''}`).includes(searchText(search.trim())));
+ const rangeForm=el('form',{className:'quran-controls',onSubmit:read},!library&&el('label',null,t('Surah'),el('select',{value:surah,disabled:!surahs.length,'aria-label':t('Surah'),onChange:event=>{const number=Number(event.target.value);setSurah(number);setFrom('1');setTo(String(Math.min(10,surahs.find(item=>item.number===number).numberOfAyahs)));}},...surahs.map(item=>el('option',{key:item.number,value:item.number},`${item.number}. ${label(item)}`)))),el('label',null,t('From ayah'),el('input',{type:'number',min:1,max:meta?.numberOfAyahs,value:from,required:true,disabled:!surahs.length,'aria-label':t('From ayah'),onChange:event=>setFrom(event.target.value)})),el('label',null,t('To ayah'),el('input',{type:'number',min:1,max:meta?.numberOfAyahs,value:to,required:true,disabled:!surahs.length,'aria-label':t('To ayah'),onChange:event=>setTo(event.target.value)})),el('button',{className:'primary',disabled:!surahs.length},t('Read ayahs')));
+ const reciterControl=el('div',{className:'reciter-control'},el('label',null,t('Reciter'),el('select',{value:reciter,disabled:!reciters.length,'aria-label':t('Reciter'),onChange:event=>{stopAudio();setReciter(event.target.value);store('tamkeen-quran-reciter',event.target.value);}},reciters.length?reciters.map(item=>el('option',{key:item.identifier,value:item.identifier},item.identifier===minshawi.identifier&&language==='en'?'Al-Minshawi — Murattal':label(item))):el('option',{value:DEFAULT_RECITER},minshawi[language==='ar'?'name':'englishName']))),reciterError&&el('div',{className:'reciter-error',role:'status'},el('p',null,t(reciterError)),el('button',{className:'text-button',type:'button',onClick:()=>setReciterRetry(value=>value+1)},t('Try again'))));
+ const audioPanel=()=>el('div',{className:'recall-audio',id:library?'quran-listening-controls':undefined},reciterControl,el('button',{className:library&&!recall?'primary':'text-button',type:'button',disabled:audioBusy||!reciters.length,onClick:()=>listen(step,library&&!recall)},el(Icon,{name:'play'}),t(audioBusy?'Loading recitation…':library&&!recall?'Listen to passage':'Listen to this ayah')),audio&&el('div',{className:'recitation-player'},el('p',{className:'playing-ayah'},t('Ayah {number}',{number:selection.from+step})),el('audio',{key:audio,controls:true,preload:'none',autoPlay:true,src:audio,'aria-label':t('Ayah recitation'),onEnded:()=>{if(continuous&&step<count-1)listen(step+1,true);else setContinuous(false);},onError:()=>{stopAudio();setAudioError(audioFailure);}}),el('button',{className:'text-button',type:'button',onClick:stopAudio},t('Stop listening'))),audioError&&el('p',{className:'quran-error',role:'status'},t(audioError)));
+ const colourKey=el('details',{className:'tajweed-key'},el('summary',null,t('Tajweed colour key')),el('ul',null,Object.entries(TAJWEED_RULES).map(([code,rule])=>el('li',{key:code},el('span',{className:'tajweed-swatch',style:{background:rule[2]},'aria-hidden':true}),rule[language==='ar'?1:0]))),el('a',{href:'https://alquran.cloud/tajweed-guide',target:'_blank',rel:'noopener noreferrer'},t('About these Tajweed rules')));
+ const ready=data?.number===selection.surah;
+ return el('section',{className:`quran-reader${library?' quran-library'+(audio?' is-listening':''):''}`,'aria-label':t('Qur’an reader')},
+  library&&el('aside',{className:'surah-library'},el('details',{ref:libraryDetails,open:matchMedia('(min-width:1000px)').matches},el('summary',null,el(Icon,{name:'book'}),t('Surahs')),el('label',{className:'surah-search'},t('Find a surah'),el('input',{type:'search',value:search,placeholder:t('Name or number'),onChange:event=>setSearch(event.target.value)})),el('nav',{className:'surah-list','aria-label':t('Surahs')},filtered.map(item=>el('button',{key:item.number,type:'button','aria-current':item.number===selection.surah?'true':undefined,onClick:()=>chooseSurah(item.number)},el('span',{className:'surah-index'},item.number),el('span',{className:'surah-names'},el('strong',{lang:'ar',dir:'rtl'},item.name),el('small',null,language==='ar'?t('{count} ayahs',{count:item.numberOfAyahs}):`${item.englishName} · ${t('{count} ayahs',{count:item.numberOfAyahs})}`)))),surahs.length&&!filtered.length?el('p',{className:'help'},t('No surahs found. Try another name or number.')):null))),
+  el('div',{className:'quran-workspace'},
+   library&&bookmarked&&el('button',{className:'resume-reading secondary',type:'button',onClick:()=>chooseSurah(place.surah,place.ayah)},el(Icon,{name:'bookmark'}),t('Continue reading: {surah}, ayah {ayah}',{surah:label(bookmarked),ayah:place.ayah})),
+   !locked&&(library?el('details',{className:'passage-range'},el('summary',null,t('Choose ayahs'),current&&el('span',null,`${current.englishName} ${selection.from}–${selection.to}`)),rangeForm):rangeForm),
+   error&&el('div',{className:'quran-error',role:'alert'},el('p',null,t(error)),error!=='Choose a valid ayah range.'&&el('button',{className:'secondary',type:'button',onClick:()=>setRetry(value=>value+1)},t('Try again'))),
+   loading&&el('p',{className:'help',role:'status'},t('Loading Qur’an…')),
+   ready&&el('div',{className:'quran-mode-bar'},!onAdd&&el('div',{className:'reader-mode'},el('button',{className:recall?'secondary':'primary',type:'button','aria-pressed':!recall,onClick:()=>setRecall(false)},t('Read passage')),el('button',{className:recall?'primary':'secondary',type:'button','aria-pressed':recall,onClick:()=>setRecall(true)},t('Practise from memory'))),library&&el('div',{className:'quran-text-size','aria-label':t('Text size')},!recall&&el('a',{className:'secondary quran-listen-jump',href:'#quran-listening-controls'},t('Reciter & audio')),el('button',{className:'secondary',type:'button','aria-label':t('Smaller text'),disabled:fontSize<=24,onClick:()=>setFontSize(value=>value-4)},'A−'),el('button',{className:'secondary',type:'button','aria-label':t('Larger text'),disabled:fontSize>=48,onClick:()=>setFontSize(value=>value+4)},'A+'))),
+   ready&&(recall?el('section',{className:'memorisation-practice',style:library?{'--quran-font-size':`${fontSize}px`}:undefined},
+    el('header',null,el('h2',{lang:'ar',dir:'rtl',ref:heading,tabIndex:-1},data.name),el('p',null,t('Ayah {current} of {total}',{current:step+1,total:count}))),
+    el('p',{className:'recall-instruction'},t('Recite ayah {number} from memory, then reveal it to check.',{number:selection.from+step})),
+    revealed?el('p',{className:'recall-ayah',lang:'ar',dir:'rtl',translate:'no'},el(TajweedText,{text:data.ayahs[selection.from-1+step].text})):el('button',{className:'reveal-ayah',type:'button',onClick:()=>setRevealed(true)},t('Reveal ayah')),
+    audioPanel(),
+    el('div',{className:'recall-controls'},el('button',{className:'secondary',type:'button',disabled:step===0,onClick:()=>moveAyah(-1)},t('Previous ayah')),step<count-1?el('button',{className:'primary',type:'button',onClick:()=>moveAyah(1)},t('Next ayah')):el('button',{className:'primary',type:'button',onClick:()=>{stopAudio();setFinished(true);onPractised?.();}},t('Finish practice'))),
+    finished&&el('p',{role:'status'},t('Practice finished. Your teacher will check your recitation in person.')),colourKey
+   ):el('div',{className:'quran-reading',style:library?{'--quran-font-size':`${fontSize}px`}:undefined},
+    el('header',{className:'quran-reading-heading'},el('div',{className:'surah-heading-ornament','aria-hidden':true},el(Icon,{name:'book'})),el('h2',{lang:'ar',dir:'rtl',ref:heading,tabIndex:-1},data.name),el('p',null,current&&label(current),' · ',t('Ayahs {from}–{to}',{from:selection.from,to:selection.to}))),
+    library&&audioPanel(),
+    library&&el('div',{className:'reading-place'},el('p',null,t('Select an ayah number to listen.')),el('button',{className:'text-button',type:'button',onClick:savePlace},el(Icon,{name:'bookmark'}),t(savedNotice?'Place saved on this device':'Save ayah {number}',{number:selection.from+step}))),
+    el('ol',{className:library?'quran-verses mushaf-verses':'quran-verses',dir:'rtl',start:selection.from},data.ayahs.slice(selection.from-1,selection.to).map((ayah,index)=>el('li',{key:ayah.numberInSurah,className:library&&audio&&index===step?'is-reciting':undefined},el(library?'span':'p',{className:library?'mushaf-ayah-text':undefined,lang:'ar',dir:'rtl',translate:'no'},el(TajweedText,{text:ayah.text})),library?el('button',{className:'quran-ayah-number',type:'button','aria-label':t('Listen to ayah {number}',{number:ayah.numberInSurah}),'aria-pressed':!!audio&&index===step,onClick:()=>listen(index)},new Intl.NumberFormat('ar').format(ayah.numberInSurah)):el('span',{className:'quran-ayah-number','aria-label':t('Ayah {number}',{number:ayah.numberInSurah})},new Intl.NumberFormat('ar').format(ayah.numberInSurah))))),
+    onAdd&&el('button',{className:'primary quran-add',type:'button',disabled:surah!==selection.surah||Number(from)!==selection.from||Number(to)!==selection.to,onClick:()=>onAdd(quranReference(current,selection.from,selection.to,language))},t('Add to homework')),
+    colourKey,
+    library&&el('nav',{className:'chapter-navigation','aria-label':t('Surah navigation')},el('button',{className:'secondary',type:'button',disabled:selection.surah===1,onClick:()=>chooseSurah(selection.surah-1)},t('Previous surah')),el('button',{className:'secondary',type:'button',disabled:selection.surah===114,onClick:()=>chooseSurah(selection.surah+1)},t('Next surah')))
+   )),
+   el('p',{className:'quran-source'},el('a',{href:'https://alquran.cloud/tajweed-guide',target:'_blank',rel:'noopener noreferrer'},t('Qur’an text: Al Quran Cloud · Tajweed edition')),el('a',{href:reciter===minshawi.identifier?'https://everyayah.com/':'https://alquran.cloud/api',target:'_blank',rel:'noopener noreferrer'},t(reciter===minshawi.identifier?'Recitation: EveryAyah':'Recitation: Al Quran Cloud')))
+  )
+ );
 }

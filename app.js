@@ -1,5 +1,5 @@
-import {TeacherAssignments} from './assignments.js?v=3';
-import {MissCoach,ReferenceText} from './study-tools.js?v=3';
+import {TeacherAssignments} from './assignments.js?v=4';
+import {MissCoach,ReferenceText} from './study-tools.js?v=4';
 import {
   y,
   M as N,
@@ -35,7 +35,7 @@ import {
   getLanguage,
   setLanguage,
   subscribeLanguage,
-} from "./i18n.js?v=21";
+} from "./i18n.js?v=22";
 import {
   Ze as Xe,
   $e as Qe,
@@ -55,7 +55,7 @@ import {
   MotionNav,
   GatheringFooter,
   StudyPage,
-} from "./components.js?v=21";
+} from "./components.js?v=22";
 import {
   nextHomeworkSunday,
   homeworkSunday,
@@ -65,9 +65,9 @@ import {
   storeHomeworkDraft,
   clearHomeworkDraft,
 } from "./homework.js?v=2";
-import {QuranReader} from "./quran-reader.js?v=8";
-import {quranReferences} from "./quran.js?v=3";
-import {AccountPage} from "./account.js?v=4";
+import {QuranReader} from "./quran-reader.js?v=9";
+import {quranReferences} from "./quran.js?v=4";
+import {AccountPage} from "./account.js?v=5";
 import {profileRequest} from "./profile.js?v=1";
 const el = y.createElement;
 function ProfileIcon({size=17}){return el('svg',{width:size,height:size,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor',strokeWidth:1.5,'aria-hidden':true},el('circle',{cx:12,cy:8,r:3.5}),el('path',{d:'M5 21v-2a7 7 0 0 1 14 0v2',strokeLinecap:'round'}));}
@@ -2517,7 +2517,7 @@ function Tt() {
                   : e && n === 'account' && !de
                     ? el(AccountPage,{key:v,name:v,profile:profile?.name===v?profile:null,error:profileError,onRetry:()=>setProfileVersion(value=>value+1),onSaved:setProfile,onDirtyChange:setProfileDirty,onPassword:()=>{if(cn()){kt('');jt(true);}},onSignOut:()=>{if(cn())wn();},googleSignIn:el(GoogleSignIn,{onCredential:credential=>finishGoogle(credential,v,true)}),googleError:Ot,googleBusy})
                   : e && n === 'quran' && !de
-                    ? el('section',{className:'quran-page'},el('h1',null,translate('Qur’an')),el(QuranReader,{initialSelection:quranSelection}))
+                    ? el('section',{className:'quran-page'},el('h1',null,translate('Qur’an')),el(QuranReader,{initialSelection:quranSelection,library:true}))
                   : e && n === 'study' && !de
                     ? el(StudyPage,{key:v,name:v,revisit:se,onPractice:pn,onClearRevisit:mn,onNavigate:L})
                   : e && n === `homework` && !de

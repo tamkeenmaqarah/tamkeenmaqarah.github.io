@@ -40,7 +40,7 @@ test("preserves exact API text, caches validated data, and rejects incomplete or
         data: {
           number: 112,
           numberOfAyahs: 1,
-          edition: { identifier: "quran-uthmani" },
+          edition: { identifier: "quran-tajweed" },
           ayahs: [{ numberInSurah: 1, text }],
         },
       }),
@@ -58,7 +58,7 @@ test("preserves exact API text, caches validated data, and rejects incomplete or
       data: {
         number: 114,
         numberOfAyahs: 2,
-        edition: { identifier: "quran-uthmani" },
+        edition: { identifier: "quran-tajweed" },
         ayahs: [{ numberInSurah: 1, text }],
       },
     }),

@@ -1,9 +1,9 @@
 import {y} from './runtime.js';
-import {t,getLanguage,subscribeLanguage} from './i18n.js?v=21';
+import {t,getLanguage,subscribeLanguage} from './i18n.js?v=22';
 import {requestJSON} from './api-client.js?v=1';
-import {quranReferences} from './quran.js?v=3';
-import {ReferenceText} from './study-tools.js?v=3';
-import {QuranReader} from './quran-reader.js?v=8';
+import {quranReferences} from './quran.js?v=4';
+import {ReferenceText} from './study-tools.js?v=4';
+import {QuranReader} from './quran-reader.js?v=9';
 const el=y.createElement;
 export const statusLabels={pending:'To prepare',ready:'Ready for review',help:'Help requested',reviewed:'Reviewed in person',repeat:'Practise again'};
 export function lessonLinks(text){return [...new Set(text.match(/https:\/\/[^\s<>"'()]+/g)||[])].filter(value=>!!lessonEmbed(value));}
