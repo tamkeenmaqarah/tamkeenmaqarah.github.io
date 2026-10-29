@@ -25,7 +25,7 @@ const data = {teacher:false, quizzes:[], submissions:[], records:[], moments:[],
    await summary.waitFor();
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
    const targets=await page.locator('.main-nav button,.header-actions > button,.account-menu > summary').evaluateAll(elements=>elements.filter(e=>e.getBoundingClientRect().width>0).map(e=>e.getBoundingClientRect().height));
-   assert.equal(targets.length,9);
+   assert.equal(targets.length,11);
    assert.ok(targets.every(height=>height>=44));
    await summary.tap();
    assert.equal(await page.locator('.account-menu').getAttribute('open'),'');
@@ -40,6 +40,7 @@ const data = {teacher:false, quizzes:[], submissions:[], records:[], moments:[],
    await summary.tap(); await page.touchscreen.tap(10,500);
    assert.equal(await page.locator('.account-menu').getAttribute('open'),null);
    await page.getByRole('navigation').getByRole('button',{name:ar?'الرئيسية':'Home',exact:true}).tap();
+   await page.getByRole('navigation',{name:ar?'التنقل الرئيسي':'Main navigation'}).getByRole('button',{name:ar?'الحلقات والمراجعة':'Halaqas & study',exact:true}).tap();
    assert.equal(await page.locator('.halaqa-player iframe').count(),0);
    await page.locator('.halaqa-preview').tap();
    assert.ok((await page.locator('.halaqa-player iframe').getAttribute('src')).startsWith('https://www.youtube-nocookie.com/embed/'));

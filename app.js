@@ -1,5 +1,5 @@
-import {TeacherAssignments} from './assignments.js?v=1';
-import {ReviewPlanner,MissCoach,ReferenceText} from './study-tools.js?v=1';
+import {TeacherAssignments} from './assignments.js?v=2';
+import {ReviewPlanner,MissCoach,ReferenceText} from './study-tools.js?v=2';
 import {
   y,
   M as N,
@@ -35,7 +35,7 @@ import {
   getLanguage,
   setLanguage,
   subscribeLanguage,
-} from "./i18n.js?v=19";
+} from "./i18n.js?v=20";
 import {
   Ze as Xe,
   $e as Qe,
@@ -54,7 +54,8 @@ import {
   Heater,
   MotionNav,
   GatheringFooter,
-} from "./components.js?v=19";
+  StudyPage,
+} from "./components.js?v=20";
 import {
   nextHomeworkSunday,
   homeworkSunday,
@@ -64,11 +65,12 @@ import {
   storeHomeworkDraft,
   clearHomeworkDraft,
 } from "./homework.js?v=1";
-import {QuranReader} from "./quran-reader.js?v=6";
+import {QuranReader} from "./quran-reader.js?v=7";
 import {quranReferences} from "./quran.js?v=2";
-import {AccountPage} from "./account.js?v=2";
+import {AccountPage} from "./account.js?v=3";
 import {profileRequest} from "./profile.js?v=1";
 const el = y.createElement;
+function ProfileIcon({size=17}){return el('svg',{width:size,height:size,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor',strokeWidth:1.5,'aria-hidden':true},el('circle',{cx:12,cy:8,r:3.5}),el('path',{d:'M5 21v-2a7 7 0 0 1 14 0v2',strokeLinecap:'round'}));}
 const Ye = "https://tamkeen-maqraah-teacher.ibrahiimmuhamud.workers.dev";
 var et = {
   revisit: `tamkeen-revisit`,
@@ -985,7 +987,7 @@ function Tt() {
           : l === `home` ||
               l === `quizzes` ||
               l === `moments` ||
-              l === `homework` || l === `quran` || l === `account`
+              l === `homework` || l === `quran` || l === `account` || l === `study`
             ? r(l)
             : l === `grades` || l === `ai`
               ? r(c.teacher ? l : `login`)
@@ -1119,6 +1121,8 @@ function Tt() {
           : !0;
   }
   function ln(e) {
+    const studyTool=['notes','practice','tuesday'].includes(e)?e:'';
+    if(studyTool)e='study';
     if(e!==n)setHomeworkReady(false);
     (d(null),
       h(!1),
@@ -1129,7 +1133,7 @@ function Tt() {
       a(``),
       s(``),
       Nt(``),
-      history.replaceState(null, ``, `/` + (e === `home` ? `` : `?view=` + e)),
+      history.replaceState(null, ``, `/` + (e === `home` ? `` : `?view=` + e + (studyTool?'&tool='+studyTool:''))),
       window.scrollTo(0, 0));
   }
   function L(e) {
@@ -1138,6 +1142,7 @@ function Tt() {
         location.assign(Ye + `/?view=teacher`);
         return;
       }
+      if(e==='study'&&n==='study'&&!u){window.scrollTo({top:0,left:0,behavior:'instant'});return;}
       ln(e);
     }
   }
@@ -1970,12 +1975,14 @@ function Tt() {
     Hn = m ? `home` : `quizzes`,
     Un = [
       [`home`, translate(`Home`), ye],
-      [`quizzes`, translate(`Quizzes`), ie],
       [`homework`, translate(`Homework`), HomeworkIcon],
-      [`quran`, translate("Qur’an"), ie],
+      [`study`, translate(`Halaqas & study`), ie],
+      [`quizzes`, translate(`Quizzes`), E],
+      [`quran`, translate('Qur’an'), ie],
       ...(e?.teacher ? [[`grades`, translate(`Grades`), E]] : []),
       [`leaderboard`, translate(`Leaderboard`), ze],
       [`moments`, translate(`Funny answers`), ge],
+      ...(!e?.teacher ? [[`account`,translate(`Account`),ProfileIcon]] : []),
     ];
   return At
     ? (0, N.jsx)(bt, {
@@ -2601,6 +2608,8 @@ function Tt() {
                     ? el(AccountPage,{key:v,name:v,profile:profile?.name===v?profile:null,error:profileError,onRetry:()=>setProfileVersion(value=>value+1),onSaved:setProfile,onDirtyChange:setProfileDirty,onPassword:()=>{if(cn()){kt('');jt(true);}},onSignOut:()=>{if(cn())wn();},googleSignIn:el(GoogleSignIn,{onCredential:credential=>finishGoogle(credential,v,true)}),googleError:Ot,googleBusy})
                   : e && n === 'quran' && !de
                     ? el('section',{className:'quran-page'},el('h1',null,translate('Qur’an')),el(QuranReader,{initialSelection:quranSelection}))
+                  : e && n === 'study' && !de
+                    ? el(StudyPage,{key:v,name:v,revisit:se,onPractice:pn,onClearRevisit:mn,onNavigate:L})
                   : e && n === `homework` && !de
                     ? (0, N.jsxs)(`section`, {
                         className: `homework`,
@@ -2676,8 +2685,9 @@ function Tt() {
                               { role: "status", className: "help" },
                               translate("Loading homework…"),
                             ),
+                          el('nav',{className:'homework-jumps','aria-label':translate('Homework sections')},[['assigned-work-title','Teacher assignments'],['practice-note-title','Your practice note'],['group-notes-title','Group practice notes']].map(([id,label])=>el('a',{key:id,href:'#'+id},translate(label)))),
                           el(TeacherAssignments,{week:homeworkWeek,name:v,onRead:openQuran,onAccount:()=>L('account')}),
-                          el('h2',{className:'practice-note-title'},translate('Your practice note')),
+                          el('h2',{className:'practice-note-title',id:'practice-note-title'},translate('Your practice note')),
                           el('p',{className:'help'},translate('Add your own preparation note. The group can read it.')),
                           el('div',{className:'quran-homework-picker'},
                             el('button',{className:'secondary',type:'button',disabled:!homeworkReady || homeworkBusy,'aria-expanded':homeworkQuranOpen,'aria-controls':'homework-quran-picker',onClick:()=>setHomeworkQuranOpen(value=>!value)},translate('Choose ayahs from the Qur’an')),
@@ -2757,7 +2767,7 @@ function Tt() {
                                 ),
                               }),
                           homeworkDraft.trim()&&el(ReviewPlanner,{assignment:homeworkDraft,context:homeworkWeek+'|'+v}),
-                          el('h2',{className:'group-notes-title'},translate('Group practice notes')),
+                          el('h2',{className:'group-notes-title',id:'group-notes-title'},translate('Group practice notes')),
                           (0, N.jsx)(`ul`, {
                             className: `homework-list`,
                             children: homeworkEntries.map((item) =>

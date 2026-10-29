@@ -1,5 +1,6 @@
+import {ReviewPlanner} from './study-tools.js?v=2';
 import { y } from "./runtime.js";
-import { t, getLanguage } from "./i18n.js?v=19";
+import { t, getLanguage } from "./i18n.js?v=20";
 import {
   loadSurahs,
   loadSurah,
@@ -18,6 +19,7 @@ export function QuranReader({ initialSelection, onAdd }) {
   const [data, setData] = y.useState(null);
   const [error, setError] = y.useState("");
   const [retry, setRetry] = y.useState(0);
+  const [practice,setPractice]=y.useState(false);
   const [loading, setLoading] = y.useState(true);
 
   y.useEffect(() => {
@@ -176,6 +178,7 @@ export function QuranReader({ initialSelection, onAdd }) {
         t("Read ayahs"),
       ),
     ),
+    !onAdd&&data?.number===selection.surah&&el('aside',{className:'reader-practice'},el('div',null,el('h2',null,t('Practise this passage')),el('p',{className:'help'},t('Build a timed review plan for the ayahs you are reading.'))),el('button',{className:'secondary',type:'button','aria-expanded':practice,'aria-controls':'reader-review-plan',onClick:()=>setPractice(value=>!value)},t(practice?'Close plan':'Plan with AI')),practice&&el('div',{id:'reader-review-plan'},el(ReviewPlanner,{assignment:'Review '+quranReference(loaded,selection.from,selection.to,getLanguage()),context:'reader|'+selection.surah+':'+selection.from+'-'+selection.to}))),
     error &&
       el(
         "div",

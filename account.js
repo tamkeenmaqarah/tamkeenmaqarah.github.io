@@ -1,6 +1,6 @@
 import {y} from './runtime.js';
-import {t} from './i18n.js?v=19';
-import {Avatar} from './components.js?v=19';
+import {t} from './i18n.js?v=20';
+import {Avatar} from './components.js?v=20';
 import {preparePhoto,profileRequest} from './profile.js?v=1';
 const el=y.createElement;
 export function AccountPage({name,profile,error,onRetry,onSaved,onPassword,onSignOut,googleSignIn,googleError,googleBusy,onDirtyChange}) {
@@ -26,10 +26,11 @@ export function AccountPage({name,profile,error,onRetry,onSaved,onPassword,onSig
  const change=(source)=>{setDraft({source,photo:null});setFailure('');setMessage('Photo ready to save.');};
  return el('section',{className:'account-page','aria-labelledby':'account-title'},
   el('header',{className:'page-heading'},el('div',null,el('h1',{id:'account-title'},t('Your account')))),
+  el('nav',{className:'account-jumps','aria-label':t('Account settings')},el('a',{href:'#profile-photo'},t('Profile photo')),el('a',{href:'#sign-in-settings'},t('Sign-in settings'))),
   el('div',{className:'account-layout'},
    el('section',{className:'profile-identity'},el(Avatar,{name,photo:profile?photo:null,large:true}),el('h2',null,el('bdi',null,name)),profile&&el('p',null,t(profile.google?'Connected with Google':'Name and password'))),
    el('div',{className:'profile-settings'},
-    el('h2',null,t('Profile photo')),
+    el('h2',{id:'profile-photo'},t('Profile photo')),
     !profile?el('div',{className:'profile-status',role:'status'},el('p',null,t(error||'Loading your profile…')),error&&el('div',{className:'profile-actions'},el('button',{className:'secondary',type:'button',onClick:onRetry},t('Try again')),el('button',{className:'text-button',type:'button',onClick:onSignOut},t('Sign in again'))),error==='Sign in again to update your profile.'&&el('section',{className:'profile-google'},el('h2',null,t('Connect Google')),googleSignIn,googleBusy&&el('p',{role:'status'},t('Checking with Google…')),googleError&&el('p',{className:'profile-error',role:'alert'},t(googleError)))):
     el(y.Fragment,null,
      el('p',{className:'help'},t('Choose a photo. It will be cropped to a square.')),
@@ -44,5 +45,5 @@ export function AccountPage({name,profile,error,onRetry,onSaved,onPassword,onSig
       failure&&el('p',{className:'profile-error',role:'alert'},t(failure)),
       el('div',{className:'profile-save'},el('button',{className:'primary',disabled:working||!dirty,type:'submit'},t(busy?'Saving…':'Save photo')),dirty&&el('button',{className:'text-button',disabled:working,type:'button',onClick:()=>{setDraft({source:profile.photoSource,photo:profile.photoSource==='upload'?profile.photo:null});setFailure('');setMessage('');}},t('Cancel')))),
      el('section',{className:'profile-google'},el('h2',null,t(profile.google?'Google photo':'Connect Google')),el('p',{className:'help'},t(profile.google?'Sign in with Google again to refresh its profile photo.':'Connect Google to use its profile photo.')),dirty?el('p',{className:'help'},t('Save or cancel your photo before connecting Google.')):googleSignIn,googleBusy&&el('p',{role:'status'},t('Checking with Google…')),googleError&&el('p',{className:'profile-error',role:'alert'},t(googleError))),
-     el('section',{className:'profile-security'},el('h2',null,t('Sign-in settings')),el('div',{className:'profile-actions'},profile.hasPassword!==false&&el('button',{className:'secondary',type:'button',onClick:onPassword},t('Change password')),el('button',{className:'text-button',type:'button',onClick:onSignOut},t('Sign out'))))))));
+     el('section',{className:'profile-security'},el('h2',{id:'sign-in-settings'},t('Sign-in settings')),el('div',{className:'profile-actions'},profile.hasPassword!==false&&el('button',{className:'secondary',type:'button',onClick:onPassword},t('Change password')),el('button',{className:'text-button',type:'button',onClick:onSignOut},t('Sign out'))))))));
 }
