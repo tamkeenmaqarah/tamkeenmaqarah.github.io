@@ -7701,3 +7701,84 @@ main > *,
 .notes-source-footer bdi{white-space:nowrap;font-variant-numeric:tabular-nums}
 
 .notes-actions .question-help{font:400 12px/1.7 Figtree,'IBM Plex Sans Arabic',sans-serif;color:#d0ad8c;display:block;margin:-4px 0 16px}
+
+/* One weekly job: prepare the assigned work, then review together in person. */
+.main-nav.student-nav{justify-content:flex-start;gap:20px}
+.main-nav.student-nav>button{padding-inline:16px}
+.simple-study-nav{grid-template-columns:1fr 1fr}
+.teacher-assignments>.section-heading>div>h2{margin-bottom:6px}
+.teacher-assignments>.section-heading .help{margin:0}
+.assigned-work>header{align-items:start}
+.task-status{display:inline-flex;align-items:center;gap:6px;font:500 13px/1.7 Figtree,'IBM Plex Sans Arabic',sans-serif;color:#d0ad8c;flex-shrink:0}
+.status-ready{color:#f0cf9c}.status-help,.status-repeat{color:#ffc9ac}.status-reviewed{color:#d2dfbd}
+.assigned-range{font-size:18px;line-height:1.8;color:#f0cf9c;margin-block:18px}
+.assigned-range bdi{white-space:nowrap}
+.task-actions,.readiness-actions{display:flex;align-items:center;gap:12px 20px;flex-wrap:wrap;margin-block:20px}
+.task-actions .quiz-completed{color:#d2dfbd;font-size:14px;margin:0}
+.assigned-practice{margin-block:26px}
+.assigned-practice .quran-reader{padding:0}
+.assigned-lesson{position:relative;aspect-ratio:16/9;margin-block:24px;background:#2b1016}
+.assigned-lesson iframe{width:100%;height:100%;border:0;display:block}
+.teacher-feedback{padding-block:18px;border-block:1px solid #9b6749;margin-block:20px}
+.teacher-feedback h4,.task-readiness h4{font-size:18px;margin:0 0 10px;font-weight:500;color:#f0cf9c}
+.teacher-feedback p{margin:0;line-height:1.8;white-space:pre-wrap}
+.task-readiness{margin-top:26px;padding-top:22px;border-top:1px solid #7c4b3e}
+.task-readiness .help{max-width:65ch;line-height:1.8;margin:0}
+.readiness-actions{margin-bottom:0}
+.homework-notice{color:#d2dfbd;padding-block:16px;line-height:1.8}
+.account-homework-hint{padding-block:12px 20px}
+.account-homework-hint p{max-width:65ch;line-height:1.8}
+.legacy-homework-notes{margin-top:34px;padding-top:18px;border-top:1px solid #7c4b3e;color:#d0ad8c}
+.legacy-homework-notes summary{min-height:44px;cursor:pointer;list-style-position:inside}
+.reader-mode{display:flex;gap:12px;flex-wrap:wrap;margin-block:20px}
+.memorisation-practice{padding:28px 32px;background:#ead3ab;color:#3a2920}
+.memorisation-practice>header{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;border-bottom:1px solid #b8966c;padding-bottom:18px}
+.memorisation-practice h2{font:400 32px/1.8 'Amiri Quran',Amiri,serif;color:#3a2920;margin:0}
+.memorisation-practice>header p{font-size:14px;color:#6a4b31;margin:0}
+.recall-instruction{margin-block:22px;line-height:1.8;color:#573e2d}
+.reveal-ayah{display:flex;align-items:center;justify-content:center;width:100%;min-height:130px;margin-block:20px;padding:24px;border:1px dashed #9b7351;background:#decaac;color:#573e2d;font:500 20px/1.6 Lora,Amiri,serif;cursor:pointer;border-radius:4px}
+.reveal-ayah:hover{background:#e3cba2}
+.recall-ayah{font:400 32px/2.6 'Amiri Quran',Amiri,serif;letter-spacing:0;min-height:130px;margin-block:20px;color:#3a2920}
+.recall-audio{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-block:1px solid #b8966c;padding-block:14px}
+.recall-audio>.text-button{color:#742c34;min-height:44px}
+.recall-audio audio{max-width:100%;height:44px}
+.recall-audio .quran-error{color:#742c34;font-size:14px;line-height:1.7;margin:0}
+.recall-controls{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:24px}
+.memorisation-practice .primary{background:#742c34;color:#fff2d9}
+.memorisation-practice .secondary{color:#742c34;border-color:#9b7351}
+@media(max-width:1100px){.main-nav.student-nav{gap:8px}}
+@media(max-width:750px){
+ html{scroll-padding-top:182px}
+ .main-nav.student-nav{grid-template-columns:repeat(3,minmax(0,1fr));min-height:94px;gap:0 4px}
+ .main-nav.student-nav>button{min-height:44px;padding:8px 3px;font-size:12px}
+ .assigned-work>header{gap:10px}
+ .task-status{font-size:12px}
+ .assigned-range{font-size:17px}
+ .task-actions,.readiness-actions{gap:12px;margin-block:18px}
+ .readiness-actions>.primary{width:100%}
+ .task-readiness{margin-top:22px}
+ .memorisation-practice{padding:22px 18px}
+ .memorisation-practice h2{font-size:28px}
+ .recall-ayah{font-size:28px}
+ .reveal-ayah{font-size:18px;min-height:130px}
+ .recall-controls{gap:10px}
+ .recall-controls>.primary,.recall-controls>.secondary{font-size:13px;padding-inline:12px}
+ .simple-study-nav{grid-template-columns:1fr 1fr}
+ .simple-study-nav>button{font-size:13px}
+}
+.homework-week.compact-week{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;gap:16px;padding:18px 24px 26px}
+.homework-week.compact-week>.homework-date{grid-area:auto;min-width:0}
+.compact-week .week-arrow{width:44px;min-width:44px;min-height:44px;padding:0;display:flex;justify-content:center;align-items:center}
+.compact-week .homework-date label{margin-top:10px}
+[dir=rtl] .week-arrow>svg{transform:scaleX(-1)}
+@media(max-width:750px){
+ .homework-week.compact-week{padding:18px 14px 22px;gap:12px 10px;margin-block:20px}
+ .homework-week.compact-week>.homework-date{display:contents}
+ .compact-week .homework-date h2{position:static;grid-area:1/1/2/-1;font-size:19px;line-height:1.5}
+ .compact-week .homework-date label{grid-area:2/2;margin:0}
+ .compact-week .homework-date input{width:100%;max-width:180px}
+ .homework-week.compact-week .week-arrow{grid-row:2;font-size:14px}
+ .compact-week .week-arrow:first-child{grid-column:1}
+ .compact-week .week-arrow:last-child{grid-column:3}
+ .teacher-assignments{margin-top:24px}
+}

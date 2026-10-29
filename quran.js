@@ -88,3 +88,10 @@ export function quranReferences(body) {
   }
   return [...found.values()];
 }
+
+export async function loadRecitation(number,signal,expectedCount){
+ if(!Number.isInteger(number)||number<1||number>114)throw Error('Choose a surah.');
+ const path=`/surah/${number}/ar.alafasy`,data=await request(path,signal);
+ if(data.number!==number||data.edition?.identifier!=='ar.alafasy'||!Number.isInteger(data.numberOfAyahs)||data.numberOfAyahs<1||data.numberOfAyahs>286||!Array.isArray(data.ayahs)||data.ayahs.length!==data.numberOfAyahs||(Number.isInteger(expectedCount)&&data.numberOfAyahs!==expectedCount)||data.ayahs.some((ayah,index)=>{try{const url=new URL(ayah.audio);return ayah.numberInSurah!==index+1||url.protocol!=='https:'||url.hostname!=='cdn.islamic.network'||url.username||url.password||!url.pathname.startsWith('/quran/audio/');}catch{return true;}}))throw Error('Recitation audio could not be loaded. You can still read and practise.');
+ cache.set(path,data);return data;
+}

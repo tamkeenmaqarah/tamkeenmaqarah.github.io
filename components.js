@@ -1,6 +1,6 @@
-import {TeacherAssignments} from './assignments.js?v=2';
-import {nextHomeworkSunday} from './homework.js?v=1';
-import {NotesCards,MissCoach} from './study-tools.js?v=2';
+import {TeacherAssignments} from './assignments.js?v=3';
+import {nextHomeworkSunday} from './homework.js?v=2';
+import {MissCoach} from './study-tools.js?v=3';
 import {
   y,
   M,
@@ -36,7 +36,7 @@ import {
   getLanguage,
   setLanguage,
   subscribeLanguage,
-} from "./i18n.js?v=20";
+} from "./i18n.js?v=21";
 import {photoUrl} from "./profile.js?v=1";
 const Ge = (e) => (e.score / e.max) * 100,
   Ke = (e) =>
@@ -276,15 +276,15 @@ function Halaqas({tuesday=false}) {
 
   );
 }
-function StudyPage({name,revisit,onPractice,onClearRevisit,onNavigate}) {
+function StudyPage({revisit,onPractice,onClearRevisit,onNavigate}) {
  const initial=new URLSearchParams(location.search).get('tool');
- const [tab,setTab]=y.useState(['notes','practice','tuesday'].includes(initial)?initial:'lessons');
+ const [tab,setTab]=y.useState(initial==='practice'?'practice':initial==='tuesday'?'tuesday':'lessons');
+ y.useEffect(()=>{if(initial==='notes')history.replaceState(null,'','/?view=study');},[]);
  function select(value){setTab(value);history.replaceState(null,'','/?view=study'+(value==='lessons'?'':'&tool='+value));}
- return el('section',{className:'study-page'},el('header',{className:'page-heading'},el('div',null,el('h1',null,translate('Halaqas & study')),el('p',null,translate('Watch the lesson, work through your notes, and revisit missed questions.')))),
-  el('nav',{className:'study-section-nav','aria-label':translate('Study sections')},[['lessons','Watch halaqas'],['notes','My notes & AI'],['practice','Missed questions']].map(([id,label])=>el('button',{type:'button',key:id,'aria-pressed':tab===id||(id==='lessons'&&tab==='tuesday'),onClick:()=>select(id)},translate(label),id==='practice'&&revisit?.misses?.length?el('span',{className:'study-count'},revisit.misses.length):null))),
+ return el('section',{className:'study-page'},el('header',{className:'page-heading'},el('div',null,el('h1',null,translate('Halaqas')),el('p',null,translate('Watch the lesson and check what you remember.'))),el('button',{className:'secondary',onClick:()=>onNavigate('quizzes')},translate('Lesson quizzes'))),
+  el('nav',{className:'study-section-nav simple-study-nav','aria-label':translate('Halaqa sections')},[['lessons','Watch halaqas'],['practice','Missed questions']].map(([id,label])=>el('button',{type:'button',key:id,'aria-pressed':tab===id||(id==='lessons'&&tab==='tuesday'),onClick:()=>select(id)},translate(label),id==='practice'&&revisit?.misses?.length?el('span',{className:'study-count'},revisit.misses.length):null))),
   (tab==='lessons'||tab==='tuesday')&&el(Halaqas,{key:tab,tuesday:tab==='tuesday'}),
-  tab==='notes'&&el(NotesCards,{owner:name}),
-  tab==='practice'&&(revisit?.misses?.length?el(PrivatePractice,{revisit,onPractice,onClearRevisit}):el('section',{className:'study-empty'},el('h2',null,translate('Your missed questions will be here')),el('p',null,translate('After a quiz, review the teacher’s explanation, ask for a simpler explanation, or practise your missed questions.')),el('button',{className:'primary',onClick:()=>onNavigate('quizzes')},translate('Find a quiz')))));
+  tab==='practice'&&(revisit?.misses?.length?el(PrivatePractice,{revisit,onPractice,onClearRevisit}):el('section',{className:'study-empty'},el('h2',null,translate('Your missed questions will be here')),el('p',null,translate('After a quiz, review the teacher’s explanation or practise your missed questions.')),el('button',{className:'primary',onClick:()=>onNavigate('quizzes')},translate('Find a quiz')))));
 }
 function Ze({name,data,recent,revisit,onPractice,onClearRevisit,onNavigate,onStart}) {
  const quiz=data.quizzes.find(quiz=>quiz.published),board=data.community.boards.find(board=>board.rows.length),moment=data.community.moments[0],week=nextHomeworkSunday();
@@ -295,8 +295,8 @@ function Ze({name,data,recent,revisit,onPractice,onClearRevisit,onNavigate,onSta
   el('div',{className:'home-week-grid'},el(TeacherAssignments,{week,name,compact:true,onHomework:()=>onNavigate('homework')}),
    el('section',{className:'weekly-quiz','aria-labelledby':'weekly-quiz-title'},el('div',{className:'weekly-quiz-copy'},el('h2',{id:'weekly-quiz-title'},translate('Weekly quiz')),el('h3',{dir:'auto'},quiz?quiz.title:translate('No quiz is open right now.')),quiz&&el('p',null,translate('{count} questions · No time limit',{count:quiz.questions.length})),recent&&el('p',{className:'latest-score'},translate('Your latest result: '),el('b',null,recent.score,'/',recent.max))),
     el('div',{className:'week-quiz-actions'},el('button',{className:'primary',onClick:()=>quiz?onStart(quiz):onNavigate('quizzes')},translate(quiz?quizAction:'All quizzes'),el(w,{size:17})),quiz&&el('button',{className:'text-button',onClick:()=>onNavigate('quizzes')},translate('All quizzes'))))),
-  el('section',{className:'home-study-launch','aria-labelledby':'home-study-title'},el('header',null,el('h2',{id:'home-study-title'},translate('Halaqas & study')),el('span',{className:'help'},translate('Lessons, notes and practice'))),
-   el('div',{className:'study-launch-actions'},[['tuesday','Watch Tuesday halaqa','The Arab Spring',ie],['notes','Study my notes','Revision cards & answers from your notes',E],['practice','Practise missed questions',revisit?.misses?.length?translate('{count} to revisit',{count:revisit.misses.length}):'Review after your next quiz',Oe]].map(([id,title,detail,Icon])=>el('button',{type:'button',key:id,onClick:()=>onNavigate(id)},el(Icon,{size:23}),el('span',null,el('strong',null,translate(title)),el('small',null,translate(detail))),el(w,{size:18}))))),
+  el('section',{className:'home-study-launch','aria-labelledby':'home-study-title'},el('header',null,el('h2',{id:'home-study-title'},translate('Halaqas & practice')),el('span',{className:'help'},translate('Watch, remember, check'))),
+   el('div',{className:'study-launch-actions'},[['tuesday','Watch Tuesday halaqa','The Arab Spring',ie],['quizzes','Lesson quizzes','Check what you remember',E],['practice','Practise missed questions',revisit?.misses?.length?translate('{count} to revisit',{count:revisit.misses.length}):'Review after your next quiz',Oe]].map(([id,title,detail,Icon])=>el('button',{type:'button',key:id,onClick:()=>onNavigate(id)},el(Icon,{size:23}),el('span',null,el('strong',null,translate(title)),el('small',null,translate(detail))),el(w,{size:18}))))),
     el(
       "div",
       { className: "home-community-grid" },

@@ -25,7 +25,7 @@ export function nextHomeworkSunday(from = new Date()) {
   const date = new Date(
     from.getFullYear(),
     from.getMonth(),
-    from.getDate() + 1,
+    from.getDate(),
   );
   return homeworkSunday(homeworkIso(date));
 }

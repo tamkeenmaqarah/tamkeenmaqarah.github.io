@@ -9,8 +9,8 @@ import {
   clearHomeworkDraft,
 } from "../homework.js";
 
-test("defaults to a strictly future Sunday in local time, including Sunday and year boundaries", () => {
-  assert.equal(nextHomeworkSunday(new Date(2026, 9, 25, 23, 59)), "2026-11-01");
+test("keeps Sunday on today and otherwise chooses the upcoming Sunday in local time", () => {
+  assert.equal(nextHomeworkSunday(new Date(2026, 9, 25, 23, 59)), "2026-10-25");
   assert.equal(nextHomeworkSunday(new Date(2026, 9, 24, 12)), "2026-10-25");
   assert.equal(nextHomeworkSunday(new Date(2026, 11, 31, 12)), "2027-01-03");
   assert.equal(nextHomeworkSunday(new Date(2026, 2, 7, 12)), "2026-03-08");

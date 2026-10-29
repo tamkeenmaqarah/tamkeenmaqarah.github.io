@@ -1,5 +1,5 @@
-import {TeacherAssignments} from './assignments.js?v=2';
-import {ReviewPlanner,MissCoach,ReferenceText} from './study-tools.js?v=2';
+import {TeacherAssignments} from './assignments.js?v=3';
+import {MissCoach,ReferenceText} from './study-tools.js?v=3';
 import {
   y,
   M as N,
@@ -35,7 +35,7 @@ import {
   getLanguage,
   setLanguage,
   subscribeLanguage,
-} from "./i18n.js?v=20";
+} from "./i18n.js?v=21";
 import {
   Ze as Xe,
   $e as Qe,
@@ -55,7 +55,7 @@ import {
   MotionNav,
   GatheringFooter,
   StudyPage,
-} from "./components.js?v=20";
+} from "./components.js?v=21";
 import {
   nextHomeworkSunday,
   homeworkSunday,
@@ -64,10 +64,10 @@ import {
   readHomeworkLocal,
   storeHomeworkDraft,
   clearHomeworkDraft,
-} from "./homework.js?v=1";
-import {QuranReader} from "./quran-reader.js?v=7";
-import {quranReferences} from "./quran.js?v=2";
-import {AccountPage} from "./account.js?v=3";
+} from "./homework.js?v=2";
+import {QuranReader} from "./quran-reader.js?v=8";
+import {quranReferences} from "./quran.js?v=3";
+import {AccountPage} from "./account.js?v=4";
 import {profileRequest} from "./profile.js?v=1";
 const el = y.createElement;
 function ProfileIcon({size=17}){return el('svg',{width:size,height:size,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor',strokeWidth:1.5,'aria-hidden':true},el('circle',{cx:12,cy:8,r:3.5}),el('path',{d:'M5 21v-2a7 7 0 0 1 14 0v2',strokeLinecap:'round'}));}
@@ -876,6 +876,7 @@ function Tt() {
     [tn, nn] = (0, y.useState)(!1),
     [googleTicket, setGoogleTicket] = (0, y.useState)(``),
     [googleBusy, setGoogleBusy] = (0, y.useState)(!1),
+    [homeworkQuizReturn,setHomeworkQuizReturn]=y.useState(false),
     [homeworkWeek, setHomeworkWeek] = (0, y.useState)(nextHomeworkSunday),
     [homeworkEntries, setHomeworkEntries] = (0, y.useState)([]),
     [homeworkDraft, setHomeworkDraft] = (0, y.useState)(``),
@@ -1075,7 +1076,6 @@ function Tt() {
         stop = !0;
       };
     }, [n, homeworkWeek, v]));
-  const homeworkDirty=n==='homework'&&homeworkReady&&homeworkDraft.trim().replace(/\s+/g,' ')!==(homeworkEntries.find(item=>homeworkKey(item.name)===homeworkKey(v))?.body||'').trim().replace(/\s+/g,' ');
   let an =
       de &&
       !!(
@@ -1086,13 +1086,13 @@ function Tt() {
     on = !!(u && !S && x.some((e) => e !== -1));
   (0, y.useEffect)(() => {
     let e = (e) => {
-      (an || on || M || profileDirty || homeworkDirty) && (e.preventDefault(), (e.returnValue = ``));
+      (an || on || M || profileDirty) && (e.preventDefault(), (e.returnValue = ``));
     };
     return (
       window.addEventListener(`beforeunload`, e),
       () => window.removeEventListener(`beforeunload`, e)
     );
-  }, [an, on, M, profileDirty, homeworkDirty]);
+  }, [an, on, M, profileDirty]);
   async function sn(e) {
     (l(!0), a(``), s(``));
     try {
@@ -1106,8 +1106,6 @@ function Tt() {
   function cn() {
     return profileDirty
       ? confirm(translate("Leave without saving your profile photo?"))
-      : homeworkDirty
-      ? confirm(translate("Leave without saving your practice note?"))
       : M
       ? confirm(translate(`Leave without saving the grade changes?`))
       : on
@@ -1147,6 +1145,7 @@ function Tt() {
     }
   }
   function un(e, t = !1) {
+    setHomeworkQuizReturn(false);
     let n = T(),
       r = t ? null : it(n, P.draft),
       i = t ? null : it(n, P.done),
@@ -1869,91 +1868,8 @@ function Tt() {
     };
   }
   function changeHomeworkWeek(week) {
-    if (homeworkBusy || week === homeworkWeek) return;
-    const saved = homeworkEntries.find(
-      (item) => homeworkKey(item.name) === homeworkKey(v),
-    );
-    const body = homeworkDraft.trim().replace(/\s+/g, " ");
-    if (homeworkReady && v.trim() && body !== (saved?.body || ""))
-      storeHomeworkDraft(T(), homeworkWeek, lt(v), body);
-    setHomeworkReady(false);
-    setHomeworkWeek(week);
-    a("");
-    s("");
-  }
-  async function saveHomework() {
-    if (homeworkBusy || !homeworkReady) return;
-    const name = lt(v),
-      problem = ut(name),
-      body = homeworkDraft.trim().replace(/\s+/g, " "),
-      week = homeworkWeek,
-      context = homeworkContext.current;
-    if (problem) {
-      a(problem);
-      return;
-    }
-    if (body.length > 500) {
-      a("That homework is too long.");
-      return;
-    }
-    setHomeworkBusy(true);
-    a("");
-    s("");
-    // Keep the edit for retry before making a shared write.
-    const kept = storeHomeworkDraft(T(), week, name, body);
-    try {
-      if (homeworkLive) {
-        await I("/api/homework", "POST", { week, name, body });
-        clearHomeworkDraft(T(), week, name);
-      } else if (!kept) {
-        throw Error(
-          "This phone could not save homework. Try again when you are online.",
-        );
-      }
-      if (homeworkContext.current !== context) return;
-      setHomeworkEntries((entries) => {
-        const others = entries.filter(
-          (item) => homeworkKey(item.name) !== homeworkKey(name),
-        );
-        return body
-          ? [{ name, body, localOnly: !homeworkLive }, ...others]
-          : others;
-      });
-      setHomeworkDraft(body);
-      setHomeworkPending(!homeworkLive);
-      s(
-        homeworkLive
-          ? body
-            ? "Practice note shared."
-            : "Practice note removed."
-          : "Saved on this phone.",
-      );
-    } catch (err) {
-      if (homeworkContext.current === context) {
-        setHomeworkPending(kept);
-        a(
-          err instanceof Error && err.message
-            ? err.message
-            : "Could not save homework. Please try again.",
-        );
-      }
-    } finally {
-      setHomeworkBusy(false);
-    }
-  }
-  function openQuran(reference) {
-    if (!cn()) return;
-    setQuranSelection(reference);
-    ln('quran');
-    history.replaceState(null, '', `/?view=quran&surah=${reference.surah}&from=${reference.from}&to=${reference.to}`);
-  }
-  function addQuranHomework(reference) {
-    if (!homeworkReady || homeworkBusy) return;
-    const next = [homeworkDraft.trim(), reference].filter(Boolean).join('\n');
-    if (next.length > 500) { a('That homework is too long.'); return; }
-    setHomeworkDraft(next);
-    setHomeworkQuranOpen(false);
-    document.getElementById('homework-body')?.focus();
+    if(week===homeworkWeek)return;
+    setHomeworkWeek(week);a('');s('');
   }
   let zn = m
       ? S?.score === S?.max
@@ -1971,18 +1887,12 @@ function Tt() {
       : f
         ? translate(`This was a preview. No grade was saved.`)
         : translate("{name}, your result has been saved.", { name: v }),
-    Vn = m ? translate(`Back home`) : translate(`Back to quizzes`),
-    Hn = m ? `home` : `quizzes`,
+    Vn = m ? translate(`Back home`) : translate(homeworkQuizReturn?`Back to homework`:`Back to quizzes`),
+    Hn = m ? `home` : homeworkQuizReturn?`homework`:`quizzes`,
     Un = [
-      [`home`, translate(`Home`), ye],
-      [`homework`, translate(`Homework`), HomeworkIcon],
-      [`study`, translate(`Halaqas & study`), ie],
-      [`quizzes`, translate(`Quizzes`), E],
-      [`quran`, translate('Qur’an'), ie],
-      ...(e?.teacher ? [[`grades`, translate(`Grades`), E]] : []),
-      [`leaderboard`, translate(`Leaderboard`), ze],
-      [`moments`, translate(`Funny answers`), ge],
-      ...(!e?.teacher ? [[`account`,translate(`Account`),ProfileIcon]] : []),
+      [`home`,translate(`Home`),ye],[`homework`,translate(`Homework`),HomeworkIcon],
+      [`study`,translate(`Halaqas`),ie],[`quran`,translate('Qur’an'),ie],
+      [`leaderboard`,translate(`Leaderboard`),ze],[`account`,translate(`Account`),ProfileIcon],
     ];
   return At
     ? (0, N.jsx)(bt, {
@@ -2132,13 +2042,13 @@ function Tt() {
                         {
                           "aria-current":
                             !u &&
-                            (n === e ||
+                            (n === e || (e===`study`&&n===`quizzes`) ||
                               (e === `quizzes` && [`ai`, `manage`].includes(n)))
                               ? `page`
                               : void 0,
                           className:
                             !u &&
-                            (n === e ||
+                            (n === e || (e===`study`&&n===`quizzes`) ||
                               (e === `quizzes` && [`ai`, `manage`].includes(n)))
                               ? `selected`
                               : ``,
@@ -2611,211 +2521,10 @@ function Tt() {
                   : e && n === 'study' && !de
                     ? el(StudyPage,{key:v,name:v,revisit:se,onPractice:pn,onClearRevisit:mn,onNavigate:L})
                   : e && n === `homework` && !de
-                    ? (0, N.jsxs)(`section`, {
-                        className: `homework`,
-                        children: [
-                          (0, N.jsx)(`h1`, { children: translate(`Homework`) }),
-                          (0, N.jsx)(`p`, {
-                            className: `homework-intro`,
-                            children: translate(
-                              `See your teacher’s assignments and prepare for Sunday.`,
-                            ),
-                          }),
-                          (0, N.jsxs)(`div`, {
-                            className: `homework-week`,
-                            children: [
-                              (0, N.jsx)(`button`, {
-                                type: `button`,
-                                className: `secondary`,
-                                disabled: homeworkBusy,
-                                onClick: () =>
-                                  changeHomeworkWeek(
-                                    shiftHomeworkWeek(homeworkWeek, -7),
-                                  ),
-                                children: translate(`Previous Sunday`),
-                              }),
-                              el(
-                                "div",
-                                { className: "homework-date" },
-                                el(
-                                  "h2",
-                                  null,
-                                  formatHomeworkWeek(homeworkWeek),
-                                ),
-                                el(
-                                  "label",
-                                  null,
-                                  translate("Choose a date"),
-                                  el("input", {
-                                    type: "date",
-                                    "aria-label": translate("Choose a date"),
-                                    value: homeworkWeek,
-                                    disabled: homeworkBusy,
-                                    onChange: (event) => {
-                                      const week = homeworkSunday(
-                                        event.target.value,
-                                      );
-                                      if (week) changeHomeworkWeek(week);
-                                    },
-                                  }),
-                                ),
-                              ),
-                              (0, N.jsx)(`button`, {
-                                type: `button`,
-                                className: `secondary`,
-                                disabled: homeworkBusy,
-                                onClick: () =>
-                                  changeHomeworkWeek(
-                                    shiftHomeworkWeek(homeworkWeek, 7),
-                                  ),
-                                children: translate(`Next Sunday`),
-                              }),
-                            ],
-                          }),
-                          el(
-                            "p",
-                            { className: "help homework-date-help" },
-                            translate(
-                              "Dates are grouped by Sunday. A different day selects the following Sunday.",
-                            ),
-                          ),
-                          !homeworkReady &&
-                            el(
-                              "p",
-                              { role: "status", className: "help" },
-                              translate("Loading homework…"),
-                            ),
-                          el('nav',{className:'homework-jumps','aria-label':translate('Homework sections')},[['assigned-work-title','Teacher assignments'],['practice-note-title','Your practice note'],['group-notes-title','Group practice notes']].map(([id,label])=>el('a',{key:id,href:'#'+id},translate(label)))),
-                          el(TeacherAssignments,{week:homeworkWeek,name:v,onRead:openQuran,onAccount:()=>L('account')}),
-                          el('h2',{className:'practice-note-title',id:'practice-note-title'},translate('Your practice note')),
-                          el('p',{className:'help'},translate('Add your own preparation note. The group can read it.')),
-                          el('div',{className:'quran-homework-picker'},
-                            el('button',{className:'secondary',type:'button',disabled:!homeworkReady || homeworkBusy,'aria-expanded':homeworkQuranOpen,'aria-controls':'homework-quran-picker',onClick:()=>setHomeworkQuranOpen(value=>!value)},translate('Choose ayahs from the Qur’an')),
-                            homeworkQuranOpen && el('div',{id:'homework-quran-picker'},el(QuranReader,{onAdd:addQuranHomework}))),
-                          v.trim()
-                            ? (0, N.jsxs)(`form`, {
-                                className: `homework-editor`,
-                                onSubmit: (e) => {
-                                  e.preventDefault();
-                                  saveHomework();
-                                },
-                                children: [
-                                  (0, N.jsxs)(`label`, {
-                                    htmlFor: `homework-body`,
-                                    children: [
-                                      translate(`Your practice note`),
-                                      (0, N.jsx)(`textarea`, {
-                                        id: `homework-body`,
-                                        "aria-label": translate("Your practice note"),
-                                        dir: `auto`,
-                                        maxLength: 500,
-                                        disabled:
-                                          !homeworkReady || homeworkBusy,
-                                        value: homeworkDraft,
-                                        placeholder: translate(`Surah and ayahs`),
-                                        onChange: (e) =>
-                                          setHomeworkDraft(e.target.value),
-                                      }),
-                                    ],
-                                  }),
-                                  (0, N.jsx)(`button`, {
-                                    className: `primary`,
-                                    disabled:
-                                      homeworkBusy ||
-                                      !homeworkReady ||
-                                      (!homeworkDraft.trim() &&
-                                        !homeworkEntries.some(
-                                          (item) =>
-                                            homeworkKey(item.name) ===
-                                            homeworkKey(v),
-                                        )),
-                                    children: homeworkBusy
-                                      ? translate(`Saving…`)
-                                      : homeworkDraft.trim() ||
-                                          !homeworkEntries.some(
-                                            (item) =>
-                                              homeworkKey(item.name) ===
-                                              homeworkKey(v),
-                                          )
-                                        ? translate(`Save practice note`)
-                                        : translate(`Remove my note`),
-                                  }),
-                                  homeworkReady &&
-                                    homeworkPending &&
-                                    homeworkLive &&
-                                    el(
-                                      "p",
-                                      { className: "help", role: "status" },
-                                      translate(
-                                        "You have a note saved on this phone. Save it to share it with the group.",
-                                      ),
-                                    ),
-                                  homeworkReady &&
-                                    !homeworkLive &&
-                                    (0, N.jsx)(`p`, {
-                                      className: `help`,
-                                      children: translate(
-                                        `The shared list updates when the teacher site can store it. Until then, a change stays on this phone.`,
-                                      ),
-                                    }),
-                                ],
-                              })
-                            : (0, N.jsx)(`p`, {
-                                className: `help`,
-                                children: translate(
-                                  `Come in with your name to add your homework.`,
-                                ),
-                              }),
-                          homeworkDraft.trim()&&el(ReviewPlanner,{assignment:homeworkDraft,context:homeworkWeek+'|'+v}),
-                          el('h2',{className:'group-notes-title',id:'group-notes-title'},translate('Group practice notes')),
-                          (0, N.jsx)(`ul`, {
-                            className: `homework-list`,
-                            children: homeworkEntries.map((item) =>
-                              (0, N.jsxs)(
-                                `li`,
-                                {
-                                  className:
-                                    homeworkKey(item.name) === homeworkKey(v)
-                                      ? "is-own-homework"
-                                      : "",
-                                  children: [
-                                    el(
-                                      "strong",
-                                      null,
-                                      el("bdi", null, item.name),
-                                      homeworkKey(item.name) ===
-                                        homeworkKey(v) &&
-                                        el(
-                                          "small",
-                                          { className: "homework-own-label" },
-                                          translate("Your shared note"),
-                                        ),
-                                      item.localOnly &&
-                                        el(
-                                          "small",
-                                          { className: "homework-own-label" },
-                                          translate("Saved on this phone."),
-                                        ),
-                                    ),
-                                    el('div',{className:'homework-entry-body'},
-                                      el('p',{dir:'auto'},el(ReferenceText,{text:item.body})),
-                                      ...quranReferences(item.body).map(ref=>el('button',{key:`${ref.surah}:${ref.from}-${ref.to}`,className:'text-button homework-read',type:'button',onClick:()=>openQuran(ref)},translate('Read ayahs'),el('bdi',{dir:'ltr'},`${ref.surah}:${ref.from}–${ref.to}`)))),
-                                  ],
-                                },
-                                homeworkKey(item.name),
-                              ),
-                            ),
-                          }),
-                          homeworkReady &&
-                            !homeworkEntries.length &&
-                            (0, N.jsx)(`p`, {
-                              className: `help`,
-                              children: translate(
-                                `No homework has been saved for this Sunday yet.`,
-                              ),
-                            }),
-                        ],
-                      })
+                    ? el('section',{className:'homework'},el('h1',null,translate('Homework')),el('p',{className:'homework-intro'},translate('Practise your assigned work. Your teacher checks it with you in the tent.')),
+                      el('div',{className:'homework-week compact-week'},el('button',{className:'secondary week-arrow','aria-label':translate('Previous Sunday'),title:translate('Previous Sunday'),onClick:()=>changeHomeworkWeek(shiftHomeworkWeek(homeworkWeek,-7))},el(te,{size:18})),el('div',{className:'homework-date'},el('h2',null,formatHomeworkWeek(homeworkWeek)),el('label',null,el('input',{type:'date','aria-label':translate('Choose a date'),value:homeworkWeek,onChange:event=>{const week=homeworkSunday(event.target.value);if(week)changeHomeworkWeek(week)}}))),el('button',{className:'secondary week-arrow','aria-label':translate('Next Sunday'),title:translate('Next Sunday'),onClick:()=>changeHomeworkWeek(shiftHomeworkWeek(homeworkWeek,7))},el(w,{size:18}))),
+                      el(TeacherAssignments,{week:homeworkWeek,name:v,onAccount:()=>L('account'),onQuiz:id=>{const quiz=e.quizzes.find(row=>row.id===id&&row.published);if(quiz){un(quiz);setHomeworkQuizReturn(true);}else a(translate('This quiz is unavailable. Ask your teacher for help.'))}}),
+                      (!!homeworkEntries.length||homeworkPending&&homeworkDraft.trim())&&el('details',{className:'legacy-homework-notes'},el('summary',null,translate('Earlier shared practice notes')),homeworkPending&&homeworkDraft.trim()&&el('p',{dir:'auto'},homeworkDraft),el('ul',{className:'homework-list'},homeworkEntries.map(row=>el('li',{key:row.name},el('strong',null,el('bdi',null,row.name)),el('p',{dir:'auto'},el(ReferenceText,{text:row.body})))))))
                     : e && n === `home` && !de
                     ? (0, N.jsx)(Xe, {
                         data: e,
