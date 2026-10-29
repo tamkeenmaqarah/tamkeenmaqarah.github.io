@@ -143,6 +143,15 @@ await assert.rejects(ai.readAIInput(new Request('https://test/api',{method:'POST
 const vowelNotes='اسْتَمِعْ إلى المتحدّث دون مقاطعة. راجِعْ الملاحظات قبل الإجابة. اسْأَلْ المعلّم عمّا لم يتّضح لك.';
 const vowelCards=[{question:'كيف تستمع إلى المتحدّث؟',answer:'اسْتَمِعْ إلى المتحدّث دون مقاطعة.'},{question:'ماذا تراجع قبل الإجابة؟',answer:'راجِعْ الملاحظات قبل الإجابة.'},{question:'ماذا تفعل إن لم تتّضح نقطة؟',answer:'اسْأَلْ المعلّم عمّا لم يتّضح لك.'}];
 assert.equal(ai.validateCards({cards:vowelCards},vowelNotes).cards[0].answer,vowelCards[0].answer);assert.throws(()=>ai.validateCards({cards:vowelCards.map(card=>({...card,answer:card.answer.replace(/[\u064B-\u065F]/g,'')}))},vowelNotes),/matched/);
+assert.throws(()=>ai.validateLearning({kind:'ask',source:cardNotes,question:'Short',language:'en'}),/8–240/);
+assert.deepEqual(JSON.parse(JSON.stringify(ai.validateNoteAnswer({found:false,answer:''},cardNotes))),{found:false,answer:''});
+assert.throws(()=>ai.validateNoteAnswer({found:true,answer:'This was not in the lesson notes.'},cardNotes),/matched/);
+assert.throws(()=>ai.validateNoteAnswer({found:false,answer:'Invented outside information.'},cardNotes),/matched/);
+queue=[{found:true,answer:cards[2].answer}];calls=[];
+const found=await ai.learning({kind:'ask',source:cardNotes,question:'What should I do if a point is unclear?',language:'en'},'c'.repeat(64));
+assert.equal(found.answer,cards[2].answer);assert.match(calls[0].body.systemInstruction.parts[0].text,/ONLY these notes/);assert.ok(!JSON.stringify(calls[0]).includes('c'.repeat(64)));
+queue=[{found:false,answer:''}];
+const absent=await ai.learning({kind:'ask',source:cardNotes,question:'What day does the next lesson begin?',language:'ar'},'c'.repeat(64));assert.equal(absent.found,false);
 quota = false;
 await assert.rejects(ai.explainMiss({prompt: questions[0].prompt, options: questions[0].options, correct: 0, chosen: questions[0].options[1], explanation: questions[0].explanation}), /limit for today/);
 await assert.rejects(ai.draftQuiz(request), /daily AI limit/);

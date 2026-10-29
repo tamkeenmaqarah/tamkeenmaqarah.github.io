@@ -228,3 +228,18 @@ main:focus{outline:none}
 .quran-inline-ref{white-space:nowrap}
 [dir=rtl] .teacher-homework .teacher-week>label>span{font-family:Amiri,serif}
 @media(max-width:750px){.teacher-homework .teacher-week{padding:22px 16px 30px}.teacher-homework .teacher-week>label>span{font-size:23px}.teacher-assignment h3{font-size:23px}}
+
+.teacher-work-links{margin-block:28px 34px}
+.assignment-prepared h4{font:500 16px/1.7 Figtree,'IBM Plex Sans Arabic',sans-serif;color:#e7b479;margin-bottom:10px}
+@media(max-width:750px){
+ html{scroll-padding-top:220px}
+ .teacher-sidebar{padding:10px 16px 8px}
+ .teacher-sidebar nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;margin-top:10px}
+ .teacher-sidebar nav>button{display:flex;align-items:center;justify-content:center;min-height:44px;padding:6px 3px;font-size:11px;line-height:1.5;white-space:normal;text-align:center}
+ .teacher-sidebar nav>button>svg{display:none}
+ .teacher-sidebar-bottom{display:flex;align-items:center;gap:8px 18px;justify-content:space-between;flex-wrap:wrap;margin-top:8px;padding-top:6px;border-top:1px solid var(--line)}
+ .teacher-sidebar-bottom .text-button,.teacher-sidebar-bottom>a,.teacher-sidebar-bottom .teacher-language{font-size:11px;min-height:44px;padding-block:5px}
+ .teacher-sidebar-brand>a>span{font-size:27px}
+ .teacher-sidebar-brand small{font-size:10px}
+ .teacher-work-links{margin-block:22px 30px}
+}
