@@ -24,6 +24,9 @@ jobs:
       - run: node --test tests/quran-content.test.mjs
       - run: node verify-profiles.mjs
       - run: node verify-accounts.mjs
+      - run: node verify-ai.mjs
+      - run: node verify-learning-routes.mjs
+      - run: node verify-assignments.mjs
       - run: pnpm build
       - name: Verify Quran Foundation production access
         if: ${{ inputs.verify_quran }}
