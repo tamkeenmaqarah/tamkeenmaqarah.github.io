@@ -123,6 +123,11 @@ components:
     backgroundColor: '{colors.form-clay}'
     textColor: '{colors.field-ink}'
     rounded: '{rounded.panel}'
+  homework-editor:
+    backgroundColor: '{colors.form-clay}'
+    textColor: '{colors.field-ink}'
+    rounded: '{rounded.panel}'
+    padding: 34px 28px 28px
   empty-state:
     backgroundColor: '{colors.panel}'
     textColor: '{colors.ink}'
@@ -231,7 +236,7 @@ Publication badges and actual totals communicate real state. Preserve semantic r
 
 ### Sunday homework
 
-A localized full Sunday date sits above the native date input, between Previous Sunday and Next Sunday controls. The initial device-local date is strictly the next Sunday, including seven days ahead when opened on a Sunday. Choosing a weekday maps forward to that week’s following Sunday; week buttons move seven days. Mobile keeps the date above two wrapping navigation actions. Homework entries use names isolated with `bdi` and bodies with automatic direction, plus loading, empty, error and retry states.
+A localized full Sunday date sits above the native date input, between Previous Sunday and Next Sunday controls. The initial device-local date is strictly the next Sunday, including seven days ahead when opened on a Sunday. Choosing a weekday maps forward to that week’s following Sunday; week buttons move seven days. Mobile keeps the date above two wrapping navigation actions. The Sunday selector uses a dark fabric band and a narrow Sadu bottom seam. Teacher assignments use ruled rows with a title, recipient, instructions, Edit/Remove actions and a native prepared-name disclosure. Names use `bdi`; instructions use automatic direction and isolated references. The inline editor reuses the clay editing sheet, cream fields, native recipient selector and burgundy form actions, with a narrow Sadu top seam. Its desktop padding is (34px 28px 28px); mobile uses (34px 18px 22px). Keep edit-reset wording, loading, empty, error, retry and success states close to their task. Students’ own practice notes occupy a separately labeled section below assignments. Preserve the existing sidebar and still dashboard behavior.
 
 ### Teacher entry
 
