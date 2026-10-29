@@ -1,5 +1,5 @@
-import {TeacherAssignments} from './assignments.js?v=4';
-import {MissCoach,ReferenceText} from './study-tools.js?v=4';
+import {TeacherAssignments,QuranStudy} from './assignments.js?v=5';
+import {MissCoach,ReferenceText} from './study-tools.js?v=5';
 import {
   y,
   M as N,
@@ -35,7 +35,7 @@ import {
   getLanguage,
   setLanguage,
   subscribeLanguage,
-} from "./i18n.js?v=22";
+} from "./i18n.js?v=23";
 import {
   Ze as Xe,
   $e as Qe,
@@ -55,7 +55,7 @@ import {
   MotionNav,
   GatheringFooter,
   StudyPage,
-} from "./components.js?v=22";
+} from "./components.js?v=23";
 import {
   nextHomeworkSunday,
   homeworkSunday,
@@ -65,9 +65,8 @@ import {
   storeHomeworkDraft,
   clearHomeworkDraft,
 } from "./homework.js?v=2";
-import {QuranReader} from "./quran-reader.js?v=9";
-import {quranReferences} from "./quran.js?v=4";
-import {AccountPage} from "./account.js?v=5";
+import {quranReferences} from "./quran.js?v=5";
+import {AccountPage} from "./account.js?v=6";
 import {profileRequest} from "./profile.js?v=1";
 const el = y.createElement;
 function ProfileIcon({size=17}){return el('svg',{width:size,height:size,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor',strokeWidth:1.5,'aria-hidden':true},el('circle',{cx:12,cy:8,r:3.5}),el('path',{d:'M5 21v-2a7 7 0 0 1 14 0v2',strokeLinecap:'round'}));}
@@ -886,6 +885,7 @@ function Tt() {
     [homeworkPending, setHomeworkPending] = (0, y.useState)(!1),
     [homeworkQuranOpen, setHomeworkQuranOpen] = y.useState(false),
     [quranSelection, setQuranSelection] = y.useState(null),
+    [homeworkFocus,setHomeworkFocus]=y.useState(''),
     [profile,setProfile] = y.useState(null),
     [profileError,setProfileError] = y.useState(''),
     [profileVersion,setProfileVersion] = y.useState(0),
@@ -996,7 +996,7 @@ function Tt() {
                 r(c.teacher ? `quizzes` : `login`);
         if (l === 'quran') {
           const reference = quranReferences(`(${e.get('surah')}:${e.get('from') || 1}-${e.get('to') || 1})`)[0];
-          if (reference) setQuranSelection(reference);
+          if (reference) setQuranSelection({...reference,assignmentId:e.get('assignment')||'',week:homeworkSunday(e.get('week')||'')===e.get('week')?e.get('week'):undefined});
         }
         let u = e.get(`quizId`);
         u && Ie(u);
@@ -1869,7 +1869,7 @@ function Tt() {
   }
   function changeHomeworkWeek(week) {
     if(week===homeworkWeek)return;
-    setHomeworkWeek(week);a('');s('');
+    setHomeworkWeek(week);setHomeworkFocus('');setQuranSelection(null);a('');s('');
   }
   let zn = m
       ? S?.score === S?.max
@@ -2517,13 +2517,13 @@ function Tt() {
                   : e && n === 'account' && !de
                     ? el(AccountPage,{key:v,name:v,profile:profile?.name===v?profile:null,error:profileError,onRetry:()=>setProfileVersion(value=>value+1),onSaved:setProfile,onDirtyChange:setProfileDirty,onPassword:()=>{if(cn()){kt('');jt(true);}},onSignOut:()=>{if(cn())wn();},googleSignIn:el(GoogleSignIn,{onCredential:credential=>finishGoogle(credential,v,true)}),googleError:Ot,googleBusy})
                   : e && n === 'quran' && !de
-                    ? el('section',{className:'quran-page'},el('h1',null,translate('Qur’an')),el(QuranReader,{initialSelection:quranSelection,library:true}))
+                    ? el('section',{className:'quran-page'},el('h1',null,translate('Qur’an')),el(QuranStudy,{key:v+'|'+(quranSelection?.assignmentId||'')+'|'+(quranSelection?.week||homeworkWeek),week:quranSelection?.week||homeworkWeek,name:v,initialSelection:quranSelection,onSelect:setQuranSelection,onAccount:()=>L('account'),onHomework:id=>{if(quranSelection?.week)setHomeworkWeek(quranSelection.week);setHomeworkFocus(id||'');L('homework');}}))
                   : e && n === 'study' && !de
                     ? el(StudyPage,{key:v,name:v,revisit:se,onPractice:pn,onClearRevisit:mn,onNavigate:L})
                   : e && n === `homework` && !de
                     ? el('section',{className:'homework'},el('h1',null,translate('Homework')),el('p',{className:'homework-intro'},translate('Practise your assigned work. Your teacher checks it with you in the tent.')),
                       el('div',{className:'homework-week compact-week'},el('button',{className:'secondary week-arrow','aria-label':translate('Previous Sunday'),title:translate('Previous Sunday'),onClick:()=>changeHomeworkWeek(shiftHomeworkWeek(homeworkWeek,-7))},el(te,{size:18})),el('div',{className:'homework-date'},el('h2',null,formatHomeworkWeek(homeworkWeek)),el('label',null,el('input',{type:'date','aria-label':translate('Choose a date'),value:homeworkWeek,onChange:event=>{const week=homeworkSunday(event.target.value);if(week)changeHomeworkWeek(week)}}))),el('button',{className:'secondary week-arrow','aria-label':translate('Next Sunday'),title:translate('Next Sunday'),onClick:()=>changeHomeworkWeek(shiftHomeworkWeek(homeworkWeek,7))},el(w,{size:18}))),
-                      el(TeacherAssignments,{week:homeworkWeek,name:v,onAccount:()=>L('account'),onQuiz:id=>{const quiz=e.quizzes.find(row=>row.id===id&&row.published);if(quiz){un(quiz);setHomeworkQuizReturn(true);}else a(translate('This quiz is unavailable. Ask your teacher for help.'))}}),
+                      el(TeacherAssignments,{week:homeworkWeek,name:v,focusId:homeworkFocus,onOpenQuran:(row,ref)=>{if(!cn())return;setQuranSelection({...ref,assignmentId:row.id,week:homeworkWeek});ln('quran');const url=new URL(location.href);for(const [key,value]of Object.entries({assignment:row.id,week:homeworkWeek,surah:ref.surah,from:ref.from,to:ref.to}))url.searchParams.set(key,String(value));history.replaceState(null,'',url.pathname+url.search);},onAccount:()=>L('account'),onQuiz:id=>{const quiz=e.quizzes.find(row=>row.id===id&&row.published);if(quiz){un(quiz);setHomeworkQuizReturn(true);}else a(translate('This quiz is unavailable. Ask your teacher for help.'))}}),
                       (!!homeworkEntries.length||homeworkPending&&homeworkDraft.trim())&&el('details',{className:'legacy-homework-notes'},el('summary',null,translate('Earlier shared practice notes')),homeworkPending&&homeworkDraft.trim()&&el('p',{dir:'auto'},homeworkDraft),el('ul',{className:'homework-list'},homeworkEntries.map(row=>el('li',{key:row.name},el('strong',null,el('bdi',null,row.name)),el('p',{dir:'auto'},el(ReferenceText,{text:row.body})))))))
                     : e && n === `home` && !de
                     ? (0, N.jsx)(Xe, {

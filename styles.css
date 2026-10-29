@@ -7907,3 +7907,79 @@ main > *,
  .quran-library .recitation-player audio{grid-area:2/1/3/-1;width:100%;max-width:100%}
  .quran-library.is-listening{padding-bottom:130px}
 }
+
+/* Teacher work and independent reading share the same passage, then a short recall loop. */
+.quran-homework-link{padding:18px 22px;background:#32151b;margin-bottom:22px}
+.quran-homework-link>header{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.quran-homework-link h2{font:400 24px/1.5 Lora,Amiri,serif;margin:0}
+.quran-homework-link>header .text-button{min-height:44px}
+.quran-homework-link .help{margin-block:10px 0}
+.quran-homework-choices{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.quran-homework-choices button{display:flex;align-items:center;gap:12px;justify-content:space-between;min-height:48px;text-align:start}
+.quran-homework-choices bdi{white-space:nowrap;font-variant-numeric:tabular-nums;font-size:13px}
+.assigned-work{scroll-margin-top:190px}
+.assigned-work:focus{outline:0}
+.quran-library .mushaf-verses li.is-assigned{background:#ebd49b;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.quran-library .mushaf-verses li.is-assigned .quran-ayah-number{background:#e5c679;border-color:#8c662e;color:#523b1e}
+.quran-library .mushaf-verses li.is-assigned.is-reciting{background:#cbdcb9}
+.assigned-ayah-legend{font-size:13px;line-height:1.8;color:#624616;padding:12px 0;margin:0}
+.assigned-ayah-legend bdi{display:inline-block;margin-inline:5px}
+.practice-setup{padding-top:24px}
+.practice-setup h3,.practice-summary h3{font:400 27px/1.5 Lora,Amiri,serif;color:#3a2920;margin:0 0 14px}
+.practice-assigned-note{color:#674b2d;font-size:14px;margin:0 0 20px;line-height:1.8}
+.practice-range-fields{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:460px}
+.practice-range-fields label{display:grid;gap:8px;font-size:14px;color:#503727}
+.practice-range-fields input{width:100%;min-height:48px;font-size:16px}
+.practice-presets{display:flex;gap:10px;flex-wrap:wrap;margin-block:18px}
+.practice-presets .text-button,.practice-hint .text-button,.practice-change-range{color:#742c34;min-height:44px}
+.practice-setup>.help,.practice-summary>.help{color:#674b2d;font-size:14px;line-height:1.8;max-width:60ch}
+.practice-setup>.primary{margin-top:8px;min-height:48px}
+.memorisation-practice .quran-error{color:#742c34}
+.practice-progress{display:flex;align-items:center;gap:20px;padding-top:20px}
+.practice-progress>p{font-size:13px;color:#674b2d;margin:0;flex-shrink:0}
+.practice-progress-track{height:4px;background:#cbb18d;flex:1;overflow:hidden}
+.practice-progress-track>span{display:block;height:100%;background:#61754e;transform-origin:left;transition:transform 220ms cubic-bezier(.16,1,.3,1)}
+[dir=rtl] .practice-progress-track>span{transform-origin:right}
+.practice-repeat-note{font-size:14px;line-height:1.7;color:#742c34;padding-block:10px;margin:0}
+.ayah-flashcard{min-height:190px;margin-block:20px;animation:ayah-card-arrive 180ms cubic-bezier(.16,1,.3,1)}
+.ayah-flashcard .reveal-ayah{width:100%;min-height:190px;margin:0}
+.ayah-flashcard .recall-ayah{min-height:190px;margin:0;padding:16px 0;animation:ayah-uncover 260ms cubic-bezier(.16,1,.3,1);overflow-wrap:break-word}
+.practice-hint{min-height:44px;margin-bottom:16px}
+.practice-hint>p{font:400 27px/1.9 'Amiri Quran',Amiri,serif;color:#624616;margin:0}
+.practice-self-check{padding:16px 0 20px}
+.practice-self-check>p{font-size:14px;margin:0 0 12px;color:#503727}
+.practice-self-check>div,.practice-finish-actions{display:flex;gap:12px;flex-wrap:wrap}
+.practice-self-check button,.practice-finish-actions button{min-height:48px}
+.practice-summary{padding-block:30px 12px}
+.practice-summary>p{font-size:18px;line-height:1.7}
+.practice-finish-actions{margin-top:24px}
+.practice-change-range{margin-top:12px}
+@keyframes ayah-uncover{from{clip-path:inset(0 0 100% 0);opacity:.7;transform:translateY(6px)}to{clip-path:inset(0);opacity:1;transform:none}}
+@keyframes ayah-card-arrive{from{opacity:.8;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media(max-width:750px){
+ .quran-homework-link{padding:14px 18px;margin-bottom:18px}
+ .quran-homework-link h2{font-size:21px}
+ .quran-homework-link>header{gap:6px}
+ .quran-homework-choices{display:grid;grid-template-columns:1fr}
+ .quran-homework-choices button{width:100%;font-size:13px}
+ .quran-library .assigned-ayah-legend{order:1}
+ .quran-library .mushaf-verses{order:2}
+ .quran-library .reading-place{order:3}
+ .quran-library .quran-reading>.recall-audio{order:4}
+ .quran-library .quran-reading>.tajweed-key{order:5}
+ .quran-library .chapter-navigation{order:6}
+ .practice-setup h3,.practice-summary h3{font-size:24px}
+ .practice-presets{gap:8px}
+ .practice-presets button{font-size:13px;padding-inline:12px}
+ .practice-progress{gap:12px}
+ .practice-self-check>div{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+ .practice-self-check button{font-size:13px;padding-inline:10px}
+ .ayah-flashcard,.ayah-flashcard .reveal-ayah,.ayah-flashcard .recall-ayah{min-height:170px}
+}
+@media(prefers-reduced-motion:reduce){.ayah-flashcard,.ayah-flashcard .recall-ayah{animation:none}.practice-progress-track>span{transition:none}}
+.quran-homework-link.is-empty{padding-block:10px}
+.quran-homework-link.is-empty h2{font-size:18px}
+.quran-homework-link.is-empty>.help{margin:0;font-size:12px}
+.practice-setup h3:focus,.practice-summary h3:focus,.ayah-flashcard .recall-ayah:focus{outline:0}
+.quran-study{display:flex;flex-direction:column}
+.quran-study>.quran-homework-link.is-empty{order:1;margin-block:18px 0}

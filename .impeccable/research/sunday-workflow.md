@@ -29,3 +29,5 @@ Priority 1: useful support
 - Six student destinations; lesson quizzes remain explicit actions on Home/Halaqas/Homework, social highlights remain secondary.
 
 Scenarios to verify: new/no account, assigned vs group work, wrong ayah bounds/video/quiz, title-only vs material edit, stale tabs, withdrawal/undo, failed saves, help request, classroom review without check-in, unavailable quiz, audio failure, Sunday/year boundary, archive/restore, stale deletion preview, wrong confirmation name, unrelated records preserved, EN/AR320/390/1440 and keyboard/reduced motion.
+
+Linked Reveal refinement (29 October 2026): the owner explicitly retained Reveal ayah and requested better memorisation support for teenagers. The implemented range choice, source-exact first-word hint, reveal/self-check and flagged-ayah repeat rounds apply the general retrieval/re-exposure rationale above. These are within-session repetitions, not a persisted spacing schedule; no Qur’an-specific retention benefit or result for this group has been established. Keep teacher review in person and readiness explicit.

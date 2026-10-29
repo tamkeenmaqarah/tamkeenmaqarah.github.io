@@ -1,5 +1,5 @@
 import {y} from './runtime.js';
-import {t,getLanguage,subscribeLanguage} from './i18n.js?v=22';
+import {t,getLanguage,subscribeLanguage} from './i18n.js?v=23';
 import {requestJSON} from './api-client.js?v=1';
 const el=y.createElement;
 const studyCache=new Map();

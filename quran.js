@@ -101,6 +101,20 @@ export function validAyahRange(from, to, count) {
   );
 }
 
+export function startPractice(from,to,count){
+ if(!validAyahRange(from,to,count))throw Error('Choose a valid ayah range.');
+ return {cards:Array.from({length:to-from+1},(_,index)=>from+index),position:0,again:[],remembered:0,total:to-from+1,round:1,done:false};
+}
+export function ratePractice(session,remembered){
+ if(session.done)return session;
+ const again=remembered?session.again:[...session.again,session.cards[session.position]],next={...session,again,remembered:session.remembered+(remembered?1:0)};
+ if(session.position<session.cards.length-1)return {...next,position:session.position+1};
+ return again.length?{...next,cards:again,position:0,again:[],round:session.round+1}:{...next,done:true};
+}
+export function assignedPassages(rows){
+ return rows.filter(row=>row?.kind==='quran'&&typeof row.id==='string'&&typeof row.revision==='string'&&typeof row.title==='string'&&Number.isInteger(row.surah)&&row.surah>=1&&row.surah<=114&&validAyahRange(row.ayah_from,row.ayah_to,286)).map(row=>({id:row.id,revision:row.revision,title:row.title,status:row.status,surah:row.surah,from:row.ayah_from,to:row.ayah_to}));
+}
+
 export function quranReference(surah, from, to, language) {
   return `${language === "ar" ? surah.name : surah.englishName} (${surah.number}:${from}-${to})`;
 }

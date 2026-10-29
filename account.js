@@ -1,6 +1,6 @@
 import {y} from './runtime.js';
-import {t} from './i18n.js?v=22';
-import {Avatar} from './components.js?v=22';
+import {t} from './i18n.js?v=23';
+import {Avatar} from './components.js?v=23';
 import {preparePhoto,profileRequest} from './profile.js?v=1';
 const el=y.createElement;
 export function AccountPage({name,profile,error,onRetry,onSaved,onPassword,onSignOut,googleSignIn,googleError,googleBusy,onDirtyChange}) {
