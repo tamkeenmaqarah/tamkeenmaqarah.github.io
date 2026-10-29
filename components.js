@@ -1,3 +1,4 @@
+import {NotesCards,MissCoach} from './study-tools.js?v=1';
 import {
   y,
   M,
@@ -33,7 +34,7 @@ import {
   getLanguage,
   setLanguage,
   subscribeLanguage,
-} from "./i18n.js?v=18";
+} from "./i18n.js?v=19";
 import {photoUrl} from "./profile.js?v=1";
 const Ge = (e) => (e.score / e.max) * 100,
   Ke = (e) =>
@@ -181,6 +182,7 @@ const HALAQAS = [
     title: `Latest uploads`,
     list: `UULUKG-xZKRTI8YI2nmOAi7g`,
   },
+  { id: `tuesday`, title: `Tuesday halaqa · The Arab Spring`, list: `PLJHIkqUYcGAA` },
   { id: `_32iuirRwJI`, title: `TAMKEEN Halaqa 10 24 2026` },
   { id: `hwHEpimlzao`, title: `TAMKEEN Halaqa 10 17 2026` },
   {
@@ -188,7 +190,7 @@ const HALAQAS = [
     title: `Discussion on Music · Khatera 10/3/2026`,
   },
 ];
-function Halaqas() {
+function Halaqas({owner}) {
   let [pick, setPick] = (0, y.useState)(HALAQAS[0].id);
   const [playing, setPlaying] = y.useState(false);
   let chosen = HALAQAS.find((item) => item.id === pick) || HALAQAS[0];
@@ -218,7 +220,7 @@ function Halaqas() {
       "p",
       { className: "halaqas-note" },
       translate(
-        "Saturday and Tuesday lessons from the Tamkeen Youth channel.",
+        "Saturday halaqas and the Tuesday lesson series.",
       ),
     ),
     el("div", {className: "halaqa-media"},
@@ -269,9 +271,11 @@ function Halaqas() {
         ),
       ),
     )),
+    el(NotesCards,{owner}),
   );
 }
 function Ze({
+  name,
   data,
   recent,
   revisit,
@@ -352,7 +356,7 @@ function Ze({
         el(w, { size: 17 }),
       ),
     ),
-    el(Halaqas),
+    el(Halaqas,{owner:name}),
     revisit?.misses?.length > 0 &&
       el(PrivatePractice, { revisit, onPractice, onClearRevisit }),
     recent &&
@@ -1011,6 +1015,7 @@ function PrivatePractice({ revisit, onPractice, onClearRevisit }) {
           ),
           question.explanation &&
             el("p", { dir: "auto" }, question.explanation),
+          el(MissCoach,{quizId:revisit.quizId,question}),
         ),
       ),
     ),

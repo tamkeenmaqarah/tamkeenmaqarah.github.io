@@ -1,3 +1,5 @@
+import {TeacherAssignments} from './assignments.js?v=1';
+import {ReviewPlanner,MissCoach,ReferenceText} from './study-tools.js?v=1';
 import {
   y,
   M as N,
@@ -33,7 +35,7 @@ import {
   getLanguage,
   setLanguage,
   subscribeLanguage,
-} from "./i18n.js?v=18";
+} from "./i18n.js?v=19";
 import {
   Ze as Xe,
   $e as Qe,
@@ -52,7 +54,7 @@ import {
   Heater,
   MotionNav,
   GatheringFooter,
-} from "./components.js?v=18";
+} from "./components.js?v=19";
 import {
   nextHomeworkSunday,
   homeworkSunday,
@@ -62,9 +64,9 @@ import {
   storeHomeworkDraft,
   clearHomeworkDraft,
 } from "./homework.js?v=1";
-import {QuranReader} from "./quran-reader.js?v=5";
-import {quranReferences} from "./quran.js?v=1";
-import {AccountPage} from "./account.js?v=1";
+import {QuranReader} from "./quran-reader.js?v=6";
+import {quranReferences} from "./quran.js?v=2";
+import {AccountPage} from "./account.js?v=2";
 import {profileRequest} from "./profile.js?v=1";
 const el = y.createElement;
 const Ye = "https://tamkeen-maqraah-teacher.ibrahiimmuhamud.workers.dev";
@@ -872,9 +874,6 @@ function Tt() {
     [tn, nn] = (0, y.useState)(!1),
     [googleTicket, setGoogleTicket] = (0, y.useState)(``),
     [googleBusy, setGoogleBusy] = (0, y.useState)(!1),
-    [studyOn, setStudyOn] = (0, y.useState)(!1),
-    [studyLines, setStudyLines] = (0, y.useState)({}),
-    [studyBusy, setStudyBusy] = (0, y.useState)(null),
     [homeworkWeek, setHomeworkWeek] = (0, y.useState)(nextHomeworkSunday),
     [homeworkEntries, setHomeworkEntries] = (0, y.useState)([]),
     [homeworkDraft, setHomeworkDraft] = (0, y.useState)(``),
@@ -898,19 +897,6 @@ function Tt() {
   y.useLayoutEffect(()=>{window.scrollTo({top:0,left:0,behavior:"instant"});},[n]);
   const homeworkContext = y.useRef();
   homeworkContext.current = `${n}/${homeworkWeek}/${v}`;
-  (0, y.useEffect)(() => {
-    let stop = !1;
-    fetch(Ye + `/api/study`, { method: `OPTIONS` })
-      .then((r) => {
-        if (!stop) setStudyOn(r.ok);
-      })
-      .catch(() => {
-        if (!stop) setStudyOn(!1);
-      });
-    return () => {
-      stop = !0;
-    };
-  }, []);
   async function I(e, t = `GET`, n) {
     let r = T(),
       i = r?.getItem(P.token) || ``,
@@ -1087,6 +1073,7 @@ function Tt() {
         stop = !0;
       };
     }, [n, homeworkWeek, v]));
+  const homeworkDirty=n==='homework'&&homeworkReady&&homeworkDraft.trim().replace(/\s+/g,' ')!==(homeworkEntries.find(item=>homeworkKey(item.name)===homeworkKey(v))?.body||'').trim().replace(/\s+/g,' ');
   let an =
       de &&
       !!(
@@ -1097,13 +1084,13 @@ function Tt() {
     on = !!(u && !S && x.some((e) => e !== -1));
   (0, y.useEffect)(() => {
     let e = (e) => {
-      (an || on || M || profileDirty) && (e.preventDefault(), (e.returnValue = ``));
+      (an || on || M || profileDirty || homeworkDirty) && (e.preventDefault(), (e.returnValue = ``));
     };
     return (
       window.addEventListener(`beforeunload`, e),
       () => window.removeEventListener(`beforeunload`, e)
     );
-  }, [an, on, M, profileDirty]);
+  }, [an, on, M, profileDirty, homeworkDirty]);
   async function sn(e) {
     (l(!0), a(``), s(``));
     try {
@@ -1117,6 +1104,8 @@ function Tt() {
   function cn() {
     return profileDirty
       ? confirm(translate("Leave without saving your profile photo?"))
+      : homeworkDirty
+      ? confirm(translate("Leave without saving your practice note?"))
       : M
       ? confirm(translate(`Leave without saving the grade changes?`))
       : on
@@ -1130,6 +1119,7 @@ function Tt() {
           : !0;
   }
   function ln(e) {
+    if(e!==n)setHomeworkReady(false);
     (d(null),
       h(!1),
       C(null),
@@ -1175,7 +1165,6 @@ function Tt() {
       oe(o?.attemptId || c?.attemptId || crypto.randomUUID()),
       _(o ? Math.min(o.step, e.questions.length - 1) : -1),
       C(c && !o ? { score: c.score, max: c.max, review: c.review } : null),
-      setStudyLines({}),
       a(``),
       s(``),
       Nt(``),
@@ -1195,8 +1184,7 @@ function Tt() {
         C(null),
         _(-1),
         ee(Array(u.questions.length).fill(-1)),
-        oe(crypto.randomUUID()),
-        setStudyLines({})));
+        oe(crypto.randomUUID())));
   }
   function fn(e, t, n) {
     let r = T(),
@@ -1250,7 +1238,6 @@ function Tt() {
       ee(Array(se.misses.length).fill(-1)),
       oe(`practice`),
       C(null),
-      setStudyLines({}),
       a(``),
       s(``),
       r(`home`),
@@ -1830,29 +1817,6 @@ function Tt() {
         ));
     });
   }
-  async function saySimply(index, prompt, chosen) {
-    if (!u?.id || studyBusy !== null) return;
-    setStudyBusy(index);
-    a(``);
-    try {
-      let res = await I(`/api/study`, `POST`, {
-        quizId: u.id,
-        prompt,
-        ...(chosen ? { chosen } : {}),
-      });
-      setStudyLines((lines) => ({ ...lines, [index]: res.line }));
-    } catch (err) {
-      a(
-        translate(
-          err instanceof Error && err.message
-            ? err.message
-            : `Could not explain this question. The lesson note is still above.`,
-        ),
-      );
-    } finally {
-      setStudyBusy(null);
-    }
-  }
   async function loadHomeworkWeek(week) {
     try {
       let res = await fetch(
@@ -1955,8 +1919,8 @@ function Tt() {
       s(
         homeworkLive
           ? body
-            ? "Homework saved for everyone."
-            : "Homework cleared."
+            ? "Practice note shared."
+            : "Practice note removed."
           : "Saved on this phone.",
       );
     } catch (err) {
@@ -2396,36 +2360,7 @@ function Tt() {
                                               (0, N.jsx)(`p`, {
                                                 children: e.explanation,
                                               }),
-                                            studyOn &&
-                                              !f &&
-                                              !m &&
-                                              !e.right &&
-                                              (studyLines[t]
-                                                ? (0, N.jsx)(`p`, {
-                                                    className: `study-line`,
-                                                    children: studyLines[t],
-                                                  })
-                                                : (0, N.jsx)(`button`, {
-                                                    type: `button`,
-                                                    className: `text-button study-ask`,
-                                                    disabled: studyBusy === t,
-                                                    onClick: () =>
-                                                      saySimply(
-                                                        t,
-                                                        e.prompt,
-                                                        u.questions[t]?.options?.[
-                                                          x[t]
-                                                        ],
-                                                      ),
-                                                    children:
-                                                      studyBusy === t
-                                                        ? translate(
-                                                            `Saying it simply…`,
-                                                          )
-                                                        : translate(
-                                                            `Say it simply`,
-                                                          ),
-                                                  })),
+                                            !f&&!m&&!e.right&&el(MissCoach,{quizId:u.id,question:e,chosen:u.questions[t]?.options?.[x[t]]}),
                                           ],
                                         }),
                                       ],
@@ -2674,7 +2609,7 @@ function Tt() {
                           (0, N.jsx)(`p`, {
                             className: `homework-intro`,
                             children: translate(
-                              `Write what you will prepare for Sunday. The tent can read it.`,
+                              `See your teacher’s assignments and prepare for Sunday.`,
                             ),
                           }),
                           (0, N.jsxs)(`div`, {
@@ -2741,6 +2676,9 @@ function Tt() {
                               { role: "status", className: "help" },
                               translate("Loading homework…"),
                             ),
+                          el(TeacherAssignments,{week:homeworkWeek,name:v,onRead:openQuran,onAccount:()=>L('account')}),
+                          el('h2',{className:'practice-note-title'},translate('Your practice note')),
+                          el('p',{className:'help'},translate('Add your own preparation note. The group can read it.')),
                           el('div',{className:'quran-homework-picker'},
                             el('button',{className:'secondary',type:'button',disabled:!homeworkReady || homeworkBusy,'aria-expanded':homeworkQuranOpen,'aria-controls':'homework-quran-picker',onClick:()=>setHomeworkQuranOpen(value=>!value)},translate('Choose ayahs from the Qur’an')),
                             homeworkQuranOpen && el('div',{id:'homework-quran-picker'},el(QuranReader,{onAdd:addQuranHomework}))),
@@ -2755,10 +2693,10 @@ function Tt() {
                                   (0, N.jsxs)(`label`, {
                                     htmlFor: `homework-body`,
                                     children: [
-                                      translate(`Your homework`),
+                                      translate(`Your practice note`),
                                       (0, N.jsx)(`textarea`, {
                                         id: `homework-body`,
-                                        "aria-label": translate("Your homework"),
+                                        "aria-label": translate("Your practice note"),
                                         dir: `auto`,
                                         maxLength: 500,
                                         disabled:
@@ -2789,8 +2727,8 @@ function Tt() {
                                               homeworkKey(item.name) ===
                                               homeworkKey(v),
                                           )
-                                        ? translate(`Save homework`)
-                                        : translate(`Remove my homework`),
+                                        ? translate(`Save practice note`)
+                                        : translate(`Remove my note`),
                                   }),
                                   homeworkReady &&
                                     homeworkPending &&
@@ -2799,7 +2737,7 @@ function Tt() {
                                       "p",
                                       { className: "help", role: "status" },
                                       translate(
-                                        "You have an edit saved on this phone. Save homework to share it with everyone.",
+                                        "You have a note saved on this phone. Save it to share it with the group.",
                                       ),
                                     ),
                                   homeworkReady &&
@@ -2818,6 +2756,8 @@ function Tt() {
                                   `Come in with your name to add your homework.`,
                                 ),
                               }),
+                          homeworkDraft.trim()&&el(ReviewPlanner,{assignment:homeworkDraft,context:homeworkWeek+'|'+v}),
+                          el('h2',{className:'group-notes-title'},translate('Group practice notes')),
                           (0, N.jsx)(`ul`, {
                             className: `homework-list`,
                             children: homeworkEntries.map((item) =>
@@ -2838,7 +2778,7 @@ function Tt() {
                                         el(
                                           "small",
                                           { className: "homework-own-label" },
-                                          translate("Your saved homework"),
+                                          translate("Your shared note"),
                                         ),
                                       item.localOnly &&
                                         el(
@@ -2848,7 +2788,7 @@ function Tt() {
                                         ),
                                     ),
                                     el('div',{className:'homework-entry-body'},
-                                      el('p',{dir:'auto'},item.body),
+                                      el('p',{dir:'auto'},el(ReferenceText,{text:item.body})),
                                       ...quranReferences(item.body).map(ref=>el('button',{key:`${ref.surah}:${ref.from}-${ref.to}`,className:'text-button homework-read',type:'button',onClick:()=>openQuran(ref)},translate('Read ayahs'),el('bdi',{dir:'ltr'},`${ref.surah}:${ref.from}–${ref.to}`)))),
                                   ],
                                 },
@@ -2870,6 +2810,7 @@ function Tt() {
                     ? (0, N.jsx)(Xe, {
                         data: e,
                         recent: ne,
+                        name:v,
                         revisit: se,
                         onPractice: pn,
                         onClearRevisit: mn,

@@ -81,7 +81,7 @@ export function quranReference(surah, from, to, language) {
 
 export function quranReferences(body) {
   const found = new Map();
-  for (const match of body.matchAll(/\((\d{1,3}):(\d{1,3})-(\d{1,3})\)/g)) {
+  for (const match of body.matchAll(/\((\d{1,3}):(\d{1,3})[-–—](\d{1,3})\)/g)) {
     const [surah, from, to] = match.slice(1).map(Number);
     if (surah >= 1 && surah <= 114 && validAyahRange(from, to, 286))
       found.set(`${surah}:${from}-${to}`, { surah, from, to });

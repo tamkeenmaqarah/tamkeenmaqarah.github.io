@@ -1,11 +1,11 @@
 import { y } from "./runtime.js";
-import { t, getLanguage } from "./i18n.js?v=18";
+import { t, getLanguage } from "./i18n.js?v=19";
 import {
   loadSurahs,
   loadSurah,
   validAyahRange,
   quranReference,
-} from "./quran.js?v=1";
+} from "./quran.js?v=2";
 const el = y.createElement;
 
 export function QuranReader({ initialSelection, onAdd }) {

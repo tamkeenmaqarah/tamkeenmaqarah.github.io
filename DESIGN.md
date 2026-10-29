@@ -185,6 +185,10 @@ components:
     backgroundColor: '#35151bed'
     rounded: '{rounded.control}'
     padding: 32px
+  assignment-surface:
+    backgroundColor: '{colors.upholstery}'
+    textColor: '{colors.ink}'
+    padding: 34px 32px 28px
   quran-reading:
     backgroundColor: '{colors.form-clay}'
     textColor: '{colors.field-ink}'
@@ -326,6 +330,12 @@ The reading tab and Homework disclosure reuse one shared reader. Keep the famili
 Use dedicated Amiri Quran for the surah heading and verses. Preserve the returned Al Quran Cloud Uthmani text, diacritics and order exactly; sacred text is reading content, never ornament. Keep the page-level `notranslate` metadata and source-text `translate="no"` protection. A centered heading and fine warm divider introduce the range. Verse rows have (22px) vertical padding, reducing to (18px) on mobile, and a separate ochre-brown index so numbering does not disturb the text. Keep the index legible on clay. The attributed source link stays below the reader in quiet supporting text.
 
 Loading uses a status message; failed or incomplete loading uses readable feedback and an explicit retry action. Range validation stays visible and prevents invalid reading. Successful content is cached, and stale or slow requests are canceled. In Homework, adding a selected range appends its explicit reference to the existing draft; the normal Save action remains necessary. Saved explicit references can open the reading range directly, including after refresh. Do not infer a range from legacy free-form assignments or present an unsaved draft as shared homework.
+
+### Assigned work and study aids
+
+Homework keeps the native Sunday control on a dark upholstered band with a narrow Sadu bottom seam. The teacher-assignment surface uses the upholstery and ink tokens, a narrow Sadu top seam and ruled task rows. Authored titles, instructions, reading/lesson actions and the native preparation checkbox establish the hierarchy. The checkbox sits in a small bordered paper-red control; checked preparation gains a panel fill and brass border. Keep mixed-script references isolated and unbroken. At (750px), the assignment surface uses (28px 18px 24px) padding and task headers stack.
+
+Optional study tools use native `details` / `summary` disclosures with a small brass book icon, visible Gemini label and chevron. Cream labeled fields and amber primary study actions stay within the existing palette. The three-phase review plan is a ruled horizontal timeline with small amber diamonds on desktop; at (750px), it becomes a vertical timeline. Revision questions use native disclosures, with the supplied-note excerpt on a paper-red inset. Opening a study body settles over (230ms) using the shared ease-out curve; reduced motion removes this animation and the chevron transition. Keep loading, failure and attribution adjacent to the requested aid, and keep the shared-note editor visibly separate from teacher work.
 
 ### Tent door
 

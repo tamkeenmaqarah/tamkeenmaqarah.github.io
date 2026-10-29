@@ -105,3 +105,8 @@ test("only explicit valid references become reading links, without guessing old 
     [],
   );
 });
+
+test('explicit homework references accept typed hyphens and typographic dashes without guessing free text',()=>{
+ assert.deepEqual(quranReferences('Al-Mulk (67:1–10) and الملك (67:11—12)'),[{surah:67,from:1,to:10},{surah:67,from:11,to:12}]);
+ assert.deepEqual(quranReferences('Review page 67 and ayahs 1–10'),[]);
+});
