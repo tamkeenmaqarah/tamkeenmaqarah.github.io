@@ -1,3 +1,4 @@
+import {nameIsArchived} from '../../accounts';
 import {NextResponse} from 'next/server';
 import {db,isTeacher} from '../../server';
 import {allowedPublicOrigin,publicCors} from '../../public-cors';
@@ -64,6 +65,7 @@ export async function POST(req:Request){
   const text=typeof body.body==='string'?body.body.trim().replace(/\s+/g,' '):'';
   if(!week)return respond({error:'Choose a Sunday.'},{status:400});
   if(!name)return respond({error:'Use the name the tent knows.'},{status:400});
+  if(await nameIsArchived(name))return respond({error:'This account is archived. Ask your teacher to restore it.'},{status:403});
   if(text.length>500)return respond({error:'That homework is too long.'},{status:400});
   const id=week+':'+name.toLocaleLowerCase('en');
   if(!text){

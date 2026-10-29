@@ -243,3 +243,66 @@ main:focus{outline:none}
  .teacher-sidebar-brand small{font-size:10px}
  .teacher-work-links{margin-block:22px 30px}
 }
+.teacher-homework-tabs{display:flex;gap:8px;background:#32151b;padding:6px;margin-block:24px}
+.teacher-homework-tabs>button,.review-filters>button{min-height:44px;padding:10px 16px;border:1px solid #7c4b3e;background:transparent;color:#f0cf9c;border-radius:4px;font:600 14px/1.5 Figtree,'IBM Plex Sans Arabic',sans-serif;cursor:pointer}
+.teacher-homework-tabs>button{flex:1;border:0}
+.teacher-homework-tabs>button[aria-pressed=true],.review-filters>button[aria-pressed=true]{background:#e7b479;color:#3c1920;border-color:#e7b479}
+.assignment-editor .assignment-kind{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 22px;padding:0;border:0}
+.assignment-kind legend{margin-bottom:12px;font-weight:600}
+.assignment-editor .assignment-kind>label{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;margin:0;padding:10px;border:1px solid #ad8a61;border-radius:4px;font-size:14px;cursor:pointer}
+.assignment-kind>label.selected{background:#742c34;color:#fff2d9}
+.assignment-kind input{width:16px!important;min-height:16px;height:16px;accent-color:#742c34}
+.assignment-range{display:grid;grid-template-columns:minmax(180px,1fr) 120px 120px;gap:16px}
+.assignment-student-preview{display:flex;align-items:start;gap:10px;background:#decaac;padding:16px;font-size:14px;line-height:1.8}
+.assignment-student-preview svg{flex-shrink:0;margin-top:4px}
+.assignment-student-preview bdi{white-space:nowrap}
+.assignment-range-label{font-size:16px;color:#f0cf9c;margin-top:18px}
+.homework-admin-notice{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding-block:12px}
+.homework-admin-notice p{margin:0}
+.removed-homework{margin-block:30px;border-top:1px solid #7c4b3e;padding-top:16px}
+.removed-homework>summary{cursor:pointer;min-height:44px;color:#d0ad8c;list-style-position:inside}
+.removed-homework>div{display:flex;justify-content:space-between;gap:20px;align-items:center;padding-block:16px;border-bottom:1px solid #7c4b3e}
+.in-person-review>label{display:grid;gap:10px;max-width:680px;margin-block:24px}
+.in-person-review select{width:100%;margin:0}
+.review-filters{display:flex;flex-wrap:wrap;gap:8px;margin-block:20px}
+.review-roster,.student-roster{list-style:none;margin:24px 0;padding:0;background:#32151b}
+.review-roster>li,.student-roster>li{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:20px 24px;border-top:1px solid #7c4b3e}
+.review-roster>li>div,.student-roster>li>div{display:grid;gap:8px;min-width:0}
+.review-roster strong,.student-roster strong{font-size:17px;font-weight:500;overflow-wrap:anywhere}
+.review-roster small,.student-roster small{color:#d0ad8c;font-size:13px;line-height:1.6}
+.task-status{display:inline-flex;align-items:center;font-size:13px;line-height:1.7;color:#d0ad8c}
+.status-ready{color:#f0cf9c}.status-help,.status-repeat{color:#ffc9ac}.status-reviewed{color:#d2dfbd}
+.review-student-panel{padding:26px;background:#54232b;margin-block:24px}
+.review-student-panel h3{font-size:23px;line-height:1.6}
+.review-student-panel label{display:grid;gap:10px;margin-block:20px}
+.review-student-panel textarea{width:100%;margin:0}
+.review-student-panel .form-actions{flex-wrap:wrap;gap:12px;justify-content:flex-start}
+.student-list-tools{display:flex;align-items:end;gap:24px;flex-wrap:wrap;margin-top:28px}
+.student-list-tools>label{display:grid;gap:10px;flex:1;min-width:200px}
+.student-list-tools input{width:100%;margin:0}
+.student-list-tools .review-filters{margin:0}
+.student-management{padding:28px;background:#32151b;margin-block:28px}
+.student-management>header{display:flex;justify-content:space-between;align-items:baseline;gap:20px}
+.student-management h2{margin:0;overflow-wrap:anywhere}
+.student-management h3{font-size:23px;margin-top:28px}
+.student-management p{line-height:1.8;max-width:72ch}
+.student-delete{border-top:1px solid #9b6749;margin-top:30px;padding-top:8px}
+.student-delete dl{max-width:650px;margin-block:24px}
+.student-delete dl>div{display:flex;justify-content:space-between;gap:24px;padding-block:10px;border-bottom:1px solid #7c4b3e;font-size:14px}
+.student-delete dd{font-variant-numeric:tabular-nums;margin:0}
+.student-delete label{display:grid;gap:10px;max-width:650px;margin-block:24px}
+.student-delete input{margin:0;width:100%}
+.danger-button{min-height:48px;padding:12px 20px;border:1px solid #ffc0a3;background:#742c34;color:#fff2d9;border-radius:5px;font:600 15px/1.5 Figtree,'IBM Plex Sans Arabic',sans-serif;cursor:pointer}
+@media(max-width:750px){.assignment-editor .assignment-kind{grid-template-columns:1fr 1fr}.assignment-range{grid-template-columns:1fr 1fr;gap:12px}.assignment-range>label:first-child{grid-column:1/-1}.assignment-editor .assignment-kind>label{font-size:13px}.review-filters>button{font-size:12px;padding:8px 12px}.review-roster>li,.student-roster>li{padding:18px;gap:14px}.review-roster strong,.student-roster strong{font-size:16px}.review-student-panel,.student-management{padding:22px 18px}.review-student-panel h3{font-size:22px}.student-list-tools{gap:16px}.student-management>header{align-items:start;flex-wrap:wrap}.removed-homework>div{align-items:start;flex-direction:column;gap:8px}}
+@media(max-width:750px){
+ .teacher-homework .teacher-week{grid-template-columns:44px minmax(0,1fr) 44px;padding:60px 14px 22px;gap:10px}
+ .teacher-homework .teacher-week>label{grid-column:2;grid-row:1;gap:0}
+ .teacher-homework .teacher-week>label>span{position:absolute;inset-inline:10px;top:14px;font-size:20px;line-height:1.5}
+ .teacher-homework .teacher-week input{max-width:100%;width:100%;min-height:46px}
+ .teacher-homework .teacher-week>.secondary{width:44px;min-height:44px;padding:0;font-size:0;gap:0}
+ .teacher-homework .teacher-week>.secondary:first-child{grid-column:1;grid-row:1}
+ .teacher-homework .teacher-week>.secondary:last-child{grid-column:3;grid-row:1}
+}
+
+[dir=rtl] .teacher-week>.secondary>svg{transform:scaleX(-1)}
+.review-empty{padding:20px 0;color:#d0ad8c;line-height:1.8}

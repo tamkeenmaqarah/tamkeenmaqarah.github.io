@@ -5,11 +5,11 @@ import ts from 'typescript';
 import {DatabaseSync} from 'node:sqlite';
 function load(file,mocks={}){const exports={};vm.runInNewContext(ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText,{exports,crypto,Request,Response,URL,TextDecoder,require:name=>{if(!(name in mocks))throw Error('Unexpected import '+name);return mocks[name];}});return exports;}
 const sql=new DatabaseSync(':memory:');sql.exec('PRAGMA foreign_keys=ON');
-for(const file of ['0000_youthful_dark_phoenix','0001_broken_human_robot','0002_charming_rhodey','0003_student_accounts','0004_google_sign_in','0007_profile_photos','0008_teacher_homework'])sql.exec(fs.readFileSync('drizzle/'+file+'.sql','utf8').replaceAll('--> statement-breakpoint',';'));
+for(const file of ['0000_youthful_dark_phoenix','0001_broken_human_robot','0002_charming_rhodey','0003_student_accounts','0004_google_sign_in','0007_profile_photos','0008_teacher_homework','0009_sunday_workflow'])sql.exec(fs.readFileSync('drizzle/'+file+'.sql','utf8').replaceAll('--> statement-breakpoint',';'));
 function statement(query,args=[]){const stmt=sql.prepare(query);return{bind(...values){return statement(query,values);},async first(){return stmt.get(...args)||null},async all(){return{results:stmt.all(...args)}},async run(){return{meta:{changes:Number(stmt.run(...args).changes)}}}};}
 const database={prepare:statement,async batch(statements){sql.exec('BEGIN');try{const results=[];for(const stmt of statements)results.push(await stmt.run());sql.exec('COMMIT');return results;}catch(error){sql.exec('ROLLBACK');throw error;}}};
 for(const [id,name]of [['one','Student One'],['two','Student Two']])sql.prepare('INSERT INTO students(id,name,password_hash,created_at) VALUES(?,?,?,?)').run(id,name,'test-only','2026-10-28');
-const model=load('app/assignments.ts',{'./server':{db:()=>database}});
+const model=load('app/assignments.ts',{'./server':{db:()=>database},'../public/assets/quran-surahs.json':{default:JSON.parse(fs.readFileSync('public/assets/quran-surahs.json','utf8'))}});
 assert.equal(model.sundayWeek('2026-11-01'),'2026-11-01');for(const date of ['2026-11-02','2026-02-30','2026-1-1'])assert.equal(model.sundayWeek(date),null);
 const work={week:'2026-11-01',title:'Review the opening',body:'Al-Mulk (67:1–10).',studentId:null};
 const group=await model.saveAssignment(work),personal=await model.saveAssignment({...work,title:'Individual task',studentId:'two'});
@@ -19,14 +19,14 @@ assert.equal((await model.listAssignments(work.week,false,null)).assignments.len
 const first=own.assignments[0];await model.markPrepared('one',{id:group.id,revision:first.revision,completed:true,studentId:'two'});
 assert.equal((await model.listAssignments(work.week,false,'one')).assignments[0].completed,true);assert.equal((await model.listAssignments(work.week,false,'two')).assignments[0].completed,false);
 const privateRow=(await model.listAssignments(work.week,false,'two')).assignments.find(row=>row.id===personal.id);
-await assert.rejects(model.markPrepared('one',{id:personal.id,revision:privateRow.revision,completed:true}),error=>error.status===404);
+await assert.rejects(model.markPrepared('one',{id:personal.id,revision:privateRow.revision,completed:true}),error=>error.status===409);
 let teacherPack=await model.listAssignments(work.week,true,null);assert.equal(teacherPack.students.length,2);assert.equal(teacherPack.assignments.find(row=>row.id===group.id).prepared[0].name,'Student One');
 await model.saveAssignment({...work,body:'Al-Mulk (67:1–12).'},group.id,first.revision);
 assert.equal((await model.listAssignments(work.week,false,'one')).assignments[0].completed,false);
 await assert.rejects(model.saveAssignment(work,group.id,first.revision),error=>error.status===409);
 await assert.rejects(model.markPrepared('one',{id:group.id,revision:first.revision,completed:true}),error=>error.status===409);
 await assert.rejects(model.removeAssignment(group.id,first.revision),error=>error.status===409);
-const revised=(await model.listAssignments(work.week,false,'one')).assignments[0];await model.markPrepared('one',{id:group.id,revision:revised.revision,completed:true});await model.removeAssignment(group.id,revised.revision);assert.equal(sql.prepare('SELECT COUNT(*) n FROM assignment_progress').get().n,0);
+const revised=(await model.listAssignments(work.week,false,'one')).assignments[0];await model.markPrepared('one',{id:group.id,revision:revised.revision,completed:true});await model.removeAssignment(group.id,revised.revision);assert.equal(sql.prepare('SELECT COUNT(*) n FROM assignment_progress').get().n,1);
 await assert.rejects(model.saveAssignment({...work,studentId:'missing'}),/account list/);await assert.rejects(model.saveAssignment({...work,body:'x'.repeat(1001)}),/1,000/);
 let teacher=false;
 const server={db:()=>database,isTeacher:async()=>teacher,sameOrigin:req=>req.headers.get('origin')===new URL(req.url).origin};

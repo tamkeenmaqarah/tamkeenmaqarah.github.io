@@ -27,7 +27,7 @@ assert.equal(accounts.reviewFrom(''),null);
 assert.equal(accounts.validReview({quizId:'q',title:'Siwak',score:0,max:1,misses:[{prompt:'Which tree?',options:['a','b','c','d'],correct:1,explanation:'al-Arak'}]}).misses.length,1);
 assert.equal(accounts.validReview({quizId:'q',title:'Siwak',score:0,max:1,misses:[{prompt:'x',options:['a'],correct:1,explanation:''}]}),null);
 const db=new DatabaseSync(':memory:');
-for(const file of ['drizzle/0000_youthful_dark_phoenix.sql','drizzle/0001_broken_human_robot.sql','drizzle/0002_charming_rhodey.sql','drizzle/0003_student_accounts.sql','drizzle/0004_google_sign_in.sql','drizzle/0007_profile_photos.sql'])db.exec(fs.readFileSync(file,'utf8').replaceAll('--> statement-breakpoint',';'));
+for(const file of ['drizzle/0000_youthful_dark_phoenix.sql','drizzle/0001_broken_human_robot.sql','drizzle/0002_charming_rhodey.sql','drizzle/0003_student_accounts.sql','drizzle/0004_google_sign_in.sql','drizzle/0007_profile_photos.sql','drizzle/0008_teacher_homework.sql','drizzle/0009_sunday_workflow.sql'])db.exec(fs.readFileSync(file,'utf8').replaceAll('--> statement-breakpoint',';'));
 db.prepare('INSERT INTO quizzes (id,title,description,questions,published,created_at) VALUES (?,?,?,?,?,?)').run('q1','Etiquette','','[]',1,'2026-10-25T00:00:00.000Z');
 db.prepare('INSERT INTO students (id,name,password_hash,created_at) VALUES (?,?,?,?)').run('s1','Yaseen',hash,'2026-10-25T00:00:00.000Z');
 db.prepare('INSERT INTO submissions (id,quiz_id,name,answers,score,max,created_at,student_id) VALUES (?,?,?,?,?,?,?,?)').run('attempt-1','q1','Yaseen','[]',0,1,'2026-10-25T00:00:00.000Z',null);

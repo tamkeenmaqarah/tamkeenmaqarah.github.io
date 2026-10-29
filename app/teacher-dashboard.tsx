@@ -1,12 +1,12 @@
 'use client';
 import {useEffect,useSyncExternalStore} from 'react';
-import {House,BookOpen,ClipboardList,CalendarDays,Trophy,Smile,LogOut,ArrowUpRight,Plus,ArrowRight,ArrowLeft,Globe,Sparkles} from 'lucide-react';
+import {House,BookOpen,ClipboardList,CalendarDays,Trophy,Smile,LogOut,ArrowUpRight,Plus,ArrowRight,ArrowLeft,Globe,Sparkles,Users} from 'lucide-react';
 import {TeacherHomeworkPanel} from './teacher-homework';
 import type {Data,Quiz} from './ui';
 import {t,getLanguage,setLanguage,subscribeLanguage} from './i18n.js';
 export function useTeacherLanguage(){const language=useSyncExternalStore(subscribeLanguage,getLanguage,()=> 'en');useEffect(()=>{try{setLanguage(localStorage.getItem('tamkeen-language')==='ar'?'ar':'en');}catch{}},[]);return language;}
 export function TeacherLanguage(){const language=useTeacherLanguage();return <button className="teacher-language" type="button" onClick={()=>setLanguage(language==='ar'?'en':'ar')} aria-label={language==='ar'?'Switch to English':'Change language to Arabic'}><Globe size={17}/>{language==='ar'?'English':'العربية'}</button>;}
-const nav=[['home','Overview',House],['homework','Homework',CalendarDays],['quizzes','Quizzes',BookOpen],['ai','AI tools',Sparkles],['grades','Grades',ClipboardList],['leaderboard','Leaderboard',Trophy],['moments','Funny answers',Smile]] as const;
+const nav=[['home','Overview',House],['homework','Homework',CalendarDays],['quizzes','Quizzes',BookOpen],['ai','AI tools',Sparkles],['students','Students',Users],['grades','Grades',ClipboardList],['leaderboard','Leaderboard',Trophy],['moments','Funny answers',Smile]] as const;
 export function TeacherNavigation({tab,active,onNavigate,onSignOut}:{tab:string;active:boolean;onNavigate:(tab:string)=>void;onSignOut:()=>void}){
  useTeacherLanguage();
  return <header className='teacher-sidebar'>

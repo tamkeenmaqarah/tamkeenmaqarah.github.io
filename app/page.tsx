@@ -1,4 +1,5 @@
 'use client';
+import {TeacherStudents} from './teacher-students';
 import { useEffect, useState } from 'react';
 import { t } from './i18n.js';
 import { TeacherNavigation, TeacherEntryHeader, TeacherOverview, TeacherHomework, useTeacherLanguage } from './teacher-dashboard';
@@ -97,7 +98,7 @@ export default function Page() {
                     setTab('leaderboard');
                 else if (view === 'home' || view === 'quizzes' || view === 'moments' || view === 'homework')
                     setTab(d.teacher ? view : 'login');
-                else if (view === 'grades' || view === 'ai')
+                else if (view === 'students' || view === 'grades' || view === 'ai')
                     setTab(d.teacher ? view : 'login');
                 else if (view === 'teacher' || view === 'login')
                     setTab(d.teacher ? 'home' : 'login');
@@ -402,7 +403,8 @@ export default function Page() {
                 setManage(quiz);
                 route('manage');
             } }}/> : data && tab === 'home' && !creating ? <CommunityHome data={data} recent={recent} revisit={revisit} onPractice={beginPractice} onClearRevisit={clearRevisit} onNavigate={navigate} onStart={start} onCreate={() => newQuiz()}/> :
-                data && data.teacher && tab === 'homework' ? <TeacherHomework onDirtyChange={setHomeworkDirty}/> : data && !data.teacher && tab === 'leaderboard' ? <CommunityLeaderboard community={data.community} onNavigate={navigate}/> :
+                data && data.teacher && tab === 'students' ? <TeacherStudents/> :
+                            data && data.teacher && tab === 'homework' ? <TeacherHomework onDirtyChange={setHomeworkDirty}/> : data && !data.teacher && tab === 'leaderboard' ? <CommunityLeaderboard community={data.community} onNavigate={navigate}/> :
                     data && !data.teacher && tab === 'moments' ? <CommunityMoments community={data.community} onNavigate={navigate}/> :
                         data && creating ? <section className="builder"><button className="text-button back" onClick={() => navigate('quizzes')}><ArrowLeft size={17}/>{t("Back to quizzes")}</button><div className="page-heading"><h1>{t(editingId ? 'Edit quiz' : 'Create a quiz')}</h1><span className="help">{t("Changes are not saved yet")}</span></div><ol className="builder-steps" aria-label={t("Quiz creation steps")}>{['Details', 'Questions', 'Publish'].map((s, i) => <li className={i === buildStep ? 'current' : i < buildStep ? 'complete' : ''} key={s} aria-current={i === buildStep ? 'step' : undefined}><span>{i < buildStep ? <Check size={15}/> : i + 1}</span>{t(s)}</li>)}</ol>
  <form onSubmit={e => { e.preventDefault(); if (buildStep === 0) {

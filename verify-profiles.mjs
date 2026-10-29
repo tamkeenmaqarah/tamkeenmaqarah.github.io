@@ -6,7 +6,7 @@ import vm from 'node:vm';
 import {validUpload,validProfileChange} from './lib/profile-photo.mjs';
 function load(file,mocks={}) {const exports={};vm.runInNewContext(ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText,{exports,URL,crypto,TextEncoder,TextDecoder,Uint8Array,atob,Request,Response,require:name=>{if(!(name in mocks))throw Error('Unexpected import '+name);return mocks[name];}});return exports;}
 const database=new DatabaseSync(':memory:');
-for(const file of ['0000_youthful_dark_phoenix','0001_broken_human_robot','0002_charming_rhodey','0003_student_accounts','0004_google_sign_in','0007_profile_photos'])database.exec(fs.readFileSync('drizzle/'+file+'.sql','utf8').replaceAll('--> statement-breakpoint',';'));
+for(const file of ['0000_youthful_dark_phoenix','0001_broken_human_robot','0002_charming_rhodey','0003_student_accounts','0004_google_sign_in','0007_profile_photos','0008_teacher_homework','0009_sunday_workflow'])database.exec(fs.readFileSync('drizzle/'+file+'.sql','utf8').replaceAll('--> statement-breakpoint',';'));
 const db=()=>({prepare(sql){const stmt=database.prepare(sql);const bound=(args)=>({async first(){return stmt.get(...args)||null},async run(){return stmt.run(...args)},async all(){return {results:stmt.all(...args)}}});return {...bound([]),bind(...args){return bound(args)}}}});
 for(const [id,name]of [['one','Ahmed'],['two','Ali']])database.prepare('INSERT INTO students(id,name,password_hash,created_at) VALUES(?,?,?,?)').run(id,name,'hash','2026-10-25');
 const google=load('app/google.ts');
@@ -42,7 +42,7 @@ assert.equal(saved.status,200);assert.equal((await saved.json()).profile.name,'A
 assert.equal((await profiles.profileFor('two')).photo,null);
 assert.equal((await route.GET(req())).headers.get('Cache-Control'),'no-store');
 let teacher=true;
-const homework=load('app/api/homework/route.ts',{'next/server':{NextResponse:{json:Response.json}},'../../server':{db,isTeacher:async()=>teacher},'../../public-cors':cors});
+const homework=load('app/api/homework/route.ts',{'../../accounts':{nameIsArchived:async()=>false},'next/server':{NextResponse:{json:Response.json}},'../../server':{db,isTeacher:async()=>teacher},'../../public-cors':cors});
 const sameOriginRead=new Request('https://backend.example/api/homework?week=2026-11-01');
 assert.equal((await homework.GET(sameOriginRead)).status,200);
 teacher=false;assert.equal((await homework.GET(sameOriginRead)).status,403);

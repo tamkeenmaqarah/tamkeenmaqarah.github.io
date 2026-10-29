@@ -64,6 +64,13 @@
       "when": 1793174400000,
       "tag": "0008_teacher_homework",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "6",
+      "when": 1793232000000,
+      "tag": "0009_sunday_workflow",
+      "breakpoints": true
     }
   ]
 }

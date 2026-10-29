@@ -17,10 +17,10 @@ export async function studentFrom(req:Request){
  if(!token)return null;
  const tokenHash=await digest(token);
  try{
-  const row:any=await db().prepare('SELECT s.id,s.name,s.google_sub,s.has_password FROM sessions n JOIN students s ON s.id=n.student_id WHERE n.token_hash=?').bind(tokenHash).first();
+  const row:any=await db().prepare('SELECT s.id,s.name,s.google_sub,s.has_password FROM sessions n JOIN students s ON s.id=n.student_id WHERE n.token_hash=? AND s.archived_at IS NULL').bind(tokenHash).first();
   return row?{id:row.id as string,name:row.name as string,google:Boolean(row.google_sub),hasPassword:row.has_password!==0}:null;
  }catch{
-  const row:any=await db().prepare('SELECT s.id,s.name FROM sessions n JOIN students s ON s.id=n.student_id WHERE n.token_hash=?').bind(tokenHash).first();
+  const row:any=await db().prepare('SELECT s.id,s.name FROM sessions n JOIN students s ON s.id=n.student_id WHERE n.token_hash=? AND s.archived_at IS NULL').bind(tokenHash).first();
   return row?{id:row.id as string,name:row.name as string}:null;
  }
 }
@@ -55,7 +55,11 @@ export async function latestMisses(studentId:string){
 export async function saveReview(studentId:string,review:StoredReview|null){
  await db().prepare('UPDATE students SET review=? WHERE id=?').bind(review?JSON.stringify({...review,name:''}):'',studentId).run();
 }
+export async function nameIsArchived(name:string){return !!await db().prepare('SELECT id FROM students WHERE name=? COLLATE NOCASE AND archived_at IS NOT NULL').bind(name.trim()).first();}
 async function openSessionFor(id:string,name:string){
+ const active:any=await db().prepare('SELECT archived_at FROM students WHERE id=?').bind(id).first();
+ if(!active)throw Error('This account no longer exists. Ask your teacher.');
+ if(active.archived_at)throw Error('This account is archived. Ask your teacher to restore it.');
  const token=await digest(crypto.randomUUID()+crypto.randomUUID());
  await db().prepare('INSERT INTO sessions (token_hash,student_id,created_at) VALUES (?,?,?)').bind(await digest(token),id,new Date().toISOString()).run();
  return {token,student:{id,name}};
@@ -74,7 +78,7 @@ export async function resetPassword(name:string,recovery:string,password:string)
  const clean=cleanName(name);
  const problem=passwordProblem(password)||recoveryProblem(recovery);
  if(problem)throw Error(problem);
- const row:any=await db().prepare('SELECT id,name,recovery_hash FROM students WHERE name=? COLLATE NOCASE').bind(clean).first();
+ const row:any=await db().prepare('SELECT id,name,recovery_hash FROM students WHERE name=? COLLATE NOCASE AND archived_at IS NULL').bind(clean).first();
  if(!row?.recovery_hash||!sameHash(row.recovery_hash,await digest(recoveryKey(recovery))))return null;
  await db().prepare('UPDATE students SET password_hash=? WHERE id=?').bind(await digest(password),row.id).run();
  await db().prepare('DELETE FROM sessions WHERE student_id=?').bind(row.id).run();
@@ -107,7 +111,7 @@ export async function signInWithGoogle(credential:string,name:string|undefined,c
  try{identity=await identify(credential,clientId)}catch{identity=null}
  if(!identity)throw Error('Google could not confirm this sign-in.');
  const sub=identity.sub;
- const syncPicture=async(id:string)=>{if(identity.picture!==undefined)await db().prepare('UPDATE students SET google_picture=? WHERE id=?').bind(identity.picture,id).run()};
+ const syncPicture=async(id:string)=>{if(await nameIsArchived((await db().prepare('SELECT name FROM students WHERE id=?').bind(id).first() as any)?.name||''))throw Error('This account is archived. Ask your teacher to restore it.');if(identity.picture!==undefined)await db().prepare('UPDATE students SET google_picture=? WHERE id=?').bind(identity.picture,id).run()};
  try{
   if(linkedStudentId){
    const owner:any=await db().prepare('SELECT id FROM students WHERE google_sub=?').bind(sub).first();

@@ -12,7 +12,7 @@ export async function GET(req:Request){
 }
 async function write(req:Request,action:string){
  if(!sameOrigin(req)||!await isTeacher())return reply(req,{error:'Teacher access required.'},403);
- try{const body=await homeworkBody(req);if(!body||typeof body!=='object')throw new HomeworkError('Add homework details.');if(action==='remove')await removeAssignment(body.id,body.revision);else await saveAssignment(body,action==='edit'?body.id:undefined,body.revision);return reply(req,{ok:true});}catch(e){return reply(req,{error:e instanceof HomeworkError?e.message:'Could not save teacher homework. Your draft is still here.'},e instanceof HomeworkError?e.status:503);}
+ try{const body=await homeworkBody(req);if(!body||typeof body!=='object')throw new HomeworkError('Add homework details.');const result=action==='remove'?await removeAssignment(body.id,body.revision):await saveAssignment(body,action==='edit'?body.id:undefined,body.revision);return reply(req,{ok:true,...result});}catch(e){return reply(req,{error:e instanceof HomeworkError?e.message:'Could not save teacher homework. Your draft is still here.'},e instanceof HomeworkError?e.status:503);}
 }
 export function POST(req:Request){return write(req,'create');}
 export function PATCH(req:Request){return write(req,'edit');}
