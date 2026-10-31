@@ -1,6 +1,6 @@
 'use client';
-import {useEffect,useSyncExternalStore} from 'react';
-import {House,BookOpen,ClipboardList,CalendarDays,Trophy,Smile,LogOut,ArrowUpRight,Plus,ArrowRight,ArrowLeft,Globe,Sparkles,Users} from 'lucide-react';
+import {useEffect,useSyncExternalStore,useState,useRef} from 'react';
+import {House,BookOpen,ClipboardList,CalendarDays,Trophy,Smile,LogOut,ArrowUpRight,Plus,ArrowRight,ArrowLeft,Globe,Sparkles,Users,Menu,X} from 'lucide-react';
 import {TeacherHomeworkPanel} from './teacher-homework';
 import type {Data,Quiz} from './ui';
 import {t,getLanguage,setLanguage,subscribeLanguage} from './i18n.js';
@@ -8,11 +8,13 @@ export function useTeacherLanguage(){const language=useSyncExternalStore(subscri
 export function TeacherLanguage(){const language=useTeacherLanguage();return <button className="teacher-language" type="button" onClick={()=>setLanguage(language==='ar'?'en':'ar')} aria-label={language==='ar'?'Switch to English':'Change language to Arabic'}><Globe size={17}/>{language==='ar'?'English':'العربية'}</button>;}
 const nav=[['home','Overview',House],['homework','Homework',CalendarDays],['quizzes','Quizzes',BookOpen],['ai','AI tools',Sparkles],['students','Students',Users],['grades','Grades',ClipboardList],['leaderboard','Leaderboard',Trophy],['moments','Funny answers',Smile]] as const;
 export function TeacherNavigation({tab,active,onNavigate,onSignOut}:{tab:string;active:boolean;onNavigate:(tab:string)=>void;onSignOut:()=>void}){
- useTeacherLanguage();
- return <header className='teacher-sidebar'>
-  <div className="teacher-sidebar-brand"><a href="/?view=home" onClick={event=>{event.preventDefault();onNavigate('home');}}><span lang="ar" dir="rtl">أصحاب الخيمة</span><small>{t('Teacher dashboard')}</small></a></div>
-  <nav id="teacher-navigation" aria-label={t('Teacher navigation')}>{nav.map(([id,label,Icon])=><button key={id} aria-current={!active&&(tab===id||(id==='quizzes'&&tab==='manage'))?'page':undefined} className={!active&&(tab===id||(id==='quizzes'&&tab==='manage'))?'selected':''} onClick={()=>onNavigate(id)}><Icon size={19}/><span>{t(label)}</span></button>)}</nav>
-  <div className="teacher-sidebar-bottom"><a href="https://tamkeenmaqarah.github.io/" target="_blank" rel="noopener noreferrer">{t('Student website')}<ArrowUpRight size={17}/></a><TeacherLanguage/><button className="text-button" onClick={onSignOut}><LogOut size={17}/>{t('Sign out')}</button></div>
+ useTeacherLanguage();const [open,setOpen]=useState(false),menu=useRef<HTMLButtonElement>(null);
+ useEffect(()=>{setOpen(false)},[tab,active]);
+ useEffect(()=>{if(!open)return;const escape=(event:KeyboardEvent)=>{if(event.key==='Escape'){setOpen(false);menu.current?.focus()}};document.addEventListener('keydown',escape);return()=>document.removeEventListener('keydown',escape)},[open]);
+ return <header className={'teacher-sidebar'+(open?' is-open':'')}>
+  <div className="teacher-sidebar-brand"><a href="/?view=home" onClick={event=>{event.preventDefault();onNavigate('home');}}><span lang="ar" dir="rtl">أصحاب الخيمة</span><small>{t('Teacher dashboard')}</small></a><button ref={menu} className="teacher-menu-toggle secondary" type="button" aria-expanded={open} aria-controls="teacher-navigation teacher-navigation-utilities" onClick={()=>setOpen(value=>!value)}>{open?<X size={19}/>:<Menu size={19}/>}<span>{t(open?'Close menu':'Menu')}</span></button></div>
+  <nav id="teacher-navigation" aria-label={t('Teacher navigation')}>{nav.map(([id,label,Icon])=><button key={id} aria-current={!active&&(tab===id||(id==='quizzes'&&tab==='manage'))?'page':undefined} className={!active&&(tab===id||(id==='quizzes'&&tab==='manage'))?'selected':''} onClick={()=>{onNavigate(id);setOpen(false)}}><Icon size={19}/><span>{t(label)}</span></button>)}</nav>
+  <div className="teacher-sidebar-bottom" id="teacher-navigation-utilities"><a href="https://tamkeenmaqarah.github.io/" target="_blank" rel="noopener noreferrer">{t('Student website')}<ArrowUpRight size={17}/></a><TeacherLanguage/><button className="text-button" onClick={onSignOut}><LogOut size={17}/>{t('Sign out')}</button></div>
  </header>;
 }
 export function TeacherEntryHeader(){useTeacherLanguage();return <header className="teacher-entry-header"><a href="https://tamkeenmaqarah.github.io/" className="teacher-entry-brand" lang="ar" dir="rtl">أصحاب الخيمة</a><div><TeacherLanguage/><a href="https://tamkeenmaqarah.github.io/">{t('Student website')}<ArrowUpRight size={16}/></a></div></header>;}

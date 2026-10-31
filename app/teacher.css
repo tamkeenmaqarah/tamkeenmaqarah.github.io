@@ -296,9 +296,9 @@ main:focus{outline:none}
 @media(max-width:750px){.assignment-editor .assignment-kind{grid-template-columns:1fr 1fr}.assignment-range{grid-template-columns:1fr 1fr;gap:12px}.assignment-range>label:first-child{grid-column:1/-1}.assignment-editor .assignment-kind>label{font-size:13px}.review-filters>button{font-size:12px;padding:8px 12px}.review-roster>li,.student-roster>li{padding:18px;gap:14px}.review-roster strong,.student-roster strong{font-size:16px}.review-student-panel,.student-management{padding:22px 18px}.review-student-panel h3{font-size:22px}.student-list-tools{gap:16px}.student-management>header{align-items:start;flex-wrap:wrap}.removed-homework>div{align-items:start;flex-direction:column;gap:8px}}
 @media(max-width:750px){
  .teacher-homework .teacher-week{grid-template-columns:44px minmax(0,1fr) 44px;padding:60px 14px 22px;gap:10px}
- .teacher-homework .teacher-week>label{grid-column:2;grid-row:1;gap:0}
+ .teacher-homework .teacher-week>label{grid-column:2;grid-row:1;gap:0;min-width:0;width:100%}
  .teacher-homework .teacher-week>label>span{position:absolute;inset-inline:10px;top:14px;font-size:20px;line-height:1.5}
- .teacher-homework .teacher-week input{max-width:100%;width:100%;min-height:46px}
+ .teacher-homework .teacher-week input{min-width:0;max-width:100%;width:100%;min-height:46px;padding-inline:6px;box-sizing:border-box}
  .teacher-homework .teacher-week>.secondary{width:44px;min-height:44px;padding:0;font-size:0;gap:0}
  .teacher-homework .teacher-week>.secondary:first-child{grid-column:1;grid-row:1}
  .teacher-homework .teacher-week>.secondary:last-child{grid-column:3;grid-row:1}
@@ -351,3 +351,18 @@ main:focus{outline:none}
 .quran-history-cutoff{max-width:520px}
 .quran-history-cutoff>span{flex:1;min-width:0}
 .quran-history-cutoff input{flex-shrink:0}
+
+.current-sunday{margin-block:-8px 12px}
+@media(max-width:750px){
+ html{scroll-padding-top:100px}
+ .teacher-sidebar{padding:10px 16px}
+ .teacher-sidebar-brand{min-height:54px;gap:12px}
+ .teacher-menu-toggle{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 12px;font-size:14px;flex-shrink:0}
+ .teacher-sidebar:not(.is-open) nav,.teacher-sidebar:not(.is-open) .teacher-sidebar-bottom{display:none}
+ .teacher-sidebar.is-open nav{display:grid;grid-template-columns:1fr 1fr;margin-top:12px}
+ .teacher-sidebar.is-open nav>button{justify-content:flex-start;font-size:14px;padding:10px}
+ .teacher-sidebar.is-open nav>button>svg{display:block}
+ .teacher-sidebar.is-open .teacher-sidebar-bottom{display:flex}
+ .quran-progress-layout.has-student>.quran-progress-students{display:none}
+ .teacher-site>main{min-height:calc(100dvh - 160px)}
+}
