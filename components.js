@@ -1,6 +1,6 @@
-import {TeacherAssignments} from './assignments.js?v=6';
+import {TeacherAssignments} from './assignments.js?v=7';
 import {nextHomeworkSunday} from './homework.js?v=2';
-import {MissCoach} from './study-tools.js?v=6';
+import {MissCoach} from './study-tools.js?v=7';
 import {
   y,
   M,
@@ -36,7 +36,7 @@ import {
   getLanguage,
   setLanguage,
   subscribeLanguage,
-} from "./i18n.js?v=24";
+} from "./i18n.js?v=25";
 import {photoUrl} from "./profile.js?v=1";
 const Ge = (e) => (e.score / e.max) * 100,
   Ke = (e) =>
@@ -291,13 +291,13 @@ function Ze({name,data,recent,revisit,onPractice,onClearRevisit,onNavigate,onSta
  let quizAction='Start quiz';try{const draft=JSON.parse(localStorage.getItem('tamkeen-draft')||'null'),done=JSON.parse(localStorage.getItem('tamkeen-done')||'null');if(quiz&&draft?.quizId===quiz.id&&Array.isArray(draft.answers)&&draft.answers.length===quiz.questions.length&&(draft.step>=0||draft.answers.some(answer=>answer!==-1)))quizAction='Resume quiz';else if(quiz&&done?.quizId===quiz.id)quizAction='View result';}catch{}
  const date=new Intl.DateTimeFormat(getLanguage()==='ar'?'ar':'en',{weekday:'long',month:'long',day:'numeric'}).format(new Date(week+'T12:00:00'));
  return el('div',{className:'community-home week-home'},
-  el('section',{className:'week-intro','aria-labelledby':'gathering-title'},el('div',null,el('h1',{id:'gathering-title'},translate('Your week')),el('p',{className:'week-gathering'},date,' · ',translate('After Fajr')),el('div',{className:'week-quick-actions'},el('button',{className:'secondary',onClick:()=>onNavigate('quran')},translate('Read Qur’an')),el('button',{className:'text-button',onClick:()=>onNavigate('account')},translate('Your account')))),el('div',{className:'week-hearth'},el(Lantern,{className:'week-lantern'}),el(Heater,{className:'hero-heater'}),el(Cushion,{kind:'backrest',className:'week-cushion'}))),
-  el('div',{className:'home-week-grid'},el(TeacherAssignments,{week,name,compact:true,onHomework:()=>onNavigate('homework')}),
-   el('section',{className:'weekly-quiz','aria-labelledby':'weekly-quiz-title'},el('div',{className:'weekly-quiz-copy'},el('h2',{id:'weekly-quiz-title'},translate('Weekly quiz')),el('h3',{dir:'auto'},quiz?quiz.title:translate('No quiz is open right now.')),quiz&&el('p',null,translate('{count} questions · No time limit',{count:quiz.questions.length})),recent&&el('p',{className:'latest-score'},translate('Your latest result: '),el('b',null,recent.score,'/',recent.max))),
+  el('section',{className:'week-intro','aria-labelledby':'gathering-title'},el('div',null,el('h1',{id:'gathering-title'},translate('Your week')),el('p',{className:'week-gathering'},date,' · ',translate('After Fajr')),el('div',{className:'week-quick-actions'},el('button',{className:'primary',onClick:()=>onNavigate('homework')},translate('Open homework')),el('button',{className:'secondary',onClick:()=>onNavigate('quran')},translate('Read Qur’an')))),el('div',{className:'week-hearth'},el(Lantern,{className:'week-lantern'}),el(Heater,{className:'hero-heater'}),el(Cushion,{kind:'backrest',className:'week-cushion'}))),
+  el('div',{className:'home-week-grid'},el(TeacherAssignments,{week,name,compact:true,onHomework:id=>onNavigate('homework',id)}),
+   el('section',{className:'weekly-quiz'+(quiz?'':' is-empty'),'aria-labelledby':'weekly-quiz-title'},el('div',{className:'weekly-quiz-copy'},el('h2',{id:'weekly-quiz-title'},translate('Weekly quiz')),el('h3',{dir:'auto'},quiz?quiz.title:translate('No quiz is open right now.')),quiz&&el('p',null,translate('{count} questions · No time limit',{count:quiz.questions.length})),recent&&el('p',{className:'latest-score'},translate('Your latest result: '),el('b',null,recent.score,'/',recent.max))),
     el('div',{className:'week-quiz-actions'},el('button',{className:'primary',onClick:()=>quiz?onStart(quiz):onNavigate('quizzes')},translate(quiz?quizAction:'All quizzes'),el(w,{size:17})),quiz&&el('button',{className:'text-button',onClick:()=>onNavigate('quizzes')},translate('All quizzes'))))),
   el('section',{className:'home-study-launch','aria-labelledby':'home-study-title'},el('header',null,el('h2',{id:'home-study-title'},translate('Halaqas & practice')),el('span',{className:'help'},translate('Watch, remember, check'))),
-   el('div',{className:'study-launch-actions'},[['tuesday','Watch Tuesday halaqa','The Arab Spring',ie],['quizzes','Lesson quizzes','Check what you remember',E],['practice','Practise missed questions',revisit?.misses?.length?translate('{count} to revisit',{count:revisit.misses.length}):'Review after your next quiz',Oe]].map(([id,title,detail,Icon])=>el('button',{type:'button',key:id,onClick:()=>onNavigate(id)},el(Icon,{size:23}),el('span',null,el('strong',null,translate(title)),el('small',null,translate(detail))),el(w,{size:18}))))),
-    el(
+   el('div',{className:'study-launch-actions'},[['tuesday','Watch Tuesday halaqa','The Arab Spring',ie],['quizzes','Lesson quizzes','Check what you remember',E],...(revisit?.misses?.length?[['practice','Practise missed questions',translate('{count} to revisit',{count:revisit.misses.length}),Oe]]:[])].map(([id,title,detail,Icon])=>el('button',{type:'button',key:id,onClick:()=>onNavigate(id)},el(Icon,{size:23}),el('span',null,el('strong',null,translate(title)),el('small',null,translate(detail))),el(w,{size:18}))))),
+    (board||moment)&&el(
       "div",
       { className: "home-community-grid" },
       el(

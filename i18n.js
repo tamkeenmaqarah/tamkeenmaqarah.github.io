@@ -1,4 +1,14 @@
 const arabic = {
+  "All homework": "جميع الواجبات",
+  "Your teacher has checked all this work. Open All homework to revisit it.": "راجع المعلّم كل هذه الواجبات. افتح «جميع الواجبات» لمراجعتها مجدّدًا.",
+  "Cancel help request": "إلغاء طلب المساعدة",
+  "Ready for your turn": "جاهز لدورك",
+  "Your teacher has checked this work. You can revisit it anytime.": "راجع المعلّم هذا الواجب. يمكنك مراجعته مجدّدًا في أي وقت.",
+  "Your teacher can see you are ready. Keep practising while you wait.": "يرى المعلّم أنك جاهز. واصل المراجعة حتى يحين دورك.",
+  "Back to this Sunday": "العودة إلى واجب هذا الأحد",
+  "Menu": "القائمة",
+  "Close menu": "إغلاق القائمة",
+
   "Remove saved ayah": "إزالة الآية المحفوظة",
   "Saved ayah removed from this device.": "أُزيلت الآية المحفوظة من هذا الجهاز.",
   "Your saved place could not be removed. Please try again.": "تعذّرت إزالة موضع القراءة المحفوظ. حاول مجدّدًا.",

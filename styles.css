@@ -7991,3 +7991,46 @@ main > *,
 .saved-place-notice>.text-button{min-height:44px}
 @media(max-width:750px){.saved-reading-place{flex-wrap:wrap;gap:4px}.saved-reading-place>.resume-reading{flex-basis:100%}.saved-reading-place>.text-button{margin-inline-start:auto}}
 .saved-place-error{color:#ffdda0;font-size:14px;line-height:1.8;margin-bottom:18px}
+
+/* Keep the wayfinding visible while the decorative masthead scrolls away. */
+.home-task-link{display:flex;align-items:center;gap:16px;width:100%;min-height:64px;padding:12px 0;border:0;border-radius:0;text-align:start;background:transparent;color:var(--ink);font:inherit;cursor:pointer}
+.home-task-link>div{display:grid;gap:6px;min-width:0}
+.home-task-link strong{font-weight:500}.home-task-link small{color:#d0ad8c}
+.home-task-link:hover strong{text-decoration:underline;text-underline-offset:4px}
+.home-assignment-preview>ul>li{padding-block:0}
+.homework-views{display:flex;gap:10px;flex-wrap:wrap;margin-block:20px}
+.homework-up-to-date{padding-block:16px;line-height:1.8;color:#d2dfbd}
+.current-sunday{margin-block:-8px 16px}
+.week-quick-actions{flex-direction:row-reverse;justify-content:flex-end}
+@media(max-width:750px){
+ .app-header{top:calc(-1 * var(--masthead-height,76px))}
+ html{scroll-padding-top:112px}
+ .week-intro{padding:22px 20px;gap:12px;min-height:0}
+ .week-intro h1{font-size:30px}.week-intro .week-gathering{font-size:14px}
+ .week-quick-actions{gap:8px;flex-wrap:wrap}
+ .week-quick-actions>button{font-size:13px;padding-inline:12px}
+ .home-assignment-preview{padding:22px 20px}
+ .task-actions>.primary,.task-actions>.secondary{flex:1 1 160px}
+ .homework-views{margin-block:16px}
+ .homework-views>button{flex:1;font-size:13px;padding-inline:10px}
+ .assigned-work{padding-block:24px}
+ .assigned-work>header{display:grid;grid-template-columns:minmax(0,1fr) auto}
+ .assigned-work>header h3{font-size:22px}
+ .assigned-range{margin-block:12px;font-size:16px}
+ .task-readiness{margin-top:18px;padding-top:18px}
+ .task-readiness h4{font-size:16px}
+ .task-readiness .help{font-size:13px;line-height:1.7}
+ .homework-week.compact-week{padding-block:12px 16px;margin-block:18px}
+}
+.home-task-link>div{flex:1}.home-task-arrow{flex-shrink:0;color:#e7b479}
+[dir=rtl] .home-task-arrow{transform:scaleX(-1)}
+.week-quick-actions{flex-direction:row;justify-content:flex-start}
+@media(max-width:750px){
+ .week-intro>div:first-child{flex:1;min-width:0}
+ .week-intro h1,.week-intro .week-gathering{padding-inline-end:80px}
+ .week-intro .week-hearth{position:absolute;inset-inline-end:18px;inset-block-start:18px;width:74px;max-height:130px}
+ .week-quick-actions{flex-wrap:nowrap;gap:8px}
+ .week-quick-actions>button{white-space:nowrap;padding-inline:10px;font-size:13px}
+ .home-week-grid .weekly-quiz.is-empty{padding:20px}
+ .weekly-quiz.is-empty h3{font-size:18px;line-height:1.5}
+}

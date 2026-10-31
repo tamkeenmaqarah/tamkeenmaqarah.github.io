@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-29T17:34:17.902874Z",
+  "generatedAt": "2026-10-31T02:53:05.577001Z",
   "title": "Design System: أصحاب الخيمة / Ashab Al Khaimah",
   "extensions": {
     "colorMeta": {
@@ -636,15 +636,15 @@
     "layouts": [
       {
         "name": "student-navigation",
-        "description": "Six destinations; three columns by two rows at 750px, 44px minimum targets."
+        "description": "Six named destinations remain visible in a three-by-two mobile grid at 750px with 44px minimum targets; the measured brand row scrolls away, retaining 112px scroll clearance."
       },
       {
         "name": "sunday-control",
-        "description": "Today on Sunday, otherwise upcoming; native date input, separate full-date mobile grid row and 44px week arrows."
+        "description": "Today on Sunday, otherwise upcoming; native date input, separate full-date mobile row and 44px week arrows. Back to this Sunday appears while away."
       },
       {
         "name": "assigned-practice",
-        "description": "Locked exact range; one-ayah hidden recall/reveal/listen/finish on clay, wrapping readiness controls."
+        "description": "Direct Practise assigned ayahs opens bounded range setup; secondary Open assigned ayahs opens full-surah reading. URL mode follows reader changes, assignment selection and refresh. Explicit readiness remains separate."
       },
       {
         "name": "halaqas",
@@ -692,7 +692,7 @@
     {
       "name": "Text navigation",
       "kind": "nav",
-      "description": "Six visible destinations; three columns by two rows on mobile, retaining selected-tab continuity.",
+      "description": "Six named destinations; three columns by two rows on mobile, with the brand row scrolling away and navigation staying visible.",
       "html": "<nav class=\"ds-nav\" aria-label=\"Main navigation\"><button aria-current=\"page\">Home</button><button>Homework</button><button>Halaqas</button><button>Qur’an</button><button>Leaderboard</button><button>Account</button><span class=\"ds-nav-line\" aria-hidden=\"true\"></span></nav>",
       "css": ".ds-nav{position:relative;display:flex;gap:20px;justify-content:flex-start;min-height:54px;background:#321319;padding-inline:20px}.ds-nav button{font-family:var(--body,Figtree,\"IBM Plex Sans Arabic\",sans-serif);min-height:54px;padding:0 16px;background:transparent;border:0;font-size:13px;font-weight:500;color:#d2ad8a;cursor:pointer}.ds-nav button:hover,.ds-nav [aria-current]{color:#ffe0a5}.ds-nav [aria-current]{font-weight:700}.ds-nav-line{position:absolute;left:20px;bottom:0;width:40px;height:2px;background:#e5a75e;pointer-events:none;transform-origin:left center;transition:transform 230ms cubic-bezier(.16,1,.3,1),opacity 120ms}.ds-nav button:focus-visible{outline:3px solid var(--focus,#ffbd69);outline-offset:4px}.ds-nav button:active{background:#54232b}.ds-nav:focus-within>.ds-nav-line{transition:none}@media(max-width:750px){.ds-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));height:auto;min-height:94px;padding:0 12px 6px;gap:0 4px}.ds-nav button{display:flex;align-items:center;justify-content:center;min-height:44px;font-size:12px;line-height:1.4;padding:7px 2px;white-space:normal;text-align:center}.ds-nav [aria-current]{background:#54232b}.ds-nav-line{left:16px;bottom:48px;width:calc((100% - 32px)/3)}}@media(prefers-reduced-motion:reduce){.ds-nav-line{transition:none}}"
     },
@@ -762,8 +762,8 @@
       "name": "Assigned work and private readiness",
       "kind": "custom",
       "refersTo": "assignment-surface",
-      "description": "Open assigned ayahs deep-links to full-surah reading and gold assignment highlights. Back to homework focuses this task; readiness remains a separate explicit check-in with no grading or points.",
-      "html": "<article class=\"ds-work\"><header><h3>Assigned work</h3><span>To prepare</span></header><button class=\"ds-ready\" type=\"button\">Open assigned ayahs</button><footer><p>Ready is your own check-in. Your teacher reviews recitation in person.</p><button class=\"ds-ready\" type=\"button\">I’m ready for my teacher</button><button class=\"ds-help\" type=\"button\">I need help</button></footer></article>",
+      "description": "Primary Practise assigned ayahs opens exact bounded setup; secondary Open assigned ayahs opens full-surah reading with gold highlights. Tasks prioritize help/repeat/pending/ready before reviewed; counted To prepare / All homework preserve revisiting. Return focuses the task; readiness is explicit, and Cancel help request returns to pending.",
+      "html": "<article class=\"ds-work\"><header><h3>Assigned work</h3><span>To prepare</span></header><button class=\"ds-ready\" type=\"button\">Practise assigned ayahs</button><button class=\"ds-help\" type=\"button\">Open assigned ayahs</button><footer><p>Ready is your own check-in. Your teacher reviews recitation in person.</p><button class=\"ds-ready\" type=\"button\">I’m ready for my teacher</button><button class=\"ds-help\" type=\"button\">I need help</button></footer></article>",
       "css": ".ds-work{padding:34px 32px 28px;background:#32151b;color:#f0dfc2;font:16px/1.6 Figtree,\"IBM Plex Sans Arabic\",sans-serif}.ds-work header{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.ds-work h3{font:500 25px/1.35 Lora,Georgia,serif;margin:0 0 20px}.ds-work header span{font-size:13px;color:#d0ad8c}.ds-work footer{margin-top:26px;padding-top:22px;border-top:1px solid #7c4b3e}.ds-work footer p{max-width:65ch;line-height:1.8}.ds-ready,.ds-help{min-height:46px;padding:11px 20px;border-radius:5px;font:600 15px/1.6 Figtree,sans-serif;cursor:pointer;margin:6px 12px 6px 0}.ds-ready{background:#e7b479;color:#3c1920;border:1px solid transparent}.ds-ready:hover{background:#f1c790}.ds-help{background:transparent;color:#f0cfaa;border:1px solid #a67150}.ds-help:hover{background:#63312c}.ds-work button:focus-visible{outline:3px solid #ffbd69;outline-offset:4px}.ds-work button:active{transform:scale(.98)}@media(max-width:750px){.ds-work{padding:28px 18px 24px}.ds-work footer .ds-ready{width:100%}}@media(prefers-reduced-motion:reduce){.ds-work button:active{transform:none}}"
     },
     {
